@@ -34,17 +34,31 @@ cc.Class({
 
         this.node.on("speedupdate",function(event){
             var data = event.getUserData()
-            //this.speed = Math.floor(sp*10)
             this.player.getComponent(Player).setSpeed(Math.floor(data.x*5),Math.floor(data.y*5))
         },this)
 
         this.node.on("bulltea",function(event){
             var data = event.getUserData()
-            console.log("id is >>>",data[0], "pos is <<<>>>",data[1],data[2]);
             this.fightLayer.createrButtle(data[1],data[2]);
-            //this.speed = Math.floor(sp*10)
-            //this.player.getComponent(Player).setSpeed(Math.floor(data.x*5),Math.floor(data.y*5))
+
         },this)
+
+        //摇杆开始
+        this.node.on("recker_start",function(event){
+            var data = event.getUserData()
+            var speedX = data[1]/8
+            var speedY = data[2]/8
+            console.log("@@@data is >>===================>>".data[1],data[2]);
+            console.log("@@@x y is >>===================>>".speedX,speedY);
+            
+            this.player.getComponent(Player).setSpeed(speedX,speedY)
+        },this)
+        this.node.on("recker_move",function(event){
+
+        })
+        this.node.on("recker_end",function(event){
+
+        })
     },
 
     start () {
