@@ -10,79 +10,50 @@
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
-        state:0,         //状态：0停止 1左 2右
         eventList:[],
     },
 
     // LIFE-CYCLE CALLBACKS:
-
     onLoad () {
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
-
         cc.systemEvent.setAccelerometerEnabled(true);
         cc.systemEvent.on(cc.SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
 
-        //触摸事件用数组保存
+        //上滑
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
-            // console.log("@111111",event.getID())
-            // console.log("@111111",event.getLocationX())
-            var Custom_Event = new cc.Event.EventCustom("bulltea",true)
-            var data = new Array(3)
-            data[0]=event.getID()
-            data[1]=event.getLocationX()
-            data[2]=event.getLocationY()
-            Custom_Event.setUserData(data)
-            this.node.dispatchEvent(Custom_Event)
-
-
+            this.eventList[event.getID()] = event.getLocation()
         },this);
+
         this.node.on("touchmove",function(event){
-            console.log("@222")
+
         },this)
+
         this.node.on("touchend",function(event){
-            console.log("@333")
+            var y = event.getLocationY() 
+            var p = this.eventList[event.getID()]
+            if (y - p.y > 100) {
+                var Custom_Event = new cc.Event.EventCustom("createBullet",true)
+                var data = new Array(3)
+                data[0] = event.getID()
+                data[1] = p.x
+                data[2] = p.y
+                Custom_Event.setUserData(data)
+                this.node.dispatchEvent(Custom_Event)
+            }
         },this)
 
     },
 
     onDeviceMotionEvent (event) {
-
-        var Custom_Event = new cc.Event.EventCustom("speedupdate",true)
-        Custom_Event.setUserData(event.acc)
-        this.node.dispatchEvent(Custom_Event)
-    },
-
-    onKeyUp(event){
-        switch(event.keyCode) {
-            case cc.KEY.a:
-                //this.node.dispatchEvent(new cc.Event.EventCustom("stopleft", true));
-                var Custom_Event = new cc.Event.EventCustom("stopleft",true)
-                Custom_Event.setUserData(123)
-                this.node.dispatchEvent(Custom_Event)
-                break;
-            case cc.KEY.d:
-                this.node.dispatchEvent(new cc.Event.EventCustom("stopright", true));
-                break;      
-        }
-    },
-
-    onKeyDown(event){
-        switch(event.keyCode) {
-            case cc.KEY.a:
-                this.node.dispatchEvent(new cc.Event.EventCustom("goleft", true));
-                break;
-            case cc.KEY.d:
-                this.node.dispatchEvent(new cc.Event.EventCustom("goright", true));
-                break;          
+        if (cc.sys.isMobile)
+        {
+            var Custom_Event = new cc.Event.EventCustom("speedupdate",true)
+            Custom_Event.setUserData(event.acc)
+            this.node.dispatchEvent(Custom_Event)
         }
     },
 
     onDestroy(){
-        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
     }, 
 

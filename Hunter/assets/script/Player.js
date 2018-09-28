@@ -54,6 +54,8 @@ cc.Class({
         this.targetSpeedX = x
         this.targetSpeedY = y
 
+       
+        
     },
 
     update (dt) {
@@ -63,7 +65,7 @@ cc.Class({
         else if(this.targetSpeedX < this.nowSpeedX){
             this.nowSpeedX = this.nowSpeedX - this.addSpeedX
         }
-        //console.log("@@@nowSpeedX x is >>>>>",this.nowSpeedX);
+
 
         if (this.targetSpeedY > this.nowSpeedY){
             this.nowSpeedY += this.addSpeedY
@@ -78,11 +80,8 @@ cc.Class({
 
         this.node.y += this.nowSpeedY;
         this.node.y = (this.node.y<960) ? this.node.y : 960;
-        this.node.y = (this.node.y>0) ? this.node.y : 0;
+        this.node.y = (this.node.y>20) ? this.node.y : 20;
 
-        // this.node.y += this.speedY
-        // this.node.y = (this.node.y>480)?480:this.node.y;
-        // this.node.y = (this.node.y<-480)?-480:this.node.y;
 
     },
 });

@@ -32,28 +32,25 @@ cc.Class({
             cc.director.loadScene("LoginScene");
         },this)
 
-        this.node.on("speedupdate",function(event){
-            var data = event.getUserData()
-            this.player.getComponent(Player).setSpeed(Math.floor(data.x*5),Math.floor(data.y*5))
-        },this)
-
-        this.node.on("bulltea",function(event){
+        //触摸滑动
+        this.node.on("createBullet",function(event){
             var data = event.getUserData()
             this.fightLayer.createrButtle(data[1],data[2]);
+        },this)
 
+        //重力感应
+        this.node.on("speedupdate",function(event){
+            var data = event.getUserData()           
+            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))
         },this)
 
         //摇杆输入命令
         this.node.on("rocker_start",function(event){
-            var data = event.getUserData()
-            var speedX = data[1]/16
-            var speedY = data[2]/16           
-            this.player.getComponent(Player).setSpeed(speedX,speedY)
         },this)
         this.node.on("rocker_move",function(event){
             var data = event.getUserData()
-            var speedX = data[1]/16
-            var speedY = data[2]/16           
+            var speedX = data[1]/8
+            var speedY = data[2]/8          
             this.player.getComponent(Player).setSpeed(speedX,speedY)
         },this)
         this.node.on("rocker_end",function(event){

@@ -38,6 +38,6 @@ cc.Class({
     },
 
     update (dt) {
-        this.node.y += 2;
+        this.node.y += 10;
     },
 });
