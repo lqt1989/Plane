@@ -25,7 +25,11 @@ cc.Class({
     },
 
     start () {
+        this.nowSpeedX = 0
+        this.nowSpeedY = 0
 
+        this.addSpeedX = 0.25
+        this.addSpeedY = 0.25
     },
 
     goLeft(){
@@ -47,17 +51,19 @@ cc.Class({
 
     setSpeed(x,y){
 
-        this.targetSpeedX = -x
-        this.targetSpeedY = -y
+        this.targetSpeedX = x
+        this.targetSpeedY = y
+
     },
 
     update (dt) {
         if (this.targetSpeedX > this.nowSpeedX){
-            this.nowSpeedX += this.addSpeedX
+            this.nowSpeedX = this.nowSpeedX + this.addSpeedX
         } 
         else if(this.targetSpeedX < this.nowSpeedX){
-            this.nowSpeedX -= this.addSpeedX
+            this.nowSpeedX = this.nowSpeedX - this.addSpeedX
         }
+        //console.log("@@@nowSpeedX x is >>>>>",this.nowSpeedX);
 
         if (this.targetSpeedY > this.nowSpeedY){
             this.nowSpeedY += this.addSpeedY

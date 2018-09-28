@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.18125,
-      "y": 0.18125,
+      "x": 0.24524739583333335,
+      "y": 0.24524739583333335,
       "z": 1
     },
     "_quat": {
@@ -672,8 +672,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.5,
+      "y": 0.5,
       "z": 1
     },
     "_rotationX": 0,
@@ -943,7 +943,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 17,
+    "_localZOrder": 13,
     "groupIndex": 0,
     "_id": "8dHVDXKWBEzrhT3vWempWv"
   },
@@ -1011,7 +1011,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 20,
+    "_localZOrder": 14,
     "groupIndex": 0,
     "_id": "b3si3Y2OlGfrz5QNx3G81D"
   },
@@ -1072,7 +1072,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 16,
+    "_localZOrder": 15,
     "groupIndex": 0,
     "_id": "98oMO/blFD3pFbTkialhPu"
   },
@@ -1214,7 +1214,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 23,
+    "_localZOrder": 16,
     "groupIndex": 0,
     "_id": "28jGSlytpDl4yJ7LmJopMo"
   },
@@ -1277,7 +1277,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 14,
+    "_localZOrder": 17,
     "groupIndex": 0,
     "_id": "caVhb6SWNCfaKlA7JFknkr"
   },

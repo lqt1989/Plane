@@ -22,7 +22,7 @@ cc.Class({
 
     onLoad () {
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
-            var Custom_Event = new cc.Event.EventCustom("recker_start",true)
+            var Custom_Event = new cc.Event.EventCustom("rocker_start",true)
             var location = this.node.convertToNodeSpaceAR(event.getLocation() )
             this.PP.setPosition(location.x,location.y)
 
@@ -34,7 +34,7 @@ cc.Class({
             
         },this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE,function(event){
-            var Custom_Event = new cc.Event.EventCustom("recker_start",true)
+            var Custom_Event = new cc.Event.EventCustom("rocker_move",true)
             var location = this.node.convertToNodeSpaceAR(event.getLocation() )
 
             var x;
@@ -66,14 +66,23 @@ cc.Class({
             }
 
             this.PP.setPosition(x,y)    
-            console.log("@@@move x y is >>>.",x,y);
+
+            var data = new Array(2)
+            data[1]=x
+            data[2]=y
+            Custom_Event.setUserData(data)
+            this.node.dispatchEvent(Custom_Event)
                        
         },this);
         this.node.on(cc.Node.EventType.TOUCH_END,function(event){
-            this.PP.setPosition(0,0)                    
+            this.PP.setPosition(0,0) 
+            var Custom_Event = new cc.Event.EventCustom("rocker_end",true)
+            this.node.dispatchEvent(Custom_Event)             
         },this);
         this.node.on(cc.Node.EventType.TOUCH_CANCEL,function(event){
-            this.PP.setPosition(0,0)                    
+            this.PP.setPosition(0,0)   
+            var Custom_Event = new cc.Event.EventCustom("rocker_end",true)
+            this.node.dispatchEvent(Custom_Event)                     
         },this);
 
     },

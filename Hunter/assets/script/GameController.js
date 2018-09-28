@@ -43,22 +43,22 @@ cc.Class({
 
         },this)
 
-        //摇杆开始
-        this.node.on("recker_start",function(event){
+        //摇杆输入命令
+        this.node.on("rocker_start",function(event){
             var data = event.getUserData()
-            var speedX = data[1]/8
-            var speedY = data[2]/8
-            console.log("@@@data is >>===================>>".data[1],data[2]);
-            console.log("@@@x y is >>===================>>".speedX,speedY);
-            
+            var speedX = data[1]/16
+            var speedY = data[2]/16           
             this.player.getComponent(Player).setSpeed(speedX,speedY)
         },this)
-        this.node.on("recker_move",function(event){
-
-        })
-        this.node.on("recker_end",function(event){
-
-        })
+        this.node.on("rocker_move",function(event){
+            var data = event.getUserData()
+            var speedX = data[1]/16
+            var speedY = data[2]/16           
+            this.player.getComponent(Player).setSpeed(speedX,speedY)
+        },this)
+        this.node.on("rocker_end",function(event){
+            this.player.getComponent(Player).setSpeed(0,0)
+        },this)
     },
 
     start () {
