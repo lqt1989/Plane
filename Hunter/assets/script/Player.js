@@ -12,8 +12,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        rightSpeed:0,
-        leftSpeed:0,
+        winSize:null,
 
         //速度： 像素/帧
         nowSpeedX:0,
@@ -27,35 +26,15 @@ cc.Class({
     start () {
         this.nowSpeedX = 0
         this.nowSpeedY = 0
-
         this.addSpeedX = 0.25
         this.addSpeedY = 0.25
-    },
 
-    goLeft(){
-        this.speed = -5
-    },
-    goRight(){   
-        this.speed = 5
-    },
-    stopLeft(){
-        this.leftSpeed = 0
-    },
-    stopRight(){
-        this.rightSpeed = 0
-    },
-    stopAll(){
-
-        this.speed = 0
+        this.winSize = cc.winSize
     },
 
     setSpeed(x,y){
-
         this.targetSpeedX = x
-        this.targetSpeedY = y
-
-       
-        
+        this.targetSpeedY = y    
     },
 
     update (dt) {
@@ -65,7 +44,6 @@ cc.Class({
         else if(this.targetSpeedX < this.nowSpeedX){
             this.nowSpeedX = this.nowSpeedX - this.addSpeedX
         }
-
 
         if (this.targetSpeedY > this.nowSpeedY){
             this.nowSpeedY += this.addSpeedY
@@ -81,7 +59,5 @@ cc.Class({
         this.node.y += this.nowSpeedY;
         this.node.y = (this.node.y<960) ? this.node.y : 960;
         this.node.y = (this.node.y>20) ? this.node.y : 20;
-
-
     },
 });

@@ -16,11 +16,23 @@ cc.Class({
             type:cc.Node,
             default:null,
         },
+        btn:{
+            type:cc.Node,
+            default:null,
+        },
         name:"logunctrl"
     },
 
     // LIFE-CYCLE CALLBACKS:
 
+    addLabel(parent,str){
+        var node = new cc.Node('Label');
+        var lbl = node.addComponent(cc.Label);
+        lbl.string = str
+        lbl.fontSize = 32
+        node.anchorY = 0.5
+        node.parent = parent
+    },
 
     onLoad () {
         this.node.on("start",function(event){
@@ -34,9 +46,15 @@ cc.Class({
         this.node.on("understand",function(event){
             this.help.active = false
         },this)
+
+
+
     },
 
     start () {
+        
+
+
 
     },
 

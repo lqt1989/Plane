@@ -12,7 +12,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        event:"",
+        event:"",      
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -29,7 +29,6 @@ cc.Class({
     },
 
     callback (event, customEventData) {
-        console.log("@@event is >>>>",this.event);      
         this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
     },
 
@@ -37,5 +36,7 @@ cc.Class({
 
     },
 
-    // update (dt) {},
+    // update (dt) {
+
+    // },
 });
