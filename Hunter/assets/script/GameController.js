@@ -22,7 +22,21 @@ cc.Class({
         fightLayer:{
             default:null,
             type:FightLayer,
-        }
+        },
+
+        UpNode:{
+            default:null,
+            type:cc.Node,
+        },
+
+        downNode:{
+            default:null,
+            type:cc.Node,
+        },
+
+        WinHeight:0,
+        WinWidth:0,
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -44,22 +58,19 @@ cc.Class({
             this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))
         },this)
 
-        //摇杆输入命令
-        this.node.on("rocker_start",function(event){
-        },this)
-        this.node.on("rocker_move",function(event){
-            var data = event.getUserData()
-            var speedX = data[1]/8
-            var speedY = data[2]/8          
-            this.player.getComponent(Player).setSpeed(speedX,speedY)
-        },this)
-        this.node.on("rocker_end",function(event){
-            this.player.getComponent(Player).setSpeed(0,0)
-        },this)
+        let windowSize=cc.view.getVisibleSize();
+        this.WinHeight = windowSize.height
+        this.WinWidth = windowSize.width
+
+        this.UpNode.y = this.WinHeight/2
+        this.downNode.y = -this.WinHeight/2
+
+        cc.log("width="+windowSize.width+",height="+windowSize.height);
+
     },
 
     start () {
-
+        cc.log("WinHeight="+this.WinHeight+",WinWidth="+this.WinWidth);
     },
 
     // update (dt) {},
