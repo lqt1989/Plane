@@ -16,14 +16,21 @@ cc.Class({
             type:cc.Prefab,
             default:null,
         }
+        //玩家子弹
+
+        //玩家飞弹
+
+        //敌人
+
+        //敌人子弹
+
+        //陨石
 
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     // onLoad () {},
-
     start () {
+        
 
     },
 

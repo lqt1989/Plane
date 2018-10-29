@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var WorldCamera = require("WorldCamera");
 cc.Class({
     extends: cc.Component,
 
@@ -21,6 +21,12 @@ cc.Class({
         addSpeedY:0.25,
         targetSpeedX:0,
         targetSpeedY:0,
+
+        worldSpeed:0,
+        m_camera:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     start () {
@@ -29,35 +35,49 @@ cc.Class({
         this.addSpeedX = 0.25
         this.addSpeedY = 0.25
 
-        this.winSize = cc.winSize
+        this.winSize = cc.view.getVisibleSize();
     },
 
     setSpeed(x,y){
         this.targetSpeedX = x
         this.targetSpeedY = y    
     },
+    setWorldSpeed(speed){
+        this.worldSpeed = speed;
+    },
 
-    update (dt) {
+    //更新速度
+    updateNowSpeed()
+    {
         if (this.targetSpeedX > this.nowSpeedX){
             this.nowSpeedX = this.nowSpeedX + this.addSpeedX
         } 
         else if(this.targetSpeedX < this.nowSpeedX){
             this.nowSpeedX = this.nowSpeedX - this.addSpeedX
         }
-
         if (this.targetSpeedY > this.nowSpeedY){
             this.nowSpeedY += this.addSpeedY
         } 
         else if(this.targetSpeedY < this.nowSpeedY){
             this.nowSpeedY -= this.addSpeedY
         }
-
+    },
+    //更新坐标
+    updatePos()
+    {
         this.node.x += this.nowSpeedX;
-        this.node.x = (this.node.x<640) ? this.node.x : 640;
+        this.node.x = (this.node.x<this.winSize.width) ? this.node.x : 640;
         this.node.x = (this.node.x>0) ? this.node.x : 0;
 
-        this.node.y += this.nowSpeedY;
-        this.node.y = (this.node.y<960) ? this.node.y : 960;
-        this.node.y = (this.node.y>20) ? this.node.y : 20;
+        this.node.y += (this.nowSpeedY + this.worldSpeed)
+        this.node.y = (this.node.y > (180 + this.m_camera.y)) ? this.node.y : (180 + this.m_camera.y);
+        this.node.y = (this.node.y < (this.winSize.height + this.m_camera.y) ) ? this.node.y : (this.winSize.height + this.m_camera.y);
+
+        //console.log("@@y is >>>",this.m_camera.y);
+    },
+
+    update (dt) {
+        this.updateNowSpeed();
+        this.updatePos();
     },
 });

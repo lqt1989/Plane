@@ -12,6 +12,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        worldSpeed:0,
         // foo: {
         //     // ATTRIBUTES:
         //     default: null,        // The default value will be used only when the component attaching
@@ -35,10 +36,16 @@ cc.Class({
     // onLoad () {},
 
     start () {
-
+    
     },
 
     update (dt) {
-        this.node.y += 1;
+        this.node.y += this.worldSpeed;
     },
+
+    setWorldSpeed(speed)
+    {
+        this.worldSpeed = speed;
+    },
+
 });

@@ -10,33 +10,38 @@
 
 var Player = require("Player");
 var FightLayer = require("FightLayer");
+var WorldCamera = require("WorldCamera");
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        player:{
-            default:null,
-            type:cc.Node,
-        },
-        fightLayer:{
-            default:null,
-            type:FightLayer,
-        },
-
+        WinHeight:0,
+        WinWidth:0,
         UpNode:{
             default:null,
             type:cc.Node,
         },
-
         downNode:{
             default:null,
             type:cc.Node,
         },
 
-        WinHeight:0,
-        WinWidth:0,
+        fightLayer:{
+            default:null,
+            type:FightLayer,
+        },
 
+        //玩家飞船
+        player:{
+            default:null,
+            type:cc.Node,
+        },
+        //主摄像机
+        m_camera:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -49,7 +54,7 @@ cc.Class({
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
-            this.fightLayer.createrButtle(data[1],data[2]);
+            this.fightLayer.createrButtle(data[1],data[2]+this.m_camera.y);
         },this)
 
         //重力感应
@@ -58,20 +63,30 @@ cc.Class({
             this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))
         },this)
 
+        //屏幕适配
         let windowSize=cc.view.getVisibleSize();
         this.WinHeight = windowSize.height
         this.WinWidth = windowSize.width
-
         this.UpNode.y = this.WinHeight/2
         this.downNode.y = -this.WinHeight/2
-
-        cc.log("width="+windowSize.width+",height="+windowSize.height);
-
     },
 
     start () {
-        cc.log("WinHeight="+this.WinHeight+",WinWidth="+this.WinWidth);
+        this.setWorldSpeed(1);
+    },
+    pasue () {
+        
+    },
+    resume() {
+
     },
 
-    // update (dt) {},
+    setWorldSpeed(speed){
+        this.m_camera.getComponent(WorldCamera).setWorldSpeed(speed);
+        this.player.getComponent(Player).setWorldSpeed(speed);
+    },
+
+    update (dt) {
+        //检索坐标按批次生成敌人
+    },
 });
