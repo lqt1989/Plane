@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var FightLayer = require("FightLayer")
 cc.Class({
     extends: cc.Component,
 
@@ -27,8 +27,24 @@ cc.Class({
 
     },
 
+    destroy(){
+        this.node.parent.getComponent(FightLayer).destoryMissile(this.node)
+    },
+
+    init()
+    {
+        log("@@@init!!!")
+
+    },
+
     update (dt) {
         this.speed += this.addSpeed
         this.node.y += this.speed;
+
+        if (this.speed > 100)
+        {
+            this.speed = 1
+            this.destroy()
+        }
     },
 });

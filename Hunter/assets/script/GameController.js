@@ -54,7 +54,7 @@ cc.Class({
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
-            this.fightLayer.createrButtle(data[1],data[2]+this.m_camera.y);
+            this.fightLayer.createrMissile(data[1],data[2]+this.m_camera.y);
         },this)
 
         //重力感应
