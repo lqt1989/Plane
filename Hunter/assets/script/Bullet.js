@@ -27,14 +27,17 @@ cc.Class({
 
     },
 
-    destroy(){
+    destroySelf(){
         this.node.parent.getComponent(FightLayer).destoryMissile(this.node)
+        log("@@destory!!")
     },
 
     init()
     {
-        log("@@@init!!!")
-
+        // log("@@@init!!!")  
+        // var finished = cc.callFunc(this.destroySelf, this, null);
+        // var seq = cc.sequence(cc.moveBy(0.5, 0,800), finished);
+        // this.node.runAction(seq)
     },
 
     update (dt) {
@@ -44,7 +47,7 @@ cc.Class({
         if (this.speed > 100)
         {
             this.speed = 1
-            this.destroy()
+            this.destroySelf()
         }
     },
 });

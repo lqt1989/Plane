@@ -50,7 +50,7 @@ cc.Class({
             missile = cc.instantiate(this.star);
         }
         
-        // missile.getComponent('Bullet').init(); //接下来就可以调用 enemy 身上的脚本进行初始化
+        missile.getComponent('Bullet').init(); //接下来就可以调用 enemy 身上的脚本进行初始化
         missile.parent = this.node; // 将生成的敌人加入节点树
         missile.x = x
         missile.y = y

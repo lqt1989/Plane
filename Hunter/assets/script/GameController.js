@@ -10,15 +10,11 @@
 
 var Player = require("Player");
 var FightLayer = require("FightLayer");
-var WorldCamera = require("WorldCamera");
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
-        WinHeight:0,
-        WinWidth:0,
-        UpNode:{
+        upNode:{
             default:null,
             type:cc.Node,
         },
@@ -26,22 +22,25 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
-
         fightLayer:{
             default:null,
             type:FightLayer,
         },
-
         //玩家飞船
         player:{
             default:null,
             type:cc.Node,
         },
-        //主摄像机
-        m_camera:{
+        //地图背景长度
+        map1:{
+            default:null, 
+            type:cc.Node,
+        },
+        map2:{
             default:null,
             type:cc.Node,
         },
+        mapHeight:0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -54,7 +53,7 @@ cc.Class({
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
-            this.fightLayer.createrMissile(data[1],data[2]+this.m_camera.y);
+            this.fightLayer.createrMissile(data[1],data[2]);
         },this)
 
         //重力感应
@@ -66,13 +65,19 @@ cc.Class({
         //屏幕适配
         let windowSize=cc.view.getVisibleSize();
         this.WinHeight = windowSize.height
-        this.WinWidth = windowSize.width
-        this.UpNode.y = this.WinHeight/2
+        console.log("@@@winheight is >>>>",this.WinHeight);
+        this.upNode.y = this.WinHeight/2
         this.downNode.y = -this.WinHeight/2
     },
 
     start () {
-        this.setWorldSpeed(1);
+        this.worldSpeed = 1;
+        this.mileage = 0;
+        //this.setWorldSpeed(0);
+        
+        //初始化地图位置
+        this.map1.y = (this.mapHeight - this.WinHeight)/2      
+        this.map2.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
     },
     pasue () {
         
@@ -82,11 +87,31 @@ cc.Class({
     },
 
     setWorldSpeed(speed){
-        this.m_camera.getComponent(WorldCamera).setWorldSpeed(speed);
-        this.player.getComponent(Player).setWorldSpeed(speed);
+        //this.m_camera.getComponent(WorldCamera).setWorldSpeed(speed);
+        //this.player.getComponent(Player).setWorldSpeed(speed);
+    },
+
+    //更新背景
+    updateMapLayer()
+    {
+        this.map1.y -= this.worldSpeed
+        this.map2.y -= this.worldSpeed
+        if (this.map1.y <= (-this.WinHeight/2 -this.mapHeight/2))
+        {
+            this.map1.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
+        }
+        if (this.map2.y <= (-this.WinHeight/2-this.mapHeight/2))
+        {
+            this.map2.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
+        }
+    },
+    //更新里程，刷怪，每100整像素检测一次刷怪
+    updateMileage()
+    {
+        this.mileage += this.worldSpeed
     },
 
     update (dt) {
-        //检索坐标按批次生成敌人
+       this.updateMapLayer()
     },
 });
