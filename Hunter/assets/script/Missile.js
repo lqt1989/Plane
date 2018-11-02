@@ -16,11 +16,10 @@ cc.Class({
         addSpeed:0.25,
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     onLoad () {
         this.speed = 1
         this.addSpeed = 0.5
+        this.idx_type = 0 
     },
 
     start () {
@@ -28,8 +27,7 @@ cc.Class({
     },
 
     destroySelf(){
-        this.node.parent.getComponent(FightLayer).destoryMissile(this.node)
-        log("@@destory!!")
+        this.node.parent.getComponent(FightLayer).destoryObject(this.node,this.idx_type)
     },
 
     init()

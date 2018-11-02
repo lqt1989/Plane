@@ -53,7 +53,7 @@ cc.Class({
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
-            this.fightLayer.createrMissile(data[1],data[2]);
+            this.fightLayer.createObject(0,data[1],data[2]);
         },this)
 
         //重力感应
