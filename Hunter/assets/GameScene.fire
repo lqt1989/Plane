@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.4687337239583333,
-      "y": 0.4687337239583333,
+      "x": 0.4270833333333333,
+      "y": 0.4270833333333333,
       "z": 1
     },
     "_quat": {
@@ -605,7 +605,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 0,
+    "groupIndex": 2,
     "_id": "c2q1/cKb1J77vDHwuBVPGK"
   },
   {
@@ -647,8 +647,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 329.9999999999999,
-      "y": 309.00000000000006,
+      "x": 330,
+      "y": 309.0000000000001,
       "z": 0
     },
     "_scale": {
@@ -669,7 +669,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 0,
+    "groupIndex": 2,
     "_id": "b9MaxIEiJKJ5XYr1+Qu3/C"
   },
   {
@@ -726,8 +726,11 @@
       "__id__": 12
     },
     "_enabled": true,
-    "missile": {
-      "__uuid__": "9deb6765-3925-407d-af4c-3406a3104631"
+    "player": {
+      "__id__": 13
+    },
+    "bullet": {
+      "__uuid__": "e7469897-eabd-4a29-8a75-1898e48c6526"
     },
     "stone": {
       "__uuid__": "6dfc4dff-eb44-4929-aafb-92f8d96ab288"

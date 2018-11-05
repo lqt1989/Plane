@@ -17,42 +17,35 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.idx_type = 1
-        this.node.getComponent("Nature").atk = 50
+        this.idx_type = 0 
+        this.addSpeed = 0.5
+        this.node.getComponent("Nature").atk = 3
     },
 
     start () {
         this.speed = 1
         this.mileage = 0
-        this.hp = 50
     },
 
     reuse(){
         this.speed = 1
         this.mileage = 0
-        this.hp = 50
-    },
-
-    setWorldSpeed(sp){
-        this.speed = sp
     },
 
     onCollisionEnter: function (other, self) {
-        console.log("stone collision enter atk is",other.node.getComponent("Nature").atk);
-        var atk = other.node.getComponent("Nature").atk
-        this.hp -= atk 
-        if (this.hp <= 0)
-        {
-            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
-        }
+        console.log('bullet collision enter',other.node.getComponent("Nature").atk);
+        this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
     },
 
     update (dt) {
-        this.node.y -= this.speed
+        this.speed += this.addSpeed
+        this.node.y += this.speed;
         this.mileage += this.speed
-        if (this.mileage >= 1300)
+    
+        if (this.mileage >= 1350)
         {
-           this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)    
+            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
         }
     },
 });
+

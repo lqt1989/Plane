@@ -7,12 +7,16 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var Missile = require("Missile")
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        missile:{
+        player:{
+            type:cc.Node,
+            default:null,
+        },
+        bullet:{
             type:cc.Prefab,
             default:null,
         },
@@ -24,19 +28,24 @@ cc.Class({
     },
 
     onLoad () {
+        this.player.zIndex = 10
     },
     
     start () {
 
         this.objType = [
-            this.missile,
+            this.bullet,
             this.stone,
+        ]
+        this.objName = [
+            "Bullet",
+            "Stone",
         ]
         this.objPool = new Array();
         this.objList = new Array();
-        for (let i = 0; i < 4; ++i){
+        for (let i = 0; i < 2; ++i){
             this.objList[i] = new Array()
-            this.objPool[i] = new cc.NodePool()
+            this.objPool[i] = new cc.NodePool(this.objName[i])
             for (let j = 0; j < 15; ++j) {
                 let obj = cc.instantiate(this.objType[i]); // 创建节点
                 this.objPool[i].put(obj); // 通过 putInPool 接口放入对象池
@@ -45,22 +54,22 @@ cc.Class({
     },
 
     createObject(idx_type,x,y){
-        let obj = null
-        if (this.objPool[idx_type].size() > 0) { // 通过 size 接口判断对象池中是否有空闲的对象
+        var obj = null
+        if (this.objPool[idx_type].size() > 0) { 
             obj = this.objPool[idx_type].get();
-        } else { // 如果没有空闲对象，也就是对象池中备用对象不够时，我们就用 cc.instantiate 重新创建
+        } else { 
             obj = cc.instantiate(this.objType[idx_type]);
         }     
-        //missile.getComponent('Missile').init(); //接下来就可以调用 enemy 身上的脚本进行初始化
-        obj.parent = this.node; // 将生成的敌人加入节点树
+        //obj.getComponent(this.objName[idx_type]).init(); 
+        obj.parent = this.node; 
         obj.x = x
         obj.y = y
         this.objList[idx_type].push(obj)   
     },
-    destoryObject(node,idx_type){
+    destroyObject(node,idx_type){
         var index = this.objList[idx_type].indexOf(node)
-        this.missileList.splice(index,1)
-        this.missilePool.put(node)
+        this.objList[idx_type].splice(index,1)
+        this.objPool[idx_type].put(node)
     }
 
     // update (dt) {},

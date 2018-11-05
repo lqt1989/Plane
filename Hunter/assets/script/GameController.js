@@ -46,14 +46,17 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.node.on("return",function(event){
-            cc.director.loadScene("LoginScene");
-        },this)
+        //开启碰撞检测
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
+        //manager.enabledDebugDraw = true;
+        //manager.enabledDrawBoundingBox = true;
 
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
             this.fightLayer.createObject(0,data[1],data[2]);
+            //this.fightLayer.createObject(0,320,0);
         },this)
 
         //重力感应
@@ -64,20 +67,21 @@ cc.Class({
 
         //屏幕适配
         let windowSize=cc.view.getVisibleSize();
-        this.WinHeight = windowSize.height
-        console.log("@@@winheight is >>>>",this.WinHeight);
-        this.upNode.y = this.WinHeight/2
-        this.downNode.y = -this.WinHeight/2
+        this.winHeight = windowSize.height
+        this.winWidth = windowSize.width
+        this.upNode.y = this.winHeight/2
+        this.downNode.y = -this.winHeight/2
     },
 
     start () {
         this.worldSpeed = 1;
         this.mileage = 0;
+        this.batchList = new Array(false,false,false,false,false,false)
         //this.setWorldSpeed(0);
         
         //初始化地图位置
-        this.map1.y = (this.mapHeight - this.WinHeight)/2      
-        this.map2.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
+        this.map1.y = (this.mapHeight - this.winHeight)/2      
+        this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
     },
     pasue () {
         
@@ -96,22 +100,29 @@ cc.Class({
     {
         this.map1.y -= this.worldSpeed
         this.map2.y -= this.worldSpeed
-        if (this.map1.y <= (-this.WinHeight/2 -this.mapHeight/2))
+        if (this.map1.y <= (-this.winHeight/2 -this.mapHeight/2))
         {
-            this.map1.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
+            this.map1.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
         }
-        if (this.map2.y <= (-this.WinHeight/2-this.mapHeight/2))
+        if (this.map2.y <= (-this.winHeight/2-this.mapHeight/2))
         {
-            this.map2.y = this.WinHeight/2+this.mapHeight/2+(this.mapHeight - this.WinHeight)
+            this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
         }
     },
-    //更新里程，刷怪，每100整像素检测一次刷怪
+    //更新里程，刷怪，每500整像素检测一次刷怪
     updateMileage()
     {
         this.mileage += this.worldSpeed
+        var batch = Math.floor(this.mileage/500)
+        if ((this.batchList[batch] !== null) && (this.batchList[batch] === false))
+        {        
+            this.fightLayer.createObject(1,this.winWidth/2,this.winHeight);
+            this.batchList[batch] = true
+        }
     },
 
     update (dt) {
        this.updateMapLayer()
+       this.updateMileage()
     },
 });
