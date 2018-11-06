@@ -74,9 +74,14 @@ cc.Class({
     },
 
     start () {
+        //世界速度
         this.worldSpeed = 1;
+        //里程
         this.mileage = 0;
-        this.batchList = new Array(false,false,false,false,false,false)
+        //刷怪循环次数
+        this.loopTimes = 1;
+        this.countPerLoop = 6;
+        this.batchList = new Array(0,0,0,0,0,0)
         //this.setWorldSpeed(0);
         
         //初始化地图位置
@@ -109,15 +114,29 @@ cc.Class({
             this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
         }
     },
-    //更新里程，刷怪，每500整像素检测一次刷怪
+    //更新里程，刷怪，每350整像素检测一次刷怪
     updateMileage()
     {
         this.mileage += this.worldSpeed
-        var batch = Math.floor(this.mileage/500)
-        if ((this.batchList[batch] !== null) && (this.batchList[batch] === false))
-        {        
-            this.fightLayer.createObject(1,this.winWidth/2,this.winHeight);
-            this.batchList[batch] = true
+        var batch = Math.floor(this.mileage/350)
+        batch = batch-((this.loopTimes-1) *this.countPerLoop)
+        //console.log("@@@batch is >>>",batch);
+        
+        if (this.batchList.hasOwnProperty(batch)) 
+        {   
+            if(this.batchList[batch] !== this.loopTimes)
+            {
+                var x = Math.floor(Math.random()*440) + 100
+                var y = Math.floor(Math.random()*200)
+                this.fightLayer.createObject(1,x,this.winHeight+y);
+                this.batchList[batch] = this.loopTimes
+            }
+        }
+        else
+        {
+            log("@@@@ go here null")
+            this.loopTimes += 1;
+
         }
     },
 

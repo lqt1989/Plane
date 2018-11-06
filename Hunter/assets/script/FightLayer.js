@@ -23,6 +23,10 @@ cc.Class({
         stone:{
             type:cc.Prefab,
             default:null, 
+        },
+        boom:{
+            type:cc.Prefab,
+            default:null,
         }
 
     },
@@ -36,14 +40,16 @@ cc.Class({
         this.objType = [
             this.bullet,
             this.stone,
+            this.boom,
         ]
         this.objName = [
             "Bullet",
             "Stone",
+            "Boom",
         ]
         this.objPool = new Array();
         this.objList = new Array();
-        for (let i = 0; i < 2; ++i){
+        for (let i = 0; i < 3; ++i){
             this.objList[i] = new Array()
             this.objPool[i] = new cc.NodePool(this.objName[i])
             for (let j = 0; j < 15; ++j) {
@@ -53,7 +59,7 @@ cc.Class({
         }
     },
 
-    createObject(idx_type,x,y){
+    createObject(idx_type,x,y){   
         var obj = null
         if (this.objPool[idx_type].size() > 0) { 
             obj = this.objPool[idx_type].get();

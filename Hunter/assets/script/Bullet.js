@@ -33,7 +33,8 @@ cc.Class({
     },
 
     onCollisionEnter: function (other, self) {
-        console.log('bullet collision enter',other.node.getComponent("Nature").atk);
+        //console.log('bullet collision enter',other.node.getComponent("Nature").atk);
+        this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
         this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
     },
 

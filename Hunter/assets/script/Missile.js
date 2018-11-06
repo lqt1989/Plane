@@ -39,6 +39,7 @@ cc.Class({
         
         if (this.mileage >= 350)
         {
+            this.node.parent.getComponent(FightLayer).createObject(2,this.node.x,this.node.y)
             this.node.parent.getComponent(FightLayer).destroyObject(this.node,this.idx_type) 
         }
     },
