@@ -14,6 +14,7 @@ cc.Class({
     properties: {
         atk:0,
         def:0,
+        idx_type:0,
     },
 
     // onLoad () {},

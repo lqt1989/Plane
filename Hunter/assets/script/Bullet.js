@@ -19,27 +19,30 @@ cc.Class({
     onLoad () {
         this.idx_type = 0 
         this.addSpeed = 0.5
-        this.node.getComponent("Nature").atk = 3
+        this.node.getComponent("Nature").atk = 1
+        this.node.getComponent("Nature").idx_type = this.idx_type
     },
-
     start () {
-        this.speed = 1
-        this.mileage = 0
+        this.init()
     },
-
     reuse(){
-        this.speed = 1
+        this.init()
+    },
+    init(){
+        this.speed = 25
         this.mileage = 0
     },
 
     onCollisionEnter: function (other, self) {
-        //console.log('bullet collision enter',other.node.getComponent("Nature").atk);
-        this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
-        this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
+        if (other.node.getComponent("Nature").idx_type != this.idx_type)
+        {
+            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
+        }
     },
 
     update (dt) {
-        this.speed += this.addSpeed
+        //this.speed += this.addSpeed
         this.node.y += this.speed;
         this.mileage += this.speed
     

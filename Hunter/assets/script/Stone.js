@@ -19,32 +19,40 @@ cc.Class({
     onLoad () {
         this.idx_type = 1
         this.node.getComponent("Nature").atk = 50
+        this.node.getComponent("Nature").idx_type =  this.idx_type
         this.maxHp = 50
+        this.score = 3
     },
-
     start () {
-        this.speed = 1
-        this.mileage = 0
-        this.hp = 50    
+        this.init()  
     },
-
     reuse(){
+        this.init()
+    },
+    init(){
         this.speed = 1
         this.mileage = 0
         this.hp = 50
+        this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
     },
-
     setWorldSpeed(sp){
         this.speed = sp
     },
 
     onCollisionEnter: function (other, self) {
         var atk = other.node.getComponent("Nature").atk
-        this.hp -= atk 
-        this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
-        if (this.hp <= 0)
+        if (atk)
         {
-            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
+            this.hp -= atk 
+            this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
+            if (this.hp <= 0)
+            {
+                var Custom_Event = new cc.Event.EventCustom("addScore",true)
+                Custom_Event.setUserData(this.score)
+                this.node.dispatchEvent(Custom_Event)
+
+                this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
+            }
         }
     },
 

@@ -7,40 +7,49 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var FightLayer = require("FightLayer")
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
     },
 
+    // LIFE-CYCLE CALLBACKS:
+
     onLoad () {
-        this.idx_type = 0 
+        this.idx_type = 3 
+        this.addSpeed = 0.3
+        this.node.getComponent("Nature").atk = 3
+        this.node.getComponent("Nature").idx_type = this.idx_type
     },
-
     start () {
-        log("@@start")
+        this.init()
+    },
+    reuse(){
+        this.init()
+    },
+    init(){
         this.speed = 1
         this.mileage = 0
     },
 
-    reuse(){
-        log("@@reuse")
-        this.speed = 1
-        this.mileage = 0
+    onCollisionEnter: function (other, self) {
+        if (other.node.getComponent("Nature").idx_type != this.idx_type)
+        {
+            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
+        }
     },
 
     update (dt) {
         this.speed += this.addSpeed
         this.node.y += this.speed;
         this.mileage += this.speed
-
-        console.log("@@age is >>>",this.mileage);
-        
-        if (this.mileage >= 350)
+    
+        if (this.mileage >= 1350)
         {
-            this.node.parent.getComponent(FightLayer).createObject(2,this.node.x,this.node.y)
-            this.node.parent.getComponent(FightLayer).destroyObject(this.node,this.idx_type) 
+            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
         }
     },
 });
+

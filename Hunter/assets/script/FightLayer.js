@@ -16,6 +16,7 @@ cc.Class({
             type:cc.Node,
             default:null,
         },
+
         bullet:{
             type:cc.Prefab,
             default:null,
@@ -27,29 +28,36 @@ cc.Class({
         boom:{
             type:cc.Prefab,
             default:null,
+        },
+        missile:{
+            type:cc.Prefab,
+            default:null,
         }
 
     },
 
     onLoad () {
         this.player.zIndex = 10
+
     },
     
     start () {
-
+        //
         this.objType = [
             this.bullet,
             this.stone,
             this.boom,
+            this.missile,
         ]
         this.objName = [
             "Bullet",
             "Stone",
             "Boom",
+            "Missile",
         ]
         this.objPool = new Array();
         this.objList = new Array();
-        for (let i = 0; i < 3; ++i){
+        for (let i = 0; i < 4; ++i){
             this.objList[i] = new Array()
             this.objPool[i] = new cc.NodePool(this.objName[i])
             for (let j = 0; j < 15; ++j) {
@@ -73,6 +81,7 @@ cc.Class({
         this.objList[idx_type].push(obj)   
     },
     destroyObject(node,idx_type){
+
         var index = this.objList[idx_type].indexOf(node)
         this.objList[idx_type].splice(index,1)
         this.objPool[idx_type].put(node)

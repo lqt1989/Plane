@@ -81,5 +81,13 @@
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.85,
+      "func": "onAniCompleted",
+      "params": [
+        "end"
+      ]
+    }
+  ]
 }

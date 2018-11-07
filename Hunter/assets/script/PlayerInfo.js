@@ -12,31 +12,29 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        lbl_hp:{
+            type:cc.Node,
+            default:null,
+        },
+        lbl_score:{
+            type:cc.Node,
+            default:null,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-        this.idx_type = 2
-        this.node.zIndex = 11
-    },
+    // onLoad () {},
 
     start () {
-        var anim = this.getComponent(cc.Animation);
-        anim.play('boom_1');
+        this.hp = 50
+        this.score = 50
+        
 
     },
 
-    reuse(){
-        var anim = this.getComponent(cc.Animation);
-        anim.play('boom_1');
+    update (dt) {
+        
+
     },
-
-    onAniCompleted(string) {
-        //console.log('onAnimCompleted: param1[%s]',string);
-        this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
-    }
-
-    // update (dt) {},
 });

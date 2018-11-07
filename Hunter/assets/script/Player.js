@@ -10,29 +10,43 @@
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
         winSize:null,
+        lbl_hp:{
+            type:cc.Node,
+            default:null,
+        },
+        lbl_score:{
+            type:cc.Node,
+            default:null,
+        }
+    },
 
-        //速度： 像素/帧
-        nowSpeedX:0,
-        nowSpeedY:0,
-        addSpeedX:0.25,
-        addSpeedY:0.25,
-        targetSpeedX:0,
-        targetSpeedY:0,
+    onLoad(){
+        this.addSpeedX = 0.25
+        this.addSpeedY = 0.25
 
-        worldSpeed:0,
-
+        this.idx_type = -1
+        this.node.getComponent("Nature").atk = 30
+        this.node.getComponent("Nature").idx_type =  this.idx_type
     },
 
     start () {
         this.nowSpeedX = 0
         this.nowSpeedY = 0
-        this.addSpeedX = 0.25
-        this.addSpeedY = 0.25
+        this.targetSpeedX = 0
+        this.targetSpeedY = 0
+        this.worldSpeed = 0
 
         this.winSize = cc.view.getVisibleSize();
+
+        this.hp = 100
+        this.score = 0
+     
+        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+        this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
+
+        this.shootState = 0   //0关闭，1开启
     },
 
     setSpeed(x,y){
@@ -66,15 +80,41 @@ cc.Class({
         this.node.x = (this.node.x<this.winSize.width) ? this.node.x : 640;
         this.node.x = (this.node.x>0) ? this.node.x : 0;
 
-        this.node.y += (this.nowSpeedY + this.worldSpeed)
-        this.node.y = (this.node.y > (180 )) ? this.node.y : (180 );
-        this.node.y = (this.node.y < (this.winSize.height) ) ? this.node.y : (this.winSize.height );
-
-     
+        this.node.y += this.nowSpeedY + this.worldSpeed
+        this.node.y = (this.node.y > 100) ? this.node.y : 100;
+        this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
     },
 
     update (dt) {
+        
         this.updateNowSpeed();
         this.updatePos();
     },
+
+    onCollisionEnter: function (other, self) {
+        var atk = other.node.getComponent("Nature").atk
+        this.hp -= atk 
+        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+        
+        this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+    },
+
+    addScore(value){ 
+        this.score += value
+        this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
+    },
+
+    onShoot(){
+       if (this.shootState === 0){
+            this.schedule(function() {
+                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
+                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+            }, 0.2);
+            this.shootState = 1
+        }
+        else if (this.shootState === 1){
+            this.unscheduleAllCallbacks()
+            this.shootState = 0
+        }
+    }
 });

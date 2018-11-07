@@ -55,7 +55,7 @@ cc.Class({
         //触摸滑动
         this.node.on("createBullet",function(event){
             var data = event.getUserData()
-            this.fightLayer.createObject(0,data[1],data[2]);
+            this.fightLayer.createObject(3,data[1],data[2]);
             //this.fightLayer.createObject(0,320,0);
         },this)
 
@@ -63,6 +63,15 @@ cc.Class({
         this.node.on("speedupdate",function(event){
             var data = event.getUserData()           
             this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))
+        },this)
+
+        this.node.on("addScore",function(event){
+            var data = event.getUserData()
+            this.player.getComponent(Player).addScore(data)
+        },this)
+
+        this.node.on("shoot",function(event){
+            this.player.getComponent(Player).onShoot()
         },this)
 
         //屏幕适配
@@ -134,9 +143,7 @@ cc.Class({
         }
         else
         {
-            log("@@@@ go here null")
             this.loopTimes += 1;
-
         }
     },
 
