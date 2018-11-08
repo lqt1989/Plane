@@ -22,6 +22,7 @@ cc.Class({
         this.node.getComponent("Nature").idx_type =  this.idx_type
         this.maxHp = 50
         this.score = 3
+        
     },
     start () {
         this.init()  
@@ -30,10 +31,12 @@ cc.Class({
         this.init()
     },
     init(){
-        this.speed = 1
+        
         this.mileage = 0
         this.hp = 50
         this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
+        this.isPause = false
+        //this.speed = this.node.parent.getComponent("FightLayer").getWorldSpeed()
     },
     setWorldSpeed(sp){
         this.speed = sp
@@ -47,21 +50,44 @@ cc.Class({
             this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
             if (this.hp <= 0)
             {
-                var Custom_Event = new cc.Event.EventCustom("addScore",true)
-                Custom_Event.setUserData(this.score)
-                this.node.dispatchEvent(Custom_Event)
-
-                this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
+                this.pushScore()
+                this.destorySelf()
             }
         }
     },
 
+    pushScore(){
+        var Custom_Event = new cc.Event.EventCustom("addScore",true)
+        Custom_Event.setUserData(this.score)
+        this.node.dispatchEvent(Custom_Event)
+    },
+
+
+    destorySelf(){
+        var Custom_Event = new cc.Event.EventCustom("objDestory",true)
+        var data = new Array(2)
+        data[0] = this.node
+        data[1] = this.idx_type
+        Custom_Event.setUserData(data)
+        this.node.dispatchEvent(Custom_Event)
+    },
+
     update (dt) {
-        this.node.y -= this.speed
-        this.mileage += this.speed
-        if (this.mileage >= 1300)
+        if (this.isPause === false)
         {
-           this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)    
+            this.node.y -= this.speed
+            this.mileage += this.speed
+            if (this.mileage >= 1300)
+            {
+                this.destorySelf()
+            }
         }
+    },
+
+    pause(){
+        this.isPause = true
+    },
+    resume(){
+        this.isPause = false
     },
 });

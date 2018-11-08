@@ -38,11 +38,18 @@ cc.Class({
 
     onLoad () {
         this.player.zIndex = 10
-
+        this.worldSpeed = 1
     },
     
     start () {
-        //
+        this.init()
+    },
+
+    reStart() {
+        this.clear()
+    },
+
+    init(){
         this.objType = [
             this.bullet,
             this.stone,
@@ -67,6 +74,17 @@ cc.Class({
         }
     },
 
+    clear(){
+        for (var t = 0;t < 4; t++)
+        {
+            for ( var i = 0; i <this.objList[t].length; i++){
+                var obj = this.objList[t][i]          
+                this.objPool[idx_type].put(node)
+            }
+            this.objList[t] = []
+        }
+    },
+
     createObject(idx_type,x,y){   
         var obj = null
         if (this.objPool[idx_type].size() > 0) { 
@@ -78,14 +96,46 @@ cc.Class({
         obj.parent = this.node; 
         obj.x = x
         obj.y = y
+        obj.getComponent(this.objName[idx_type]).setWorldSpeed(this.worldSpeed)
         this.objList[idx_type].push(obj)   
     },
-    destroyObject(node,idx_type){
 
+    destroyObject(node,idx_type){
         var index = this.objList[idx_type].indexOf(node)
         this.objList[idx_type].splice(index,1)
         this.objPool[idx_type].put(node)
-    }
+    },
+
+    pause(){
+        for (var t = 0;t < 4; t++)
+        {
+            for ( var i = 0; i <this.objList[t].length; i++){
+                var obj = this.objList[t][i]
+                obj.getComponent(this.objName[t]).pause()
+            }
+        }
+    },
+
+    resume(){
+        for (var t = 0;t < 4; t++)
+        {
+            for ( var i = 0; i <this.objList[t].length; i++){
+                var obj = this.objList[t][i]
+                obj.getComponent(this.objName[t]).resume()
+            }
+        }
+    },
+
+    setWorldSpeed(sp){
+        this.worldSpeed = sp
+        for (var i = 0; i < this.objList[1].length;i++){
+            var obj = this.objList[1][i]
+            obj.getComponent(this.objName[1]).setWorldSpeed(sp)
+        }
+    },
+    getWorldSpeed(){
+        return this.worldSpeed
+    },
 
     // update (dt) {},
 });

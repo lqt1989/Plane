@@ -32,11 +32,26 @@ cc.Class({
         var anim = this.getComponent(cc.Animation);
         anim.play('boom_1');
     },
-
+    setWorldSpeed(sp){
+        this.speed = sp
+    },
     onAniCompleted(string) {
         //console.log('onAnimCompleted: param1[%s]',string);
-        this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type)
-    }
-
+        this.destorySelf()
+    },
+    destorySelf(){
+        var Custom_Event = new cc.Event.EventCustom("objDestory",true)
+        var data = new Array(2)
+        data[0] = this.node
+        data[1] = this.idx_type
+        Custom_Event.setUserData(data)
+        this.node.dispatchEvent(Custom_Event)
+    },
+    pause(){
+        this.isPause = true
+    },
+    resume(){
+        this.isPause = false
+    },
     // update (dt) {},
 });

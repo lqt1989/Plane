@@ -40,7 +40,12 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
-        mapHeight:0,
+
+        tech:{
+            default:null, 
+            type:cc.Node,
+        },
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -54,24 +59,60 @@ cc.Class({
 
         //触摸滑动
         this.node.on("createBullet",function(event){
+            if (this.isPause == false){
             var data = event.getUserData()
-            this.fightLayer.createObject(3,data[1],data[2]);
-            //this.fightLayer.createObject(0,320,0);
+            this.fightLayer.createObject(3,data[1],data[2]);}
         },this)
 
         //重力感应
         this.node.on("speedupdate",function(event){
+            if (this.isPause == false){
             var data = event.getUserData()           
-            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))
+            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))}
+        },this)
+
+        //物体销毁
+        this.node.on("objDestory",function(event){
+            var data = event.getUserData()
+            this.fightLayer.destroyObject(data[0],data[1])
         },this)
 
         this.node.on("addScore",function(event){
             var data = event.getUserData()
             this.player.getComponent(Player).addScore(data)
         },this)
-
         this.node.on("shoot",function(event){
-            this.player.getComponent(Player).onShoot()
+            if (this.isPause == false){
+                this.player.getComponent(Player).onShoot()}
+        },this)
+        this.node.on("addhp",function(event){
+            if (this.isPause == false){
+            this.player.getComponent(Player).onAddHp()}
+        },this)
+        this.node.on("shield",function(event){
+            if (this.isPause == false){
+            this.player.getComponent(Player).onShield()}
+        },this)
+        this.node.on("speedup",function(event){
+            if (this.isPause == false)
+            {
+                this.player.getComponent(Player).onSpeedUp()}
+                this.worldSpeed += 1
+                this.fightLayer.setWorldSpeed(this.worldSpeed)
+        },this)
+        this.node.on("charge",function(event){
+            if (this.isPause == false){
+            this.player.getComponent(Player).onCharge()}
+        },this)
+
+        //科技界面
+        this.node.on("tech_open",function(event){
+            this.tech.active = true
+            this.pause()
+        },this)
+        this.node.on("tech_close",function(event){
+            this.tech.active = false
+            this.resume()
         },this)
 
         //屏幕适配
@@ -83,6 +124,14 @@ cc.Class({
     },
 
     start () {
+        this.init()
+    },
+    reStart(){
+        this.clear()
+        this.init()
+    },
+
+    init () {
         //世界速度
         this.worldSpeed = 1;
         //里程
@@ -92,16 +141,30 @@ cc.Class({
         this.countPerLoop = 6;
         this.batchList = new Array(0,0,0,0,0,0)
         //this.setWorldSpeed(0);
-        
+        this.mapHeight = 1280
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
+        this.isPause = false
     },
-    pasue () {
-        
+
+    clear(){
+        //重置玩家位置
+
+        //清空战斗层
+        this.fightLayer.reStart()
+        //清空科技界面
+    },
+
+    pause () {
+        this.isPause = true
+        this.fightLayer.pause()
+        this.player.getComponent(Player).pause()
     },
     resume() {
-
+        this.isPause = false
+        this.fightLayer.resume()
+        this.player.getComponent(Player).resume()
     },
 
     setWorldSpeed(speed){
@@ -148,7 +211,9 @@ cc.Class({
     },
 
     update (dt) {
-       this.updateMapLayer()
-       this.updateMileage()
+       if (this.isPause === false){
+            this.updateMapLayer()
+            this.updateMileage()
+       }
     },
 });

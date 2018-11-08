@@ -47,6 +47,7 @@ cc.Class({
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
 
         this.shootState = 0   //0关闭，1开启
+        this.isPause = false
     },
 
     setSpeed(x,y){
@@ -86,9 +87,11 @@ cc.Class({
     },
 
     update (dt) {
-        
-        this.updateNowSpeed();
-        this.updatePos();
+        if (this.isPause === false)
+        {
+            this.updateNowSpeed();
+            this.updatePos();
+        }
     },
 
     onCollisionEnter: function (other, self) {
@@ -107,8 +110,11 @@ cc.Class({
     onShoot(){
        if (this.shootState === 0){
             this.schedule(function() {
-                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
-                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+                if (this.isPause === false)
+                {
+                    this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
+                    this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+                }
             }, 0.2);
             this.shootState = 1
         }
@@ -116,5 +122,27 @@ cc.Class({
             this.unscheduleAllCallbacks()
             this.shootState = 0
         }
-    }
+    },
+
+    onAddHp(){
+        //log("@@hpadd player")
+        this.hp += 20
+        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+    },
+    onShield(){
+        //log("@shield player")
+    },
+    onSpeedUp(){
+        //log("@speed player")
+    },
+    onCharge(){
+        //log("@charge player")
+    },
+
+    pause(){
+        this.isPause = true
+    },
+    resume(){
+        this.isPause = false
+    },
 });

@@ -31,25 +31,45 @@ cc.Class({
     init(){
         this.speed = 1
         this.mileage = 0
+        this.isPause = false
     },
-
+    setWorldSpeed(sp){
+        this.speed = sp
+    },
     onCollisionEnter: function (other, self) {
         if (other.node.getComponent("Nature").idx_type != this.idx_type)
         {
             this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
-            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
+            this.destorySelf()
         }
     },
 
     update (dt) {
-        this.speed += this.addSpeed
-        this.node.y += this.speed;
-        this.mileage += this.speed
-    
-        if (this.mileage >= 1350)
+        if (this.isPause === false)
         {
-            this.node.parent.getComponent("FightLayer").destroyObject(this.node,this.idx_type) 
+            this.speed += this.addSpeed
+            this.node.y += this.speed;
+            this.mileage += this.speed
+        
+            if (this.mileage >= 1350)
+            {
+                this.destorySelf()
+            }
         }
+    },
+    destorySelf(){
+        var Custom_Event = new cc.Event.EventCustom("objDestory",true)
+        var data = new Array(2)
+        data[0] = this.node
+        data[1] = this.idx_type
+        Custom_Event.setUserData(data)
+        this.node.dispatchEvent(Custom_Event)
+    },
+    pause(){
+        this.isPause = true
+    },
+    resume(){
+        this.isPause = false
     },
 });
 
