@@ -115,6 +115,10 @@ cc.Class({
             this.resume()
         },this)
 
+        this.node.on("restart",function(event){
+            this.reStart()
+        },this)
+
         //屏幕适配
         let windowSize=cc.view.getVisibleSize();
         this.winHeight = windowSize.height
