@@ -47,6 +47,7 @@ cc.Class({
 
     reStart() {
         this.clear()
+        this.setWorldSpeed(1)
     },
 
     init(){
@@ -79,7 +80,7 @@ cc.Class({
         {
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]          
-                this.objPool[idx_type].put(node)
+                this.objPool[t].put(obj)
             }
             this.objList[t] = []
         }

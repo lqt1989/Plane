@@ -46,6 +46,11 @@ cc.Class({
             type:cc.Node,
         },
 
+        gameover:{
+            default:null,
+            type:cc.Node,
+        },
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -115,7 +120,13 @@ cc.Class({
             this.resume()
         },this)
 
+        this.node.on("gameover",function(event){
+            this.gameover.active = true
+            this.pause()
+        },this)
+
         this.node.on("restart",function(event){
+            this.gameover.active = false
             this.reStart()
         },this)
 
@@ -144,7 +155,6 @@ cc.Class({
         this.loopTimes = 1;
         this.countPerLoop = 6;
         this.batchList = new Array(0,0,0,0,0,0)
-        //this.setWorldSpeed(0);
         this.mapHeight = 1280
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
@@ -154,7 +164,7 @@ cc.Class({
 
     clear(){
         //重置玩家位置
-
+        this.player.getComponent(Player).reStart()
         //清空战斗层
         this.fightLayer.reStart()
         //清空科技界面
@@ -169,11 +179,6 @@ cc.Class({
         this.isPause = false
         this.fightLayer.resume()
         this.player.getComponent(Player).resume()
-    },
-
-    setWorldSpeed(speed){
-        //this.m_camera.getComponent(WorldCamera).setWorldSpeed(speed);
-        //this.player.getComponent(Player).setWorldSpeed(speed);
     },
 
     //更新背景

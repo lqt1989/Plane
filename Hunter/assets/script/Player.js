@@ -19,6 +19,10 @@ cc.Class({
         lbl_score:{
             type:cc.Node,
             default:null,
+        },
+        lbl_finalscore:{
+            type:cc.Node,
+            default:null,
         }
     },
 
@@ -45,9 +49,12 @@ cc.Class({
      
         this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
+        this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
 
         this.shootState = 0   //0关闭，1开启
         this.isPause = false
+
+        this.node.y = 150
     },
 
     setSpeed(x,y){
@@ -81,9 +88,9 @@ cc.Class({
         this.node.x = (this.node.x<this.winSize.width) ? this.node.x : 640;
         this.node.x = (this.node.x>0) ? this.node.x : 0;
 
-        this.node.y += this.nowSpeedY + this.worldSpeed
-        this.node.y = (this.node.y > 100) ? this.node.y : 100;
-        this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
+        // this.node.y += this.nowSpeedY + this.worldSpeed
+        // this.node.y = (this.node.y > 100) ? this.node.y : 100;
+        // this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
     },
 
     update (dt) {
@@ -100,11 +107,18 @@ cc.Class({
         this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
         
         this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+
+        if (this.hp <= 0)
+        {
+            var Custom_Event = new cc.Event.EventCustom("gameover",true)
+            this.node.dispatchEvent(Custom_Event)  
+        }
     },
 
     addScore(value){ 
         this.score += value
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
+        this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
     },
 
     onShoot(){
@@ -144,5 +158,9 @@ cc.Class({
     },
     resume(){
         this.isPause = false
+    },
+    reStart(){
+        this.unscheduleAllCallbacks()
+        this.start()
     },
 });
