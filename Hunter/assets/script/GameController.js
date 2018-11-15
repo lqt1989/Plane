@@ -159,7 +159,9 @@ cc.Class({
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
-        this.isPause = false
+
+        this.isPause = true
+        this.tech.active =  true
     },
 
     clear(){
