@@ -32,10 +32,26 @@ cc.Class({
         this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
     },
 
-    start () {
+    pause() {
 
     },
 
+    resume(){
+
+    },
+
+    start () {
+
+    },
+    //添加一个冷却计时，计时完成前，点击无效
+    addCooldowm(sec){
+
+
+    },
+    //设置填充百分比
+    setBarPercent(per){
+
+    },
     // update (dt) {
 
     // },
