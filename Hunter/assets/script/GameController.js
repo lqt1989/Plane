@@ -120,6 +120,7 @@ cc.Class({
             this.resume()
         },this)
 
+
         this.node.on("gameover",function(event){
             this.gameover.active = true
             this.pause()
@@ -203,7 +204,6 @@ cc.Class({
         this.mileage += this.worldSpeed
         var batch = Math.floor(this.mileage/350)
         batch = batch-((this.loopTimes-1) *this.countPerLoop)
-        //console.log("@@@batch is >>>",batch);
         
         if (this.batchList.hasOwnProperty(batch)) 
         {   

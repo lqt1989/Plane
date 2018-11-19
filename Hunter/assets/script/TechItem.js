@@ -12,21 +12,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        m_select:{
+            type:cc.Node,
+            default:null,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -36,11 +25,10 @@ cc.Class({
             event.stopPropagation();
             this.sendata()
         },this)
-
     },
 
     start () {
-
+        this.m_select.active = true
     },
 
     sendata(){
@@ -60,7 +48,16 @@ cc.Class({
         cc.loader.loadRes(this.data.icon, cc.SpriteFrame, function (err, spriteFrame) {
             self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame
         })
-    }
+    },
 
+    setSelect(){
+        var self = this
+        cc.loader.loadRes("img_3", cc.SpriteFrame, function (err, spriteFrame) {
+            var node = new cc.Node();
+            var sprite = node.addComponent(cc.Sprite);
+            sprite.spriteFrame = spriteFrame
+            node.parent = self.node
+        })
+    }
     // update (dt) {},
 });
