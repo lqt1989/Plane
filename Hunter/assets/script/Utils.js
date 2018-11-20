@@ -8,15 +8,26 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-var Utils = {
+cc.Class({
     extends: cc.Component,
 
     properties: {
-            },
+        cooldown:{
+            type:cc.Prefab,
+            default:null,
+        }
+    },
 
     // onLoad () {},
-        
-    start:function() {
+
+    start () {
+
+    },
+
+    pause(){
+
+    },
+    resume(){
 
     },
 
@@ -31,8 +42,16 @@ var Utils = {
     removeSelect(pnode)
     {
         pnode.destroyAllChildren()
-    }
+    },
   
-};
-//Utils.addSelect();
-module.exports = Utils;
+    addCoolDown(node,time,img,callback)
+    {
+        var sp = new cc.SpriteFrame(img)
+        var cooldown = cc.instantiate(this.cooldown)
+        cooldown.getChildByName("bar").getComponent(cc.Sprite).spriteFrame = sp
+        cooldown.parent = node
+        cooldown.getComponent("Cooldown").setDelayCallback(time,callback,node)
+              
+    },
+
+});

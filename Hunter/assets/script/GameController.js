@@ -73,7 +73,7 @@ cc.Class({
         this.node.on("speedupdate",function(event){
             if (this.isPause == false){
             var data = event.getUserData()           
-            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*20),-Math.floor((data.y-0.5)*20))}
+            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*30),-Math.floor((data.y-0.5)*20))}
         },this)
 
         //物体销毁

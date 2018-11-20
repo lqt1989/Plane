@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var Utils = require("Utils")
+
 cc.Class({
     extends: cc.Component,
 
@@ -104,11 +104,11 @@ cc.Class({
         {
             obj.getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
            //obj.getComponent("TechItem").setSelect()
-            Utils.addSelect(obj)
+           this.node.getComponent("Utils").addSelect(obj)
         }
         else
         {
-            Utils.removeSelect(obj)
+            this.node.getComponent("Utils").removeSelect(obj)
             //obj.getComponent("TechItem").setSelect()
             if (this.canBeActiveTech(id) === 2)
             {obj.getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}

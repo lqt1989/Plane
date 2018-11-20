@@ -23,6 +23,26 @@ cc.Class({
         lbl_finalscore:{
             type:cc.Node,
             default:null,
+        },
+        btn_shield:{
+            type:cc.Node,
+            default:null,
+        },
+        btn_addhp:{
+            type:cc.Node,
+            default:null,
+        },
+        btn_shoot:{
+            type:cc.Node,
+            default:null,
+        },
+        btn_charge:{
+            type:cc.Node,
+            default:null,
+        },
+        btn_speed:{
+            type:cc.Node,
+            default:null, 
         }
     },
 
@@ -33,6 +53,9 @@ cc.Class({
         this.idx_type = -1
         this.node.getComponent("Nature").atk = 30
         this.node.getComponent("Nature").idx_type =  this.idx_type
+
+        this.btn_shield.getComponent(cc.Button).enableAutoGrayEffect  = true
+        this.btn_addhp.getComponent(cc.Button).enableAutoGrayEffect = true
     },
 
     start () {
@@ -131,10 +154,13 @@ cc.Class({
                 }
             }, 0.2);
             this.shootState = 1
+            var action = cc.repeatForever(cc.rotateBy(0.6,360))
+            this.btn_shoot.runAction(action)
         }
         else if (this.shootState === 1){
             this.unscheduleAllCallbacks()
             this.shootState = 0
+            this.btn_shoot.stopAllActions()
         }
     },
 
@@ -142,10 +168,16 @@ cc.Class({
         //log("@@hpadd player")
         this.hp += 20
         this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+        this.btn_addhp.getComponent(cc.Button).interactable = false
+        this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
     },
+
     onShield(){
+        this.btn_shield.getComponent(cc.Button).interactable = false
+        this.node.getComponent("Utils").addCoolDown(this.btn_shield,5,"btn_1")
         //log("@shield player")
     },
+    
     onSpeedUp(){
         //log("@speed player")
     },
