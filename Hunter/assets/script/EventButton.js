@@ -18,40 +18,35 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        var clickEventHandler = new cc.Component.EventHandler();
-        clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
-        clickEventHandler.component = "EventButton";//这个是代码文件名
-        clickEventHandler.handler = "callback";
-        clickEventHandler.customEventData = this.event;
+        // var clickEventHandler = new cc.Component.EventHandler();
+        // clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
+        // clickEventHandler.component = "EventButton";//这个是代码文件名
+        // clickEventHandler.handler = "callback";
+        // clickEventHandler.customEventData = this.event;
 
-        var button = this.node.getComponent(cc.Button);
-        button.clickEvents.push(clickEventHandler);
-    },
+        // var button = this.node.getComponent(cc.Button);
+        // button.clickEvents.push(clickEventHandler);
 
-    callback (event, customEventData) {
-        this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
-    },
 
-    pause() {
+        this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
+            console.log("TOUCH_START")
+            this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
+        },this);
 
-    },
+        this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
+            console.log("TOUCH_MOVE")
+        },this);
 
-    resume(){
-
-    },
-
-    start () {
-
-    },
-    //添加一个冷却计时，计时完成前，点击无效
-    addCooldowm(sec){
-
+        this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
+            console.log("TOUCH_END")
+        },this);
 
     },
-    //设置填充百分比
-    setBarPercent(per){
 
-    },
+    // callback (event, customEventData) {
+    //     this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
+    // },
+
     // update (dt) {
 
     // },

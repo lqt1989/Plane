@@ -70,11 +70,19 @@ cc.Class({
         },this)
 
         //重力感应
-        this.node.on("speedupdate",function(event){
+        // this.node.on("speedupdate",function(event){
+        //     if (this.isPause == false){
+        //     var data = event.getUserData()           
+        //     this.player.getComponent(Player).setSpeed(-Math.floor(data.x*30),-Math.floor((data.y-0.5)*20))}
+        // },this)
+        //摇杆
+        this.node.on("setSpeed",function(event){
             if (this.isPause == false){
-            var data = event.getUserData()           
-            this.player.getComponent(Player).setSpeed(-Math.floor(data.x*30),-Math.floor((data.y-0.5)*20))}
+                var data = event.getUserData() 
+                this.player.getComponent(Player).setSpeed(data[1],data[2])
+            }
         },this)
+
 
         //物体销毁
         this.node.on("objDestory",function(event){
@@ -90,10 +98,10 @@ cc.Class({
             if (this.isPause == false){
                 this.player.getComponent(Player).onShoot()}
         },this)
-        this.node.on("addhp",function(event){
-            if (this.isPause == false){
-            this.player.getComponent(Player).onAddHp()}
-        },this)
+        // this.node.on("addhp",function(event){
+        //     if (this.isPause == false){
+        //     this.player.getComponent(Player).onAddHp()}
+        // },this)
         this.node.on("shield",function(event){
             if (this.isPause == false){
             this.player.getComponent(Player).onShield()}

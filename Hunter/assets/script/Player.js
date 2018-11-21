@@ -28,10 +28,6 @@ cc.Class({
             type:cc.Node,
             default:null,
         },
-        btn_addhp:{
-            type:cc.Node,
-            default:null,
-        },
         btn_shoot:{
             type:cc.Node,
             default:null,
@@ -55,7 +51,7 @@ cc.Class({
         this.node.getComponent("Nature").idx_type =  this.idx_type
 
         this.btn_shield.getComponent(cc.Button).enableAutoGrayEffect  = true
-        this.btn_addhp.getComponent(cc.Button).enableAutoGrayEffect = true
+        //this.btn_addhp.getComponent(cc.Button).enableAutoGrayEffect = true
     },
 
     start () {
@@ -77,7 +73,7 @@ cc.Class({
         this.shootState = 0   //0关闭，1开启
         this.isPause = false
 
-        this.node.y = 150
+        this.node.y = 480 - 200
     },
 
     setSpeed(x,y){
@@ -111,9 +107,9 @@ cc.Class({
         this.node.x = (this.node.x<this.winSize.width) ? this.node.x : 640;
         this.node.x = (this.node.x>0) ? this.node.x : 0;
 
-        // this.node.y += this.nowSpeedY + this.worldSpeed
-        // this.node.y = (this.node.y > 100) ? this.node.y : 100;
-        // this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
+        this.node.y += this.nowSpeedY + this.worldSpeed
+        this.node.y = (this.node.y > 100) ? this.node.y : 100;
+        this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
     },
 
     update (dt) {
@@ -164,13 +160,13 @@ cc.Class({
         }
     },
 
-    onAddHp(){
-        //log("@@hpadd player")
-        this.hp += 20
-        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
-        this.btn_addhp.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
-    },
+    // onAddHp(){
+    //     //log("@@hpadd player")
+    //     this.hp += 20
+    //     this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+    //     this.btn_addhp.getComponent(cc.Button).interactable = false
+    //     this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
+    // },
 
     onShield(){
         this.btn_shield.getComponent(cc.Button).interactable = false

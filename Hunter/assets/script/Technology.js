@@ -44,7 +44,7 @@ cc.Class({
         this.data[2] = {id:2,des:"火力强化1",icon:"tech_2",x:-60, y:250,  m_type:2,needId:1}
         this.data[3] = {id:3,des:"火力强化2",icon:"tech_3",x:60,  y:250,  m_type:2,needId:2}
         this.data[4] = {id:4,des:"弹药收集",icon:"tech_4", x:-60, y:150,  m_type:3,needId:3}
-        this.data[5] = {id:5,des:"弹匣扩容",icon:"tech_1", x:60,  y:150,  m_type:2,needId:4}
+        this.data[5] = {id:5,des:"无尽",icon:"tech_1", x:60,  y:150,  m_type:2,needId:4}
 
         this.data[6] = {id:6,des:"激活充能炮",icon:"tech_2",x:-180,y:50,  m_type:1,needId:0}
         this.data[7] = {id:7,des:"充能冷却缩减1",icon:"tech_3",x:-60,y:50,m_type:2,needId:6}
@@ -52,15 +52,15 @@ cc.Class({
         this.data[9] = {id:9,des:"急冷",icon:"tech_1",x:180,y:50,        m_type:2,needId:8}
 
         this.data[10] = {id:10,des:"激活护盾",icon:"tech_2",x:-180,y:-50,    m_type:1,needId:0}
-        this.data[11] = {id:11,des:"护盾冷却缩减1",icon:"tech_3",x:-60,y:-50,m_type:2,needId:10}
-        this.data[12] = {id:12,des:"护盾冷却缩减2",icon:"tech_4",x:60,y:-50, m_type:2,needId:11}
-        this.data[13] = {id:13,des:"爆破",icon:"tech_1",x:180,y:-50,        m_type:3,needId:12}
+        this.data[11] = {id:11,des:"护盾生命值恢复",icon:"tech_3",x:-60,y:-50,m_type:2,needId:10}
+        this.data[12] = {id:12,des:"装甲强化",icon:"tech_4",x:60,y:-50, m_type:2,needId:11}
+        this.data[13] = {id:13,des:"磁暴",icon:"tech_1",x:180,y:-50,        m_type:3,needId:12}
 
         this.data[14] = {id:14,des:"激活加速",icon:"tech_2",x:-180,y:-150,   m_type:1,needId:0}
         this.data[15] = {id:15,des:"燃料收集",icon:"tech_3",x:-60,y:-150,    m_type:3,needId:14}
 
-        this.data[16] = {id:16,des:"激活修理",icon:"tech_4",x:-180,y:-250,   m_type:1,needId:0}
-        this.data[17] = {id:17,des:"强化装甲",icon:"tech_1",x:-60,y:-250,    m_type:2,needId:16}
+        this.data[16] = {id:16,des:"激活投弹",icon:"tech_4",x:-180,y:-250,   m_type:1,needId:0}
+        this.data[17] = {id:17,des:"投弹折跃",icon:"tech_1",x:-60,y:-250,    m_type:2,needId:16}
 
  
         this.techItemList = new Array()  
