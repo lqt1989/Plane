@@ -51,6 +51,14 @@ cc.Class({
             type:cc.Node,
         },
 
+        speedBar:{
+            default:null,
+            type:cc.ProgressBar,
+        },
+        chargeBar:{
+            default:null,
+            type:cc.ProgressBar, 
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -83,7 +91,11 @@ cc.Class({
             }
         },this)
 
-
+        //创建物体
+        this.node.on("objCreate",function(event){
+            var data = event.getUserData()
+            this.fightLayer.createObject(data[0],data[1],data[2],data[3])           
+        },this)
         //物体销毁
         this.node.on("objDestory",function(event){
             var data = event.getUserData()
@@ -98,24 +110,42 @@ cc.Class({
             if (this.isPause == false){
                 this.player.getComponent(Player).onShoot()}
         },this)
-        // this.node.on("addhp",function(event){
-        //     if (this.isPause == false){
-        //     this.player.getComponent(Player).onAddHp()}
-        // },this)
+
         this.node.on("shield",function(event){
             if (this.isPause == false){
             this.player.getComponent(Player).onShield()}
         },this)
+
         this.node.on("speedup",function(event){
             if (this.isPause == false)
             {
+                this.worldSpeedState = 2
                 this.player.getComponent(Player).onSpeedUp()}
-                this.worldSpeed += 1
-                this.fightLayer.setWorldSpeed(this.worldSpeed)
         },this)
-        this.node.on("charge",function(event){
+        this.node.on("speeddown",function(event){
+            if (this.isPause == false)
+            {
+                this.worldSpeedState = 1
+                this.player.getComponent(Player).onSpeedUp()}
+        },this)
+
+        this.node.on("chargestart",function(event){
             if (this.isPause == false){
-            this.player.getComponent(Player).onCharge()}
+                this.chargeState = 2      
+                var nowDate = new Date();
+                this.chargeTime = nowDate.getTime()       
+            }  
+        },this)
+
+        this.node.on("chargeend",function(event){
+            if (this.isPause == false){      
+                if (this.chargeState == 2)
+                {
+                    this.chargeState = 1  
+                    this.fightLayer.createCharge(this.chargeBar.progress)
+                    this.player.getComponent(Player).onChargeEnd()
+                }
+            }
         },this)
 
         //科技界面
@@ -157,7 +187,12 @@ cc.Class({
 
     init () {
         //世界速度
-        this.worldSpeed = 1;
+        this.worldSpeed = 2;
+        this.worldSpeedState = 1;
+        //充能
+        this.chargeTime = 0;
+        this.chargeState = 1;
+
         //里程
         this.mileage = 0;
         //刷怪循环次数
@@ -228,11 +263,53 @@ cc.Class({
             this.loopTimes += 1;
         }
     },
+    //更新世界速度
+    updateWorldSpeed()
+    {
+        if (this.worldSpeedState == 1)
+        {
+            this.worldSpeed -= 0.05
+            this.worldSpeed = this.worldSpeed < 2 ? 2 : this.worldSpeed
+        }
+        else if(this.worldSpeedState == 2)
+        {
+            this.worldSpeed += 0.05
+            this.worldSpeed = this.worldSpeed >10 ? 10 : this.worldSpeed
+        }
+        this.fightLayer.setWorldSpeed(this.worldSpeed)    
+        this.speedBar.progress = this.worldSpeed/10
+    },
+    //更新充能条
+    updateCharge()
+    {
+        if (this.chargeState == 1)
+        {
+            var pro = this.chargeBar.progress
+            if (pro > 0)
+            {
+                pro -= 0.05
+            }
+            this.chargeBar.progress = pro
+        }
+        else if (this.chargeState == 2)
+        {
+            var nowDate = new Date();
+            var pro = (nowDate.getTime() - this.chargeTime)/2000
+            this.chargeBar.progress = pro
+            if (this.chargeBar.progress > 1)
+            {
+                this.chargeState = 1
+            }
+        }
+        
+    },
 
     update (dt) {
        if (this.isPause === false){
             this.updateMapLayer()
             this.updateMileage()
+            this.updateWorldSpeed()
+            this.updateCharge()
        }
     },
 });

@@ -12,33 +12,33 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        event:"",      
+        startEvent:"",
+        endEvent:"",      
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        // var clickEventHandler = new cc.Component.EventHandler();
-        // clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
-        // clickEventHandler.component = "EventButton";//这个是代码文件名
-        // clickEventHandler.handler = "callback";
-        // clickEventHandler.customEventData = this.event;
-
-        // var button = this.node.getComponent(cc.Button);
-        // button.clickEvents.push(clickEventHandler);
-
 
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            console.log("TOUCH_START")
-            this.node.dispatchEvent(new cc.Event.EventCustom(this.event, true));
+            if (this.node.getComponent(cc.Button).interactable === true)
+            {
+            this.node.dispatchEvent(new cc.Event.EventCustom(this.startEvent, true));
+            }
         },this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
-            console.log("TOUCH_MOVE")
+            if (this.node.getComponent(cc.Button).interactable === true)
+            {
+
+            }
         },this);
 
         this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
-            console.log("TOUCH_END")
+            if (this.node.getComponent(cc.Button).interactable === true)
+            {
+            this.node.dispatchEvent(new cc.Event.EventCustom(this.endEvent, true));
+            }
         },this);
 
     },

@@ -22,6 +22,7 @@ cc.Class({
         //上滑
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
             this.eventList[event.getID()] = event.getLocation()
+
         },this);
 
         this.node.on("touchmove",function(event){
@@ -31,12 +32,14 @@ cc.Class({
         this.node.on("touchend",function(event){
             var y = event.getLocationY() 
             var p = this.eventList[event.getID()]
-            if (y - p.y > 100) {
+            if (y - p.y > 50) {
                 var Custom_Event = new cc.Event.EventCustom("createBullet",true)
                 var data = new Array(3)
                 data[0] = event.getID()
                 data[1] = p.x
                 data[2] = p.y
+                console.log("@ sy is >>>",p.y);
+                console.log("@ ey is >>>",y);
                 Custom_Event.setUserData(data)
                 this.node.dispatchEvent(Custom_Event)
             }

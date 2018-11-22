@@ -32,7 +32,18 @@ cc.Class({
         missile:{
             type:cc.Prefab,
             default:null,
-        }
+        },
+        enemy_1:{
+            type:cc.Prefab,
+            default:null,
+        },
+
+
+
+        charge:{
+            type:cc.Prefab,
+            default:null,
+        },
 
     },
 
@@ -56,12 +67,15 @@ cc.Class({
             this.stone,
             this.boom,
             this.missile,
+            this.enemy_1,
         ]
         this.objName = [
             "Bullet",
             "Stone",
             "Boom",
             "Missile",
+
+            "Enemy_1",
         ]
         this.objPool = new Array();
         this.objList = new Array();
@@ -86,7 +100,7 @@ cc.Class({
         }
     },
 
-    createObject(idx_type,x,y){   
+    createObject(idx_type,x,y,scale){   
         var obj = null
         if (this.objPool[idx_type].size() > 0) { 
             obj = this.objPool[idx_type].get();
@@ -94,6 +108,10 @@ cc.Class({
             obj = cc.instantiate(this.objType[idx_type]);
         }     
         //obj.getComponent(this.objName[idx_type]).init(); 
+        if (scale)
+        {obj.scale = scale}
+        else
+        {obj.scale = 1}
         obj.parent = this.node; 
         obj.x = x
         obj.y = y
@@ -105,6 +123,16 @@ cc.Class({
         var index = this.objList[idx_type].indexOf(node)
         this.objList[idx_type].splice(index,1)
         this.objPool[idx_type].put(node)
+    },
+
+    createCharge(percent)
+    {
+        var cha = cc.instantiate(this.charge)
+        cha.parent = this.node
+        cha.x = this.player.x 
+        cha.y = this.player.y 
+        var atk = cha.getComponent("Nature").atk
+        cha.getComponent("Charge").setPercent(percent)
     },
 
     pause(){

@@ -39,6 +39,11 @@ cc.Class({
         btn_speed:{
             type:cc.Node,
             default:null, 
+        },
+
+        shield:{
+            type:cc.Node,
+            default:null,
         }
     },
 
@@ -51,7 +56,7 @@ cc.Class({
         this.node.getComponent("Nature").idx_type =  this.idx_type
 
         this.btn_shield.getComponent(cc.Button).enableAutoGrayEffect  = true
-        //this.btn_addhp.getComponent(cc.Button).enableAutoGrayEffect = true
+        this.btn_charge.getComponent(cc.Button).enableAutoGrayEffect = true
     },
 
     start () {
@@ -121,16 +126,19 @@ cc.Class({
     },
 
     onCollisionEnter: function (other, self) {
-        var atk = other.node.getComponent("Nature").atk
-        this.hp -= atk 
-        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
-        
-        this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
-
-        if (this.hp <= 0)
+        if (this.shield.active === false)
         {
-            var Custom_Event = new cc.Event.EventCustom("gameover",true)
-            this.node.dispatchEvent(Custom_Event)  
+            var atk = other.node.getComponent("Nature").atk
+            this.hp -= atk 
+            this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+            
+            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+
+            if (this.hp <= 0)
+            {
+                var Custom_Event = new cc.Event.EventCustom("gameover",true)
+                this.node.dispatchEvent(Custom_Event)  
+            }
         }
     },
 
@@ -168,17 +176,26 @@ cc.Class({
     //     this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
     // },
 
+    showShield()
+    {
+        this.shield.active = true
+        var action = cc.sequence(cc.delayTime(3),cc.callFunc(function(){
+            this.shield.active = false
+        },this))
+        this.shield.runAction(action)
+    },
     onShield(){
         this.btn_shield.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_shield,5,"btn_1")
-        //log("@shield player")
-    },
-    
+        this.node.getComponent("Utils").addCoolDown(this.btn_shield,15,"btn_1")
+        this.showShield()
+    },  
     onSpeedUp(){
-        //log("@speed player")
     },
-    onCharge(){
-        //log("@charge player")
+    onChargeStart(){
+    },
+    onChargeEnd(){
+        this.btn_charge.getComponent(cc.Button).interactable = false
+        this.node.getComponent("Utils").addCoolDown(this.btn_charge,15,"btn_4")
     },
 
     pause(){
