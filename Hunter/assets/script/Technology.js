@@ -32,6 +32,10 @@ cc.Class({
             type:cc.Node,
             default:null
         },
+        lbl_surplus:{
+            type:cc.Label,
+            default:null,
+        },
 
     },
 
@@ -91,14 +95,14 @@ cc.Class({
     },
 
     init(){
-        this.techCount = 0 //已激活科技
+        this.techCount = 10   //剩余科技点
         this.techList = new Array()  
 
         this.refreshTech()
+        this.lbl_surplus.string = "当前剩余科技点："+this.techCount
     },
     //刷新科技
     refreshTechItem(id){
-
         var obj = this.techItemList[id]
         if (this.isActiveTech(id))
         {
@@ -133,8 +137,18 @@ cc.Class({
             {
                 //刷新科技按钮
             }
+            else if(this.data[id].m_type == 2)
+            {
 
+            }
+            else if(this.data[id].m_type == 3)
+            {
+
+            }
             this.refreshTech()
+
+            this.techCount -= 1
+            this.lbl_surplus.string = "当前剩余科技点："+this.techCount
         }
     },
     //科技是否激活
@@ -186,17 +200,26 @@ cc.Class({
         this.selectId = data.id
         var state = this.canBeActiveTech(this.selectId)
 
-        if (state === 1){
-            this.lbl_active.active = true
-            this.lbl_active.getComponent(cc.Label).string = "已激活"
-            this.btn_active.active = false
-        }else if (state === 2){
-            this.btn_active.active = true
-            this.lbl_active.active = false 
-        }else if (state === 3){
+        if (this.techCount <= 0)
+        {
             this.btn_active.active= false 
             this.lbl_active.active = true
-            this.lbl_active.getComponent(cc.Label).string = "需激活前置科技"
+            this.lbl_active.getComponent(cc.Label).string = "当前科技点不足"
+        }
+        else 
+        {
+            if (state === 1){
+                this.lbl_active.active = true
+                this.lbl_active.getComponent(cc.Label).string = "已激活"
+                this.btn_active.active = false
+            }else if (state === 2){
+                this.btn_active.active = true
+                this.lbl_active.active = false 
+            }else if (state === 3){
+                this.btn_active.active= false 
+                this.lbl_active.active = true
+                this.lbl_active.getComponent(cc.Label).string = "需激活前置科技"
+            }
         }
         this.lbl_des.getComponent(cc.Label).string = data.des
     }
