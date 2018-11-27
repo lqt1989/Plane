@@ -3303,7 +3303,9 @@
     "missile": {
       "__uuid__": "e7469897-eabd-4a29-8a75-1898e48c6526"
     },
-    "enemy_1": null,
+    "enemy_1": {
+      "__uuid__": "fc52a581-74cb-4eda-a62d-776fe7fdd6aa"
+    },
     "charge": {
       "__uuid__": "d643b6e8-b7b5-4094-aada-4d536abb52c0"
     },
@@ -4375,7 +4377,9 @@
     "btn_active": {
       "__id__": 87
     },
-    "lbl_surplus": null,
+    "lbl_surplus": {
+      "__id__": 99
+    },
     "_id": "38TUZI/whGzJuL4a3dLZgr"
   },
   {

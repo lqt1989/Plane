@@ -10,7 +10,7 @@
 
 var Player = require("Player");
 var FightLayer = require("FightLayer");
-
+var Item = require("Constant").Item
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -200,6 +200,8 @@ cc.Class({
         this.countPerLoop = 6;
         this.batchList = new Array(0,0,0,0,0,0)
         this.mapHeight = 1280
+        //陨石批次
+        this.stoneBatch = 0
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
@@ -245,22 +247,22 @@ cc.Class({
     updateMileage()
     {
         this.mileage += this.worldSpeed
-        var batch = Math.floor(this.mileage/350)
-        batch = batch-((this.loopTimes-1) *this.countPerLoop)
-        
-        if (this.batchList.hasOwnProperty(batch)) 
-        {   
-            if(this.batchList[batch] !== this.loopTimes)
+        var batch = Math.floor(this.mileage/300) + 1
+        //batch = batch-((this.loopTimes-1) *this.countPerLoop)
+        if (this.stoneBatch !== batch)
+        {
+            this.stoneBatch = batch
+            var count =  Math.floor(Math.random()*4) + 1
+            console.log("@@@count is UUU>>>",count);
+            
+            for(var i = 1;i < count;i++)
             {
                 var x = Math.floor(Math.random()*440) + 100
-                var y = Math.floor(Math.random()*200)
-                this.fightLayer.createObject(1,x,this.winHeight+y);
+                var y = Math.floor(Math.random()*400) + 50
+                var scale = (10 - Math.floor(Math.random()*7))/10
+                this.fightLayer.createObject(Item.Stone,x,this.winHeight+y,scale);
                 this.batchList[batch] = this.loopTimes
             }
-        }
-        else
-        {
-            this.loopTimes += 1;
         }
     },
     //更新世界速度

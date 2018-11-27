@@ -33,13 +33,22 @@ cc.Class({
     init(){
         
         this.mileage = 0
-        this.hp = 50
+        this.hp = 50 * this.node.scale
         this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
         this.isPause = false
-        //this.speed = this.node.parent.getComponent("FightLayer").getWorldSpeed()
+        
+        var time = this.node.scale * 20
+        // if (this.node.scale > 0.85)
+        //     time = 10
+        // else 
+        //     time = Math.random() * 5 + 5
+        var action = cc.repeatForever(cc.rotateBy(time,180))
+        this.node.runAction(action)
+
+        //this.node.rotation = Math.random() * 360
     },
     setWorldSpeed(sp){
-        this.speed = sp
+        this.speed = sp * (2 - this.node.scale)
     },
 
     onCollisionEnter: function (other, self) {
@@ -54,7 +63,14 @@ cc.Class({
             if (this.hp <= 0)
             {
                 this.pushScore()
-                this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y,2)
+                //this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y,2)
+                var Custom_Event = new cc.Event.EventCustom("objCreate",true)
+                var data = new Array(2)
+                data[0] = 2
+                data[1] = this.node.x
+                data[2] = this.node.y
+                Custom_Event.setUserData(data)
+                this.node.dispatchEvent(Custom_Event)
                 this.destorySelf()
             }
         }
@@ -68,7 +84,7 @@ cc.Class({
 
 
     destorySelf(){
-    
+        this.node.stopAllActions()
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
@@ -82,7 +98,7 @@ cc.Class({
         {
             this.node.y -= this.speed
             this.mileage += this.speed
-            if (this.mileage >= 1300)
+            if (this.mileage >= 1800)
             {
                 this.destorySelf()
             }

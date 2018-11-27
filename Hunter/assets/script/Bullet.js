@@ -39,7 +39,15 @@ cc.Class({
     onCollisionEnter: function (other, self) {
         if (other.node.getComponent("Nature").idx_type != this.idx_type)
         {
-            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+           // this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+            var Custom_Event = new cc.Event.EventCustom("objCreate",true)
+            var data = new Array(2)
+            data[0] = 2
+            data[1] = this.node.x
+            data[2] = this.node.y
+            Custom_Event.setUserData(data)
+            this.node.dispatchEvent(Custom_Event)
+
             this.destorySelf()
         }
     },
