@@ -33,6 +33,7 @@ cc.Class({
             this.node.dispatchEvent(Custom_Event)
             
         },this);
+        
         this.node.on(cc.Node.EventType.TOUCH_MOVE,function(event){
             var Custom_Event = new cc.Event.EventCustom("setSpeed",true)
             var location = this.node.convertToNodeSpaceAR(event.getLocation() )

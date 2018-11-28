@@ -59,6 +59,14 @@ cc.Class({
             default:null,
             type:cc.ProgressBar, 
         },
+        reocker:{
+            default:null,
+            type:cc.Node,
+        },
+        pp:{
+           default:null,
+           type:cc.Node, 
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -70,20 +78,46 @@ cc.Class({
         //manager.enabledDebugDraw = true;
         //manager.enabledDrawBoundingBox = true;
 
-        //触摸滑动
-        this.node.on("createBullet",function(event){
-            if (this.isPause == false){
-            var data = event.getUserData()
-            this.fightLayer.createObject(3,data[1],data[2]);}
+        this.node.on("touchStart",function(event){
+            var data = event.getUserData()           
+            this.reocker.x = data.x-320
+            this.reocker.y = data.y
+
         },this)
 
+        this.node.on("touchMove",function(event){
+            var data = event.getUserData()    
+            var location = this.reocker.convertToNodeSpaceAR(data)
+            var x = location.x
+            var y = location.y
+            var r = Math.sqrt(x*x + y*y)
+            if (r >= 80)
+            {
+                x = x*80/r
+                y = y*80/r
+            }
+
+            this.pp.setPosition(x,y)    
+            this.player.getComponent(Player).setSpeed(x/15,y/15)
+        },this)
+
+        this.node.on("touchEnd",function(event){
+            this.pp.setPosition(0,0)    
+            this.player.getComponent(Player).setSpeed(0,0)
+        },this)
         //重力感应
         // this.node.on("speedupdate",function(event){
         //     if (this.isPause == false){
         //     var data = event.getUserData()           
         //     this.player.getComponent(Player).setSpeed(-Math.floor(data.x*30),-Math.floor((data.y-0.5)*20))}
         // },this)
-        //摇杆
+
+        this.node.on("createBullet",function(event){
+            if (this.isPause == false){
+            var data = event.getUserData()
+            this.fightLayer.createObject(3,data[1],data[2]);}
+        },this)
+
         this.node.on("setSpeed",function(event){
             if (this.isPause == false){
                 var data = event.getUserData() 
@@ -91,12 +125,11 @@ cc.Class({
             }
         },this)
 
-        //创建物体
         this.node.on("objCreate",function(event){
             var data = event.getUserData()
             this.fightLayer.createObject(data[0],data[1],data[2],data[3])           
         },this)
-        //物体销毁
+
         this.node.on("objDestory",function(event){
             var data = event.getUserData()
             this.fightLayer.destroyObject(data[0],data[1])

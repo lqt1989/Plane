@@ -23,13 +23,20 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
             this.eventList[event.getID()] = event.getLocation()
 
+            var Custom_Event = new cc.Event.EventCustom("touchStart",true)
+                var location = event.getLocation() 
+                Custom_Event.setUserData(location)
+                this.node.dispatchEvent(Custom_Event)
         },this);
 
-        this.node.on("touchmove",function(event){
-
+        this.node.on(cc.Node.EventType.TOUCH_MOVE,function(event){
+            var Custom_Event = new cc.Event.EventCustom("touchMove",true)
+            var location = event.getLocation() 
+            Custom_Event.setUserData(location)
+            this.node.dispatchEvent(Custom_Event)
         },this)
 
-        this.node.on("touchend",function(event){
+        this.node.on(cc.Node.EventType.TOUCH_END,function(event){
             var y = event.getLocationY() 
             var p = this.eventList[event.getID()]
             if (y - p.y > 50) {
@@ -43,6 +50,9 @@ cc.Class({
                 Custom_Event.setUserData(data)
                 this.node.dispatchEvent(Custom_Event)
             }
+
+            var Custom_Event2 = new cc.Event.EventCustom("touchEnd",true)
+            this.node.dispatchEvent(Custom_Event2)
         },this)
 
     },
