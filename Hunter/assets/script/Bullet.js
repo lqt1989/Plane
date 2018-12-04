@@ -29,7 +29,7 @@ cc.Class({
         this.init()
     },
     init(){
-        this.speed = 25
+        this.speed = 16
         this.mileage = 0
         this.isPause = false
     },

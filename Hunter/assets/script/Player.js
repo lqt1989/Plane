@@ -99,6 +99,7 @@ cc.Class({
     //
     setTechValue(key,value)
     {
+
         this.tech[key] = value
     },
 
@@ -168,9 +169,12 @@ cc.Class({
                 {
                     // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
                     // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
-                    for(var i = 1;i < this.tech[0]; i++)
+                    
+                    for(var i = 1;i <= this.tech[0]; i++)
                     {
-                        var x = (i - Math.ceil(this.tech[0]/2)) * 50
+                        var x = 0
+                        if (this.tech[0] !== 1)
+                            x = (i - (this.tech[0]+1)/2) * 20
                         this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x,this.node.y)
                     }
 

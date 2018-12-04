@@ -125,7 +125,7 @@ cc.Class({
             {
                 //设置玩家属性
                 var param = TechData[id].param
-                this.player.setTechValue(param[1],param[2])
+                this.player.setTechValue(param[0],param[1])
             }
             else if(TechData[id].m_type == 3)
             {
@@ -207,7 +207,7 @@ cc.Class({
                 this.lbl_active.getComponent(cc.Label).string = "需激活前置科技"
             }
         }
-        this.lbl_des.getComponent(cc.Label).string = data.des
+        this.lbl_des.getComponent(cc.Label).string = data.name
     }
 
     // update (dt) {},
