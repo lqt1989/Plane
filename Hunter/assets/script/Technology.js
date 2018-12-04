@@ -8,6 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var TechData = require("Constant").Tech
+var Player = require("Player");
 cc.Class({
     extends: cc.Component,
 
@@ -36,6 +37,10 @@ cc.Class({
             type:cc.Label,
             default:null,
         },
+        player:{
+            type:Player,
+            default:null,
+        }
 
     },
 
@@ -112,10 +117,15 @@ cc.Class({
             if (TechData[id].m_type == 1)
             {
                 //刷新科技按钮
+                var Custom_Event = new cc.Event.EventCustom("openBtn",true)
+                this.node.dispatchEvent(Custom_Event)  
+                
             }
             else if(TechData[id].m_type == 2)
             {
-
+                //设置玩家属性
+                var param = TechData[id].param
+                this.player.setTechValue(param[1],param[2])
             }
             else if(TechData[id].m_type == 3)
             {

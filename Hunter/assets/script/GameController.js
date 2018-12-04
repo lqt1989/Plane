@@ -190,7 +190,9 @@ cc.Class({
             this.tech.active = false
             this.resume()
         },this)
+        this.node.on("openBtn",function(event){
 
+        },this)
 
         this.node.on("gameover",function(event){
             this.gameover.active = true

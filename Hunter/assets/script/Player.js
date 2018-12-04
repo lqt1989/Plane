@@ -57,6 +57,14 @@ cc.Class({
 
         this.btn_shield.getComponent(cc.Button).enableAutoGrayEffect  = true
         this.btn_charge.getComponent(cc.Button).enableAutoGrayEffect = true
+
+        //科技激活的属性
+        this.tech = new Array();
+        this.tech[0] = 1     //发射的子弹数量
+        this.tech[1] = 150     //子弹存储上限
+        this.tech[2] = 2     //单发子弹伤害
+        this.tech[3] = 30     //大炮冷却时间
+        this.tech[4] = 0      //护盾开启状态，0未开，1开启
     },
 
     start () {
@@ -87,6 +95,11 @@ cc.Class({
     },
     setWorldSpeed(speed){
         this.worldSpeed = speed;
+    },
+    //
+    setTechValue(key,value)
+    {
+        this.tech[key] = value
     },
 
     //更新速度
@@ -153,8 +166,14 @@ cc.Class({
             this.schedule(function() {
                 if (this.isPause === false)
                 {
-                    this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
-                    this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+                    // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
+                    // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+                    for(var i = 1;i < this.tech[0]; i++)
+                    {
+                        var x = (i - Math.ceil(this.tech[0]/2)) * 50
+                        this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x,this.node.y)
+                    }
+
                 }
             }, 0.2);
             this.shootState = 1
