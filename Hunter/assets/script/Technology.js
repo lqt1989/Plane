@@ -57,6 +57,7 @@ cc.Class({
         }
 
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
+            log("@@11111")
             this.techDes.active = false
         },this)
         this.node.on("showTech",function(event){
@@ -119,6 +120,9 @@ cc.Class({
                 //刷新科技按钮
                 var Custom_Event = new cc.Event.EventCustom("openBtn",true)
                 this.node.dispatchEvent(Custom_Event)  
+
+                var param = TechData[id].param
+                this.player.setTechValue(param[0],param[1])
                 
             }
             else if(TechData[id].m_type == 2)

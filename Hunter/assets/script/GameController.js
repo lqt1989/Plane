@@ -336,6 +336,7 @@ cc.Class({
             if (this.chargeBar.progress > 1)
             {
                 this.chargeState = 1
+                this.player.getComponent(Player).onOverLoad()
             }
         }
         

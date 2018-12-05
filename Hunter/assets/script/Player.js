@@ -60,11 +60,12 @@ cc.Class({
 
         //科技激活的属性
         this.tech = new Array();
-        this.tech[0] = 1     //发射的子弹数量
+        this.tech[0] = 0     //发射的子弹数量
         this.tech[1] = 150     //子弹存储上限
-        this.tech[2] = 2     //单发子弹伤害
-        this.tech[3] = 30     //大炮冷却时间
-        this.tech[4] = 0      //护盾开启状态，0未开，1开启
+        this.tech[2] = 2     //子弹类型：1普通 2强化
+        this.tech[3] = 0     //大炮冷却时间
+        this.tech[4] = 15     //过载惩罚
+        this.tech[5] = 0      //僚机数量
     },
 
     start () {
@@ -73,6 +74,8 @@ cc.Class({
         this.targetSpeedX = 0
         this.targetSpeedY = 0
         this.worldSpeed = 0
+
+        this.bulletCount = 150 //当前子弹数量
 
         this.winSize = cc.view.getVisibleSize();
 
@@ -163,31 +166,39 @@ cc.Class({
     },
 
     onShoot(){
-       if (this.shootState === 0){
-            this.schedule(function() {
-                if (this.isPause === false)
-                {
-                    // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
-                    // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
-                    
-                    for(var i = 1;i <= this.tech[0]; i++)
-                    {
-                        var x = 0
-                        if (this.tech[0] !== 1)
-                            x = (i - (this.tech[0]+1)/2) * 20
-                        this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x,this.node.y)
-                    }
-
-                }
-            }, 0.2);
-            this.shootState = 1
-            var action = cc.repeatForever(cc.rotateBy(0.6,360))
-            this.btn_shoot.runAction(action)
+        if(this.tech[0] == 0)
+        {
+            log("@@@ 先 激活！！！")
         }
-        else if (this.shootState === 1){
-            this.unscheduleAllCallbacks()
-            this.shootState = 0
-            this.btn_shoot.stopAllActions()
+        else{
+            if (this.shootState === 0){
+                this.schedule(function() {
+                    if (this.isPause === false)
+                    {
+                        // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
+                        // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
+                        if (this.bulletCount > 0)
+                        {
+                            for(var i = 1;i <= this.tech[0]; i++)
+                            {
+                                var x = 0
+                                if (this.tech[0] !== 1)
+                                    x = (i - (this.tech[0]+1)/2) * 20
+                                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x,this.node.y)
+                            }
+                            this.bulletCount -= 1
+                        }
+                    }
+                }, 0.2);
+                this.shootState = 1
+                var action = cc.repeatForever(cc.rotateBy(0.6,360))
+                this.btn_shoot.runAction(action)
+            }
+            else if (this.shootState === 1){
+                this.unscheduleAllCallbacks()
+                this.shootState = 0
+                this.btn_shoot.stopAllActions()
+            }
         }
     },
 
@@ -218,7 +229,11 @@ cc.Class({
     },
     onChargeEnd(){
         this.btn_charge.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_charge,15,"btn_4")
+        this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3],"btn_4")
+    },
+    onOverLoad(){
+        this.btn_charge.getComponent(cc.Button).interactable = false
+        this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3] + this.tech[4],"btn_4")
     },
 
     pause(){
