@@ -51,14 +51,6 @@ cc.Class({
             type:cc.Node,
         },
 
-        speedBar:{
-            default:null,
-            type:cc.ProgressBar,
-        },
-        chargeBar:{
-            default:null,
-            type:cc.ProgressBar, 
-        },
         reocker:{
             default:null,
             type:cc.Node,
@@ -105,12 +97,6 @@ cc.Class({
             this.pp.setPosition(0,0)    
             this.player.getComponent(Player).setSpeed(0,0)
         },this)
-        //重力感应
-        // this.node.on("speedupdate",function(event){
-        //     if (this.isPause == false){
-        //     var data = event.getUserData()           
-        //     this.player.getComponent(Player).setSpeed(-Math.floor(data.x*30),-Math.floor((data.y-0.5)*20))}
-        // },this)
 
         this.node.on("createBullet",function(event){
             if (this.isPause == false){
@@ -163,22 +149,11 @@ cc.Class({
         },this)
 
         this.node.on("chargestart",function(event){
-            if (this.isPause == false){
-                this.chargeState = 2      
-                var nowDate = new Date();
-                this.chargeTime = nowDate.getTime()       
-            }  
+            this.player.getComponent(Player).onChargeStart()
         },this)
 
         this.node.on("chargeend",function(event){
-            if (this.isPause == false){      
-                if (this.chargeState == 2)
-                {
-                    this.chargeState = 1  
-                    this.fightLayer.createCharge(this.chargeBar.progress)
-                    this.player.getComponent(Player).onChargeEnd()
-                }
-            }
+            this.player.getComponent(Player).onChargeEnd()
         },this)
 
         //科技界面
@@ -224,9 +199,6 @@ cc.Class({
         //世界速度
         this.worldSpeed = 2;
         this.worldSpeedState = 1;
-        //充能
-        this.chargeTime = 0;
-        this.chargeState = 1;
 
         //里程
         this.mileage = 0;
@@ -314,32 +286,6 @@ cc.Class({
             this.worldSpeed = this.worldSpeed >10 ? 10 : this.worldSpeed
         }
         this.fightLayer.setWorldSpeed(this.worldSpeed)    
-        this.speedBar.progress = this.worldSpeed/10
-    },
-    //更新充能条
-    updateCharge()
-    {
-        if (this.chargeState == 1)
-        {
-            var pro = this.chargeBar.progress
-            if (pro > 0)
-            {
-                pro -= 0.05
-            }
-            this.chargeBar.progress = pro
-        }
-        else if (this.chargeState == 2)
-        {
-            var nowDate = new Date();
-            var pro = (nowDate.getTime() - this.chargeTime)/2000
-            this.chargeBar.progress = pro
-            if (this.chargeBar.progress > 1)
-            {
-                this.chargeState = 1
-                this.player.getComponent(Player).onOverLoad()
-            }
-        }
-        
     },
 
     update (dt) {
@@ -347,7 +293,6 @@ cc.Class({
             this.updateMapLayer()
             this.updateMileage()
             this.updateWorldSpeed()
-            this.updateCharge()
        }
     },
 });

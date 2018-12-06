@@ -44,7 +44,14 @@ cc.Class({
         shield:{
             type:cc.Node,
             default:null,
+        },
+
+        bar_power:{
+            type:cc.ProgressBar,
+            default:null,
         }
+
+
     },
 
     onLoad(){
@@ -76,6 +83,10 @@ cc.Class({
         this.worldSpeed = 0
 
         this.bulletCount = 150 //当前子弹数量
+
+        //充能
+        this.chargeTime = 0;
+        this.chargeState = 1;
 
         this.winSize = cc.view.getVisibleSize();
 
@@ -134,11 +145,37 @@ cc.Class({
         this.node.y = (this.node.y < (this.winSize.height-100)) ? this.node.y : (this.winSize.height -100);
     },
 
+    updateCharge()
+    {
+        if (this.chargeState == 1)
+        {
+            var pro = this.bar_power.progress
+            if (pro > 0)
+            {
+                pro -= 0.05
+            }
+            this.bar_power.progress = pro
+        }
+        else if (this.chargeState == 2)
+        {
+            var nowDate = new Date();
+            var pro = (nowDate.getTime() - this.chargeTime)/2000
+            this.bar_power.progress = pro
+            if (this.bar_power.progress > 1)
+            {
+                this.chargeState = 1
+                this.player.getComponent(Player).onOverLoad()
+            }
+        }
+        
+    },
+
     update (dt) {
         if (this.isPause === false)
         {
             this.updateNowSpeed();
             this.updatePos();
+            this.updateCharge();
         }
     },
 
@@ -226,14 +263,46 @@ cc.Class({
     onSpeedUp(){
     },
     onChargeStart(){
+        if (this.tech[3] == 0)
+        {
+            log("@@先激活大炮！")
+        }
+        else{
+        if (this.isPause == false){
+            this.chargeState = 2      
+            var nowDate = new Date();
+            this.chargeTime = nowDate.getTime()       
+        }}
     },
     onChargeEnd(){
-        this.btn_charge.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3],"btn_4")
+        if (this.tech[3] == 0)
+        {
+            log("@@先激活大炮！")
+        }
+        else{
+        if (this.isPause == false){      
+            if (this.chargeState == 2)
+            {
+                this.chargeState = 1  
+                this.btn_charge.getComponent(cc.Button).interactable = false
+                this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3],"btn_4")
+
+                //this.fightLayer.createCharge(this.chargeBar.progress)
+                var Custom_Event = new cc.Event.EventCustom("createCharge",true)
+                Custom_Event.setUserData(this.bar_power.progress)
+                this.node.dispatchEvent(Custom_Event)  
+            }
+        }}
     },
     onOverLoad(){
+        if(this.tech[3] == 0)
+        {
+            log("@@先激活大炮！")
+        }
+        else{
         this.btn_charge.getComponent(cc.Button).interactable = false
         this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3] + this.tech[4],"btn_4")
+        }
     },
 
     pause(){

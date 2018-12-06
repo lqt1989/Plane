@@ -50,6 +50,10 @@ cc.Class({
     onLoad () {
         this.player.zIndex = 10
         this.worldSpeed = 1
+        this.node.on("createCharge",function(event){
+            var p = event.getUserData()
+            this.createCharge(p)
+        },this)
     },
     
     start () {
