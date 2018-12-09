@@ -55,7 +55,7 @@ cc.Class({
     
         var atk = other.node.getComponent("Nature").atk
 
-        console.log("collison atk is >>>",atk);
+        //console.log("collison atk is >>>",atk);
         if (atk)
         {
             this.hp -= atk 

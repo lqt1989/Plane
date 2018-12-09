@@ -11,7 +11,6 @@
 cc.Class({
     extends: cc.Component,
     properties: {
-        winSize:null,
         lbl_hp:{
             type:cc.Node,
             default:null,
@@ -20,10 +19,7 @@ cc.Class({
             type:cc.Node,
             default:null,
         },
-        lbl_finalscore:{
-            type:cc.Node,
-            default:null,
-        },
+
         btn_shield:{
             type:cc.Node,
             default:null,
@@ -95,7 +91,7 @@ cc.Class({
      
         this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
-        this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
+        //this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
 
         this.shootState = 0   //0关闭，1开启
         this.isPause = false
@@ -199,7 +195,7 @@ cc.Class({
     addScore(value){ 
         this.score += value
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
-        this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
+        //this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
     },
 
     onShoot(){

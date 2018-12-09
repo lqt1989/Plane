@@ -58,7 +58,16 @@ cc.Class({
         pp:{
            default:null,
            type:cc.Node, 
-        }
+        },
+
+        lbl_finalscore:{
+            default:null,
+            type:cc.Label,
+        },
+        lbl_historyscore:{
+            default:null,
+            type:cc.Label,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -170,6 +179,23 @@ cc.Class({
         },this)
 
         this.node.on("gameover",function(event){
+            var his = cc.sys.localStorage.getItem("history")
+            var score = this.player.getComponent(Player).score
+            if (his != null)
+            {
+                if(his < score)
+                {
+                    his = score
+                    cc.sys.localStorage.setItem("history",his)
+                }
+            }
+            else 
+            {
+                his = score
+                cc.sys.localStorage.setItem("history",his)
+            }
+            this.lbl_historyscore.string = "历史最高：" + his
+            this.lbl_finalscore.string = "本次得分：" + score
             this.gameover.active = true
             this.pause()
         },this)
