@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.28379197327878314,
-      "y": 0.28379197327878314,
+      "x": 0.3007709911621059,
+      "y": 0.3007709911621059,
       "z": 1
     },
     "_quat": {
@@ -819,10 +819,6 @@
     "lbl_score": {
       "__id__": 20
     },
-    "btn_shield": null,
-    "btn_shoot": null,
-    "btn_charge": null,
-    "btn_speed": null,
     "shield": {
       "__id__": 14
     },

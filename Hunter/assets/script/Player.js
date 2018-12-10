@@ -20,22 +20,6 @@ cc.Class({
             default:null,
         },
 
-        btn_shield:{
-            type:cc.Node,
-            default:null,
-        },
-        btn_shoot:{
-            type:cc.Node,
-            default:null,
-        },
-        btn_charge:{
-            type:cc.Node,
-            default:null,
-        },
-        btn_speed:{
-            type:cc.Node,
-            default:null, 
-        },
 
         shield:{
             type:cc.Node,
@@ -58,8 +42,6 @@ cc.Class({
         this.node.getComponent("Nature").atk = 30
         this.node.getComponent("Nature").idx_type =  this.idx_type
 
-        this.btn_shield.getComponent(cc.Button).enableAutoGrayEffect  = true
-        this.btn_charge.getComponent(cc.Button).enableAutoGrayEffect = true
 
         //科技激活的属性
         this.tech = new Array();
@@ -225,12 +207,12 @@ cc.Class({
                 }, 0.2);
                 this.shootState = 1
                 var action = cc.repeatForever(cc.rotateBy(0.6,360))
-                this.btn_shoot.runAction(action)
+ 
             }
             else if (this.shootState === 1){
                 this.unscheduleAllCallbacks()
                 this.shootState = 0
-                this.btn_shoot.stopAllActions()
+
             }
         }
     },
@@ -243,19 +225,7 @@ cc.Class({
     //     this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
     // },
 
-    showShield()
-    {
-        this.shield.active = true
-        var action = cc.sequence(cc.delayTime(3),cc.callFunc(function(){
-            this.shield.active = false
-        },this))
-        this.shield.runAction(action)
-    },
-    onShield(){
-        this.btn_shield.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_shield,15,"btn_1")
-        this.showShield()
-    },  
+
     onSpeedUp(){
     },
     onChargeStart(){
@@ -280,8 +250,7 @@ cc.Class({
             if (this.chargeState == 2)
             {
                 this.chargeState = 1  
-                this.btn_charge.getComponent(cc.Button).interactable = false
-                this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3],"btn_4")
+
 
                 //this.fightLayer.createCharge(this.chargeBar.progress)
                 var Custom_Event = new cc.Event.EventCustom("createCharge",true)
@@ -296,8 +265,7 @@ cc.Class({
             log("@@先激活大炮！")
         }
         else{
-        this.btn_charge.getComponent(cc.Button).interactable = false
-        this.node.getComponent("Utils").addCoolDown(this.btn_charge,this.tech[3] + this.tech[4],"btn_4")
+
         }
     },
 
