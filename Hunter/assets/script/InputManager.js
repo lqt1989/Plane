@@ -19,7 +19,9 @@ cc.Class({
         cc.systemEvent.setAccelerometerEnabled(true);
         cc.systemEvent.on(cc.SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
 
-        //上滑
+        //1.上 2.下
+        this.direction = 0
+    
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
             this.eventList[event.getID()] = event.getLocation()
 
@@ -34,25 +36,49 @@ cc.Class({
             var location = event.getLocation() 
             Custom_Event.setUserData(location)
             this.node.dispatchEvent(Custom_Event)
+
+            var y = event.getLocationY() 
+            var p = this.eventList[event.getID()]
+            if (this.direction === 0)
+            {
+                if (y - p.y > 0)
+                {
+                    this.direction = 1
+                }
+                else if(y - p.y < 0)
+                {
+                    this.direction = 2
+                    var Custom_Event = new cc.Event.EventCustom("chargestart",true)
+                    this.node.dispatchEvent(Custom_Event)
+                }
+            }
         },this)
 
         this.node.on(cc.Node.EventType.TOUCH_END,function(event){
             var y = event.getLocationY() 
             var p = this.eventList[event.getID()]
-            if (y - p.y > 50) {
-                var Custom_Event = new cc.Event.EventCustom("createBullet",true)
-                var data = new Array(3)
-                data[0] = event.getID()
-                data[1] = p.x
-                data[2] = p.y
-                console.log("@ sy is >>>",p.y);
-                console.log("@ ey is >>>",y);
-                Custom_Event.setUserData(data)
+
+            if (this.direction === 1)
+            {
+                if (y - p.y > 50) {
+                    var Custom_Event = new cc.Event.EventCustom("createBullet",true)
+                    var data = new Array(3)
+                    data[0] = event.getID()
+                    data[1] = p.x
+                    data[2] = p.y           
+                    Custom_Event.setUserData(data)
+                    this.node.dispatchEvent(Custom_Event)
+                }
+            }
+            else if(this.direction === 2)
+            {
+                var Custom_Event = new cc.Event.EventCustom("chargeend",true)
                 this.node.dispatchEvent(Custom_Event)
             }
 
             var Custom_Event2 = new cc.Event.EventCustom("touchEnd",true)
             this.node.dispatchEvent(Custom_Event2)
+            this.direction = 0
         },this)
 
     },

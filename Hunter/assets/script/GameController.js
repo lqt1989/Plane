@@ -80,26 +80,32 @@ cc.Class({
         //manager.enabledDrawBoundingBox = true;
 
         this.node.on("touchStart",function(event){
-            var data = event.getUserData()           
-            this.reocker.x = data.x-320
-            this.reocker.y = data.y
+            var data = event.getUserData()   
+            if (data.y < 100)
+            {        
+                this.reocker.x = data.x-320
+                this.reocker.y = data.y
+            }
 
         },this)
 
         this.node.on("touchMove",function(event){
             var data = event.getUserData()    
-            var location = this.reocker.convertToNodeSpaceAR(data)
-            var x = location.x
-            var y = location.y
-            var r = Math.sqrt(x*x + y*y)
-            if (r >= 80)
+            if (data.y < 180)
             {
-                x = x*80/r
-                y = y*80/r
-            }
+                var location = this.reocker.convertToNodeSpaceAR(data)
+                var x = location.x
+                var y = location.y
+                var r = Math.sqrt(x*x + y*y)
+                if (r >= 80)
+                {
+                    x = x*80/r
+                    y = y*80/r
+                }
 
-            this.pp.setPosition(x,y)    
-            this.player.getComponent(Player).setSpeed(x/15,y/15)
+                this.pp.setPosition(x,y)    
+                this.player.getComponent(Player).setSpeed(x/15,y/15)
+            }
         },this)
 
         this.node.on("touchEnd",function(event){

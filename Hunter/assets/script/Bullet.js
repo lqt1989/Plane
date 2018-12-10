@@ -79,5 +79,17 @@ cc.Class({
     resume(){
         this.isPause = false
     },
+
+    //1:散弹 2.贯通
+    setType(t,index,total){
+        if(t === 1)
+        {
+
+        }
+        else if(t === 2)
+        {
+
+        }
+    },
 });
 
