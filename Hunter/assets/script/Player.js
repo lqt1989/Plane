@@ -29,8 +29,16 @@ cc.Class({
         bar_power:{
             type:cc.ProgressBar,
             default:null,
-        }
+        },
 
+        wing_1:{
+            type:cc.Node,
+            default:null,
+        },
+        wing_2:{
+            type:cc.Node,
+            default:null,
+        },
 
     },
 
@@ -60,7 +68,6 @@ cc.Class({
         this.targetSpeedY = 0
         this.worldSpeed = 0
 
-        this.bulletCount = 150 //当前子弹数量
 
         //充能
         this.chargeTime = 0;
@@ -75,10 +82,13 @@ cc.Class({
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
         //this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
 
-        this.shootState = 0   //0关闭，1开启
         this.isPause = false
 
         this.node.y = 480 - 200
+        this.rotate_1 = 0
+        this.rotate_2 = 180
+
+        this.onShoot()
     },
 
     setSpeed(x,y){
@@ -95,6 +105,62 @@ cc.Class({
         this.tech[key] = value
     },
 
+    addWingPlane(index)
+    {
+        if (index === 1)
+        {
+            this.wing_1.active = true
+        }
+        else if(index === 2)
+        {
+            this.wing_2.active = true
+        }
+    },
+
+    //更新僚机坐标
+    updateWingPos()
+    {
+        console.log("this.tech[5] is",this.tech[5]);
+        
+        this.rotate_1 += 5
+        this.rotate_2 -= 5
+
+        this.rotate_1 = this.rotate_1 > 360 ? 0 : this.rotate_1
+        this.rotate_2 = this.rotate_2 < -180 ? 180 : this.rotate_2
+
+        var y1 = Math.sin(2*Math.PI/360*this.rotate_1) * 100
+        var x1 = Math.cos(2*Math.PI/360*this.rotate_1) * 100
+        
+        var y2 = Math.sin(2*Math.PI/360*this.rotate_2) * 100
+        var x2 = Math.cos(2*Math.PI/360*this.rotate_2) * 100
+        
+        this.wing_1.x = x1 
+        this.wing_1.y = y1 
+
+        this.wing_2.x = x2 
+        this.wing_2.y = y2
+
+        if (this.tech[5] === 0)
+        {   this.wing_1.active = false
+            this.wing_2.active = false}
+        else if(this.tech[5] === 1)
+        {   this.wing_1.active = true
+            this.wing_2.active = false
+            if (this.rotate_1%180 == 0)
+            {
+                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x1/2,this.node.y +y1)
+            }
+        }
+        else
+        {   this.wing_1.active = true
+            this.wing_2.active = true
+            if (this.rotate_1%180 == 0)
+            {
+                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x +x1/2,this.node.y +y1)
+                this.node.parent.getComponent("FightLayer").createObject(0,this.node.x +x2/2,this.node.y +y2)
+            }
+        }
+    },
     //更新速度
     updateNowSpeed()
     {
@@ -154,6 +220,7 @@ cc.Class({
             this.updateNowSpeed();
             this.updatePos();
             this.updateCharge();
+            this.updateWingPos();
         }
     },
 
@@ -181,53 +248,39 @@ cc.Class({
     },
 
     onShoot(){
-        if(this.tech[0] == 0)
-        {
-            log("@@@ 先 激活！！！")
-        }
-        else{
-            if (this.shootState === 0){
-                this.schedule(function() {
-                    if (this.isPause === false)
-                    {
-                        // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x+20,this.node.y)
-                        // this.node.parent.getComponent("FightLayer").createObject(0,this.node.x-20,this.node.y)
-                        if (this.bulletCount > 0)
-                        {
+        this.schedule(function() {
+            if (this.isPause === false)
+            {
+                if (this.tech[0] !== 0)
+                {
+                    if (this.tech[0] === 1)
+                        {his.node.parent.getComponent("FightLayer").createObject(0,this.node.x,this.node.y)}
+                    else{
+                        if (this.tech[0]%2 === 0) //贯通
+                        {             
+                            var startX = -(this.tech[0-1]*20/2)   
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
-                                var x = 0
-                                if (this.tech[0] !== 1)
-                                    x = (i - (this.tech[0]+1)/2) * 20
+                                var x = startX + (i-1) * 20
                                 this.node.parent.getComponent("FightLayer").createObject(0,this.node.x + x,this.node.y)
-                            }
-                            this.bulletCount -= 1
+                            }}
+                        else                      //散弹
+                        {
+                            var stratr = 90 - (this.tech[0]-1)*15/2
+                            for(var i = 1;i <= this.tech[0]; i++)
+                            {
+                                var r = stratr + (i-1)*15
+                                this.node.parent.getComponent("FightLayer").createObject(1,this.node.x,this.node.y,1)
+                            }}
                         }
-                    }
-                }, 0.2);
-                this.shootState = 1
-                var action = cc.repeatForever(cc.rotateBy(0.6,360))
- 
+                }
             }
-            else if (this.shootState === 1){
-                this.unscheduleAllCallbacks()
-                this.shootState = 0
-
-            }
-        }
+        }, 0.2);
+        var action = cc.repeatForever(cc.rotateBy(0.6,360))     
     },
 
-    // onAddHp(){
-    //     //log("@@hpadd player")
-    //     this.hp += 20
-    //     this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
-    //     this.btn_addhp.getComponent(cc.Button).interactable = false
-    //     this.node.getComponent("Utils").addCoolDown(this.btn_addhp,5,"btn_2")
-    // },
 
 
-    onSpeedUp(){
-    },
     onChargeStart(){
         if (this.tech[3] == 0)
         {

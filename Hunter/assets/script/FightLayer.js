@@ -81,6 +81,17 @@ cc.Class({
 
             "Enemy_1",
         ]
+
+        this.Objs = {
+            1:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
+            2:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
+            3:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
+            4:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
+        }
+
+        var arr = Object.keys(Objs);
+        console.log(arr.length)
+
         this.objPool = new Array();
         this.objList = new Array();
         for (let i = 0; i < 4; ++i){
