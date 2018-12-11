@@ -299,7 +299,7 @@ cc.Class({
                 var x = Math.floor(Math.random()*440) + 100
                 var y = Math.floor(Math.random()*400) + 50
                 var scale = (10 - Math.floor(Math.random()*7))/10
-                this.fightLayer.createObject(Item.Stone,x,this.winHeight+y,scale);
+                this.fightLayer.createObject(3,x,this.winHeight+y,scale);
                 this.batchList[batch] = this.loopTimes
             }
         }
@@ -325,6 +325,7 @@ cc.Class({
             this.updateMapLayer()
             this.updateMileage()
             this.updateWorldSpeed()
+
        }
     },
 });

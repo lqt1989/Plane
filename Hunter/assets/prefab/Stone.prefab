@@ -323,16 +323,6 @@
     "_id": ""
   },
   {
-    "__type__": "5b2b2MZwtNN5KB3zrlMPBoY",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_id": ""
-  },
-  {
     "__type__": "cc.PolygonCollider",
     "_name": "",
     "_objFlags": 0,
@@ -423,6 +413,16 @@
     "_N$mode": 2,
     "_N$progress": 0.8,
     "_N$reverse": false,
+    "_id": ""
+  },
+  {
+    "__type__": "5b2b2MZwtNN5KB3zrlMPBoY",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
     "_id": ""
   },
   {

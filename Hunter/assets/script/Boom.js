@@ -18,7 +18,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.idx_type = 2
+        
         this.node.zIndex = 11
     },
 
@@ -26,6 +26,10 @@ cc.Class({
         var anim = this.getComponent(cc.Animation);
         anim.play('boom_1');
 
+    },
+
+    initData (idx){
+        this.idx_type = idx
     },
 
     reuse(){

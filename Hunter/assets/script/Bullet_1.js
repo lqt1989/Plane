@@ -17,7 +17,6 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.idx_type = 0 
         this.addSpeed = 0.5
         this.node.getComponent("Nature").atk = 1
         this.node.getComponent("Nature").idx_type = this.idx_type
@@ -32,6 +31,10 @@ cc.Class({
         this.speed = 16
         this.mileage = 0
         this.isPause = false
+    },
+
+    initData (idx){
+        this.idx_type = idx
     },
     setWorldSpeed(sp){
         //this.speed = sp

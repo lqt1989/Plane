@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.39581705729166655,
-      "y": 0.39581705729166655,
+      "x": 0.35208333333333336,
+      "y": 0.35208333333333336,
       "z": 1
     },
     "_quat": {
@@ -2354,8 +2354,11 @@
     "player": {
       "__id__": 13
     },
-    "bullet": {
-      "__uuid__": "50f27bbd-88f4-415f-8665-16d8f7b2917b"
+    "bullet1": {
+      "__uuid__": "5d2892a5-e707-4c76-9710-d27df5d190f5"
+    },
+    "bullet2": {
+      "__uuid__": "8eb07b30-66c6-4c34-bae0-51d593237581"
     },
     "stone": {
       "__uuid__": "6dfc4dff-eb44-4929-aafb-92f8d96ab288"
@@ -2372,7 +2375,7 @@
     "charge": {
       "__uuid__": "d643b6e8-b7b5-4094-aada-4d536abb52c0"
     },
-    "_id": "616nnM0b9FbZmsSB9hnJcQ"
+    "_id": "f1fJNbfLtBV4WtbhkJ3B9q"
   },
   {
     "__type__": "cc.Node",

@@ -17,7 +17,6 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.idx_type = 1
         this.node.getComponent("Nature").atk = 50
         this.node.getComponent("Nature").idx_type =  this.idx_type
         this.maxHp = 50
@@ -47,6 +46,11 @@ cc.Class({
 
         //this.node.rotation = Math.random() * 360
     },
+
+    initData (idx){
+        this.idx_type = idx
+    },
+
     setWorldSpeed(sp){
         this.speed = sp * (2 - this.node.scale)
     },

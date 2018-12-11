@@ -7,6 +7,11 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+require("Bullet_1")
+require("Bullet_2")
+require("Boom")
+require("Stone")
+
 
 cc.Class({
     extends: cc.Component,
@@ -17,7 +22,11 @@ cc.Class({
             default:null,
         },
 
-        bullet:{
+        bullet1:{
+            type:cc.Prefab,
+            default:null,
+        },
+        bullet2:{
             type:cc.Prefab,
             default:null,
         },
@@ -37,9 +46,6 @@ cc.Class({
             type:cc.Prefab,
             default:null,
         },
-
-
-
         charge:{
             type:cc.Prefab,
             default:null,
@@ -66,78 +72,85 @@ cc.Class({
     },
 
     init(){
-        this.objType = [
-            this.bullet,
-            this.stone,
-            this.boom,
-            this.missile,
-            this.enemy_1,
-        ]
-        this.objName = [
-            "Bullet",
-            "Stone",
-            "Boom",
-            "Missile",
-
-            "Enemy_1",
-        ]
-
         this.Objs = {
-            1:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
-            2:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
-            3:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
-            4:{prefab:this.bullet,script:"Bullet",poolIndex:1,poolSize:30},
+            1:{prefab:this.bullet1,script:"Bullet_1",poolIndex:1,poolSize:30},
+            2:{prefab:this.bullet2,script:"Bullet_2",poolIndex:2,poolSize:30},
+            4:{prefab:this.boom,script:"Boom",poolIndex:4,poolSize:20},
+            3:{prefab:this.stone,script:"Stone",poolIndex:3,poolSize:10},
         }
 
-        var arr = Object.keys(Objs);
+        var arr = Object.keys(this.Objs);
         console.log(arr.length)
-
         this.objPool = new Array();
         this.objList = new Array();
-        for (let i = 0; i < 4; ++i){
+        for(var i = 1; i <= arr.length; i++)
+        {
             this.objList[i] = new Array()
-            this.objPool[i] = new cc.NodePool(this.objName[i])
-            for (let j = 0; j < 15; ++j) {
-                let obj = cc.instantiate(this.objType[i]); // 创建节点
-                this.objPool[i].put(obj); // 通过 putInPool 接口放入对象池
-            }         
+            var cfg = this.Objs[i]
+            var poolInx = cfg.poolIndex
+            if ( !this.objPool.hasOwnProperty(poolInx))
+            {
+                console.log("@crea poll idx is",poolInx);
+                
+                this.objPool[poolInx] = new cc.NodePool(cfg.script)
+                for (let j = 0; j < cfg.poolSize; ++j)
+                {
+                    let obj = cc.instantiate(cfg.prefab); // 创建节点
+                    this.objPool[poolInx].put(obj); // 通过 putInPool 接口放入对象池
+                }
+            }
         }
     },
 
     clear(){
-        for (var t = 0;t < 4; t++)
+        var arr = Object.keys(this.Objs);
+        for (var t = 1;t <= arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
-                var obj = this.objList[t][i]          
-                this.objPool[t].put(obj)
+                var obj = this.objList[t][i]   
+                var idx =  this.Objs[t].poolIndex      
+                this.objPool[idx].put(obj)
             }
             this.objList[t] = []
         }
     },
 
-    createObject(idx_type,x,y,scale){   
+    createObject(idx_type,x,y,param){   
         var obj = null
-        if (this.objPool[idx_type].size() > 0) { 
-            obj = this.objPool[idx_type].get();
-        } else { 
-            obj = cc.instantiate(this.objType[idx_type]);
-        }     
-        //obj.getComponent(this.objName[idx_type]).init(); 
-        if (scale)
-        {obj.scale = scale}
-        else
-        {obj.scale = 1}
-        obj.parent = this.node; 
-        obj.x = x
-        obj.y = y
-        obj.getComponent(this.objName[idx_type]).setWorldSpeed(this.worldSpeed)
-        this.objList[idx_type].push(obj)   
+        var cfg = this.Objs[idx_type]
+        if (cfg.poolIndex === null)
+        {
+            obj = cc.instantiate(cfg.prefab);
+        }
+        else 
+        {
+            if (this.objPool[cfg.poolIndex].size() > 0)
+            {
+                obj = this.objPool[cfg.poolIndex].get()}
+            else{
+                obj = cc.instantiate(cfg.prefab)}
+        }
+        if (obj != null)
+        {
+            obj.parent = this.node; 
+            obj.x = x
+            obj.y = y
+            obj.getComponent(cfg.script).initData(idx_type)
+            obj.getComponent(cfg.script).setWorldSpeed(this.worldSpeed)
+            this.objList[idx_type].push(obj)   
+        }
     },
 
     destroyObject(node,idx_type){
-        var index = this.objList[idx_type].indexOf(node)
-        this.objList[idx_type].splice(index,1)
-        this.objPool[idx_type].put(node)
+        var cfg = this.Objs[idx_type]
+        if (cfg.poolIndex === null)
+        { node.destroy()}
+        else 
+        {
+            var index = this.objList[idx_type].indexOf(node)
+            this.objList[idx_type].splice(index,1)
+            this.objPool[cfg.poolIndex].put(node)
+        }
     },
 
     createCharge(percent)
@@ -151,30 +164,43 @@ cc.Class({
     },
 
     pause(){
-        for (var t = 0;t < 4; t++)
+        var arr = Object.keys(this.Objs);
+        for (var t = 1;t < arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]
-                obj.getComponent(this.objName[t]).pause()
+                obj.getComponent(this.Objs[t].script).pause()
             }
         }
     },
 
     resume(){
-        for (var t = 0;t < 4; t++)
+        var arr = Object.keys(this.Objs);
+        for (var t = 1;t < arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]
-                obj.getComponent(this.objName[t]).resume()
+                console.log("i is ",i);
+                console.log("@@script scriptis",this.Objs[t].script);
+                
+                obj.getComponent(this.Objs[t].script).resume()
             }
         }
     },
 
     setWorldSpeed(sp){
         this.worldSpeed = sp
-        for (var i = 0; i < this.objList[1].length;i++){
-            var obj = this.objList[1][i]
-            obj.getComponent(this.objName[1]).setWorldSpeed(sp)
+        // for (var i = 0; i < this.objList[1].length;i++){
+        //     var obj = this.objList[1][i]
+        //     obj.getComponent(this.Objs[i].script).setWorldSpeed(sp)
+        // }
+        var arr = Object.keys(this.Objs);
+        for (var t = 1;t < arr.length; t++)
+        {
+            for ( var i = 0; i <this.objList[t].length; i++){
+                var obj = this.objList[t][i]              
+                obj.getComponent(this.Objs[t].script).setWorldSpeed(sp)
+            }
         }
     },
     getWorldSpeed(){
