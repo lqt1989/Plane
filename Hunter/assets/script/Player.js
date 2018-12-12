@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -227,13 +227,18 @@ cc.Class({
     onCollisionEnter: function (other, self) {
         if (this.shield.active === false)
         {
-            var atk = other.node.getComponent("Nature").atk
-            this.hp -= atk 
-            this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
+            // var atk = other.node.getComponent("Nature").atk
+            // this.hp -= atk 
+            // this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
             
-            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)
 
-            if (this.hp <= 0)
+            if (this.tech[5] > 0)
+            {
+                this.tech[5] -= 1
+                this.node.runAction(cc.sequence(cc.delayTime(10),cc.callFunc(function(){this.tech[5]+=1},this)))
+            }
+            else 
             {
                 var Custom_Event = new cc.Event.EventCustom("gameover",true)
                 this.node.dispatchEvent(Custom_Event)  

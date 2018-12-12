@@ -10,7 +10,7 @@
 
 var Player = require("Player");
 var FightLayer = require("FightLayer");
-var Item = require("Constant").Item
+var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -299,7 +299,7 @@ cc.Class({
                 var x = Math.floor(Math.random()*440) + 100
                 var y = Math.floor(Math.random()*400) + 50
                 var scale = (10 - Math.floor(Math.random()*7))/10
-                this.fightLayer.createObject(3,x,this.winHeight+y,scale);
+                this.fightLayer.createObject(Constant.Objs.Stone,x,this.winHeight+y,scale);
                 this.batchList[batch] = this.loopTimes
             }
         }

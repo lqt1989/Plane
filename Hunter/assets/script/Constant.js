@@ -1,11 +1,14 @@
 var Constant = 
 {
-    OBJ_BULLET:1,
+    OBJ_BULLET1:1,
+    OBJ_BULLET1:2,
+    OBJ_STONE:3,
 
-
-    Item:{
-        Stone:1,
-        Bullet:2,
+    Objs:{
+        Bullet_1:1,
+        Bullet_2:2,
+        Stone:3,
+        Boom:4,
     },
 
     //m_type:1.开启科技  2.更改玩家属性  3.特殊判断
@@ -19,26 +22,16 @@ var Constant =
         7:{id:7,name:"贯通3",icon:"tech_2",x:180,y:150,       m_type:2,param:[0,6],needId:6},
         8:{id:8,name:"高能弹药",icon:"tech_2",x:-180,y:150,      m_type:1,param:[3],needId:0},
 
-        8:{id:9,name:"充能炮",icon:"tech_2",x:-180,y:50,      m_type:1,param:[3,30],needId:0},
-        9:{id:10,name:"冷却1",icon:"tech_2",x:-60,y:50,       m_type:2,param:[3,20],needId:8},
-        10:{id:11,name:"冷却2",icon:"tech_2",x:60,y:50,     m_type:2,param:[3,10],needId:9},
-        11:{id:12,name:"急冷",icon:"tech_2",x:180,y:50,      m_type:2,param:[4,0],needId:10},
+        9:{id:9,name:"充能炮",icon:"tech_2",x:-180,y:50,      m_type:1,param:[3,30],needId:0},
+        10:{id:10,name:"冷却1",icon:"tech_2",x:-60,y:50,       m_type:2,param:[3,20],needId:9},
+        11:{id:11,name:"冷却2",icon:"tech_2",x:60,y:50,     m_type:2,param:[3,10],needId:10},
+        12:{id:12,name:"急冷",icon:"tech_2",x:180,y:50,      m_type:2,param:[4,0],needId:11},
 
-        12:{id:13,name:"轰炸",icon:"tech_2",x:-180,y:-50,  m_type:3,param:[],needId:0},
-        13:{id:14,name:"折跃",icon:"tech_2",x:-60,y:-50,  m_type:3,param:[],needId:12},
+        13:{id:13,name:"轰炸",icon:"tech_2",x:-180,y:-50,  m_type:3,param:[],needId:0},
+        14:{id:14,name:"折跃",icon:"tech_2",x:-60,y:-50,  m_type:3,param:[],needId:13},
 
-        14:{id:15,name:"僚机X1",icon:"tech_2",x:60,y:-50,  m_type:2,param:[5,1],needId:0},
-        15:{id:16,name:"僚机X2",icon:"tech_2",x:180,y:-50,  m_type:2,param:[5,2],needId:14},
+        15:{id:15,name:"僚机X1",icon:"tech_2",x:60,y:-50,  m_type:2,param:[5,1],needId:0},
+        16:{id:16,name:"僚机X2",icon:"tech_2",x:180,y:-50,  m_type:2,param:[5,2],needId:15},
     },
-
-    Objs:{
-        1:{},
-        2:{},
-        3:{},
-        4:{},
-        5:{},
-        6:{},
-        7:{},
-    }
 }
 module.exports = Constant

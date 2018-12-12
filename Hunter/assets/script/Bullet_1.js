@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
 
@@ -45,7 +45,7 @@ cc.Class({
            // this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)
-            data[0] = 2
+            data[0] = Constant.Objs.Boom
             data[1] = this.node.x
             data[2] = this.node.y
             Custom_Event.setUserData(data)

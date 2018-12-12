@@ -49,7 +49,7 @@ cc.Class({
     onLoad () {
         
         this.techItemList = new Array()  
-        for (var i = 1;i <= 15;i++){
+        for (var i = 1;i <= 16;i++){
             var obj = cc.instantiate(this.techItem);
             obj.getComponent("TechItem").setData(TechData[i])
             obj.parent = this.node 
@@ -105,7 +105,7 @@ cc.Class({
     },
     //刷新科技树
     refreshTech(){
-        for(var i = 1;i <= 15; i ++)
+        for(var i = 1;i <= 16; i ++)
         {
             this.refreshTechItem(i)
         }
