@@ -11,17 +11,7 @@ var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
     properties: {
-        lbl_hp:{
-            type:cc.Node,
-            default:null,
-        },
         lbl_score:{
-            type:cc.Node,
-            default:null,
-        },
-
-
-        shield:{
             type:cc.Node,
             default:null,
         },
@@ -49,16 +39,6 @@ cc.Class({
         this.idx_type = -1
         this.node.getComponent("Nature").atk = 30
         this.node.getComponent("Nature").idx_type =  this.idx_type
-
-
-        //科技激活的属性
-        this.tech = new Array();
-        this.tech[0] = 0     //发射的子弹数量
-        this.tech[1] = 150     //子弹存储上限
-        this.tech[2] = 2     //子弹类型：1普通 2强化
-        this.tech[3] = 0     //大炮冷却时间
-        this.tech[4] = 15     //过载惩罚
-        this.tech[5] = 0      //僚机数量
     },
 
     start () {
@@ -78,7 +58,6 @@ cc.Class({
         this.hp = 100
         this.score = 0
      
-        this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
         this.lbl_score.getComponent(cc.Label).string = "Score:" + this.score
         //this.lbl_finalscore.getComponent(cc.Label).string = "本次得分：" + this.score
 
@@ -88,7 +67,22 @@ cc.Class({
         this.rotate_1 = 0
         this.rotate_2 = 180
 
+        this.initTech()
+
         this.onShoot()
+    },
+
+    initTech()
+    {
+        //科技激活的属性
+        this.tech = new Array();
+        this.tech[0] = 0     //发射的子弹数量
+        this.tech[1] = 150     //子弹存储上限
+        this.tech[2] = 2     //子弹类型：1普通 2强化
+        this.tech[3] = 0     //大炮冷却时间
+        this.tech[4] = 15     //过载惩罚
+        this.tech[5] = 0      //僚机数量
+        this.tech[6] = 0      //1自身坐标 2.触点
     },
 
     setSpeed(x,y){
@@ -128,11 +122,11 @@ cc.Class({
         this.rotate_1 = this.rotate_1 > 360 ? 0 : this.rotate_1
         this.rotate_2 = this.rotate_2 < -180 ? 180 : this.rotate_2
 
-        var y1 = Math.sin(2*Math.PI/360*this.rotate_1) * 100
-        var x1 = Math.cos(2*Math.PI/360*this.rotate_1) * 100
+        var y1 = Math.sin(2*Math.PI/360*this.rotate_1) * 180
+        var x1 = Math.cos(2*Math.PI/360*this.rotate_1) * 180
         
-        var y2 = Math.sin(2*Math.PI/360*this.rotate_2) * 100
-        var x2 = Math.cos(2*Math.PI/360*this.rotate_2) * 100
+        var y2 = Math.sin(2*Math.PI/360*this.rotate_2) * 180
+        var x2 = Math.cos(2*Math.PI/360*this.rotate_2) * 180
         
         this.wing_1.x = x1 
         this.wing_1.y = y1 
@@ -224,15 +218,8 @@ cc.Class({
         }
     },
 
-    onCollisionEnter: function (other, self) {
-        if (this.shield.active === false)
-        {
-            // var atk = other.node.getComponent("Nature").atk
-            // this.hp -= atk 
-            // this.lbl_hp.getComponent(cc.Label).string = "HP:" + this.hp
-            
-            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)
-
+    onCollisionEnter: function (other, self) {           
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)          
             if (this.tech[5] > 0)
             {
                 this.tech[5] -= 1
@@ -243,7 +230,7 @@ cc.Class({
                 var Custom_Event = new cc.Event.EventCustom("gameover",true)
                 this.node.dispatchEvent(Custom_Event)  
             }
-        }
+        
     },
 
     addScore(value){ 
@@ -288,7 +275,14 @@ cc.Class({
         var action = cc.repeatForever(cc.rotateBy(0.6,360))     
     },
 
-
+    onCreateMissile(x,y){
+        if (this.tech[6] === 0){return}
+        else if(this.tech[6] === 1){
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Missile,this.node.x,this.node.y)
+        }else if(this.tech[6] === 2){
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Missile,x,y)
+        }
+    },
 
     onChargeStart(){
         if (this.tech[3] == 0)
@@ -312,8 +306,6 @@ cc.Class({
             if (this.chargeState == 2)
             {
                 this.chargeState = 1  
-
-
                 //this.fightLayer.createCharge(this.chargeBar.progress)
                 var Custom_Event = new cc.Event.EventCustom("createCharge",true)
                 Custom_Event.setUserData(this.bar_power.progress)

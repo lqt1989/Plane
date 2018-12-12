@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
 
@@ -32,7 +32,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onCollisionEnter: function (other, self) {
-            this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)
     },
 
 

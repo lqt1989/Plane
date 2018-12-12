@@ -113,10 +113,12 @@ cc.Class({
             this.player.getComponent(Player).setSpeed(0,0)
         },this)
 
-        this.node.on("createBullet",function(event){
+        this.node.on("createMissile",function(event){
             if (this.isPause == false){
             var data = event.getUserData()
-            this.fightLayer.createObject(3,data[1],data[2]);}
+            //this.fightLayer.createObject(Constant.Objs.Missile,data[1],data[2]);}       
+            this.player.getComponent(Player).onCreateMissile(data[1],data[2])}
+
         },this)
 
         this.node.on("setSpeed",function(event){
@@ -245,8 +247,8 @@ cc.Class({
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
 
-        this.isPause = true
-        this.tech.active =  true
+        this.isPause = false
+        this.tech.active =  false
     },
 
     clear(){

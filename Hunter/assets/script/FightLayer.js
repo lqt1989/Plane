@@ -77,6 +77,7 @@ cc.Class({
             2:{prefab:this.bullet2,script:"Bullet_2",poolIndex:2,poolSize:30},
             3:{prefab:this.stone,script:"Stone",poolIndex:3,poolSize:10},
             4:{prefab:this.boom,script:"Boom",poolIndex:4,poolSize:20},
+            5:{prefab:this.missile,script:"Missile",poolIndex:null,poolSize:null},
         }
 
         var arr = Object.keys(this.Objs);

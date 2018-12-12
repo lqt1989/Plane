@@ -17,17 +17,21 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.idx_type = 3 
         this.addSpeed = 0.3
         this.node.getComponent("Nature").atk = 3
         this.node.getComponent("Nature").idx_type = this.idx_type
     },
     start () {
-        
+        this.init()
     },
     reuse(){
         this.init()
     },
+
+    initData (idx){
+        this.idx_type = idx
+    },
+
     init(){
         this.speed = 1
         this.mileage = 0
@@ -37,7 +41,7 @@ cc.Class({
         var action1 = cc.sequence(cc.moveBy(1,0,150),cc.callFunc(function(){
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)
-            data[0] = 2
+            data[0] = 4
             data[1] = this.node.x
             data[2] = this.node.y
             data[3] = 5
