@@ -88,7 +88,7 @@ cc.Class({
         var obj = this.techItemList[id]
         if (this.isActiveTech(id))
         {
-            obj.getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
+            obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
            //obj.getComponent("TechItem").setSelect()
            this.node.getComponent("Utils").addSelect(obj)
         }
@@ -97,9 +97,9 @@ cc.Class({
             this.node.getComponent("Utils").removeSelect(obj)
             //obj.getComponent("TechItem").setSelect()
             if (this.canBeActiveTech(id) === 2)
-            {obj.getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
+            {obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
             else{
-                obj.getComponent(cc.Sprite).setState(cc.Sprite.State.GRAY)
+                obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.GRAY)
             }
         }
     },

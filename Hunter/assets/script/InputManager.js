@@ -61,7 +61,7 @@ cc.Class({
             if (this.direction === 1)
             {
                 if (y - p.y > 50) {
-                    var Custom_Event = new cc.Event.EventCustom("createBullet",true)
+                    var Custom_Event = new cc.Event.EventCustom("createMissile",true)
                     var data = new Array(3)
                     data[0] = event.getID()
                     data[1] = p.x

@@ -32,7 +32,7 @@ cc.Class({
     },
 
     addSelect(pnode){
-       cc.loader.loadRes("img_3", cc.SpriteFrame, function (err, spriteFrame) {
+       cc.loader.loadRes("img_select", cc.SpriteFrame, function (err, spriteFrame) {
             var node = new cc.Node();
             var sprite = node.addComponent(cc.Sprite);
             sprite.spriteFrame = spriteFrame
@@ -41,7 +41,9 @@ cc.Class({
     },
     removeSelect(pnode)
     {
-        pnode.destroyAllChildren()
+        var node = pnode.getChildByName("select")
+        if (node != null)
+        node.destroy()
     },
   
     addCoolDown(node,time,img,callback)

@@ -43,10 +43,21 @@ cc.Class({
         this.node.x = this.data.x 
         this.node.y = this.data.y
         //this.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(this.data.icon)
+        if (this.data.needId === 0)
+        {
+            this.node.getChildByName("line").active = false
+        }
+        else{
+            this.node.getChildByName("line").active = true
+            if (this.data.id === 5)
+            this.node.getChildByName("line").rotation = 0
+            else
+            this.node.getChildByName("line").rotation = -90
+        }
 
         var self = this
         cc.loader.loadRes(this.data.icon, cc.SpriteFrame, function (err, spriteFrame) {
-            self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame
+            self.node.getChildByName("icon").getComponent(cc.Sprite).spriteFrame = spriteFrame
         })
     },
 
