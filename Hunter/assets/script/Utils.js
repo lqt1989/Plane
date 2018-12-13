@@ -34,16 +34,22 @@ cc.Class({
     addSelect(pnode){
        cc.loader.loadRes("img_select", cc.SpriteFrame, function (err, spriteFrame) {
             var node = new cc.Node();
+            node.name = "select"
             var sprite = node.addComponent(cc.Sprite);
             sprite.spriteFrame = spriteFrame
+            node.x = 25
+            node.y = 25
             node.parent = pnode
         })
     },
     removeSelect(pnode)
     {
-        var node = pnode.getChildByName("select")
-        if (node != null)
-        node.destroy()
+        if (pnode != null)
+        {
+            var node = pnode.getChildByName("select")
+            if (node != null)
+            node.destroy()
+        }
     },
   
     addCoolDown(node,time,img,callback)
@@ -52,6 +58,7 @@ cc.Class({
         var cooldown = cc.instantiate(this.cooldown)
         cooldown.getChildByName("bar").getComponent(cc.Sprite).spriteFrame = sp
         cooldown.parent = node
+
         cooldown.getComponent("Cooldown").setDelayCallback(time,callback,node)
               
     },

@@ -43,7 +43,7 @@ cc.Class({
         this.node.x = this.data.x 
         this.node.y = this.data.y
         //this.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(this.data.icon)
-        if (this.data.needId === 0)
+        if (this.data.needId[0] === 0)
         {
             this.node.getChildByName("line").active = false
         }
@@ -53,6 +53,14 @@ cc.Class({
             this.node.getChildByName("line").rotation = 0
             else
             this.node.getChildByName("line").rotation = -90
+
+            if(this.data.id === 8)
+            {
+                var node =  cc.instantiate(this.node.getChildByName("line"))
+                node.parent = this.node 
+                node.zIndex = -1
+                node.rotation = 0
+            }
         }
 
         var self = this

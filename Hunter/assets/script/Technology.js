@@ -152,7 +152,7 @@ cc.Class({
             return false 
         }
     },
-    //科技可否激活： 1.已激活 2.可激活 3.不可激活
+    //科技可否激活： 1.已激活 2.可激活 3.不可激活 4.被斥
     canBeActiveTech(id){
         if (this.isActiveTech(id))
         {
@@ -160,9 +160,12 @@ cc.Class({
         }
         else{
             var needId = TechData[id].needId
-            if (needId === 0 || this.isActiveTech(needId))
+            if (needId[0] === 0 || this.isActiveTech(needId[0])|| this.isActiveTech(needId[1]))
             {
-                return 2
+                if (TechData[id].repel === null ||  !this.isActiveTech(TechData[id].repel))
+                    return 2
+                else 
+                    return 4
             }
             else
             {
@@ -210,9 +213,17 @@ cc.Class({
                 this.lbl_active.active = true
                 this.lbl_active.getComponent(cc.Label).string = "需激活前置科技"
             }
+            else if (state === 4){
+                this.btn_active.active= false 
+                this.lbl_active.active = true
+                this.lbl_active.getComponent(cc.Label).string = "互斥科技已激活"
+            }
         }
         this.lbl_des.getComponent(cc.Label).string = data.name
-    }
+    },
 
+    reStart(){
+        this.start()
+    },
     // update (dt) {},
 });

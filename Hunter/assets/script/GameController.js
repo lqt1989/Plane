@@ -11,6 +11,7 @@
 var Player = require("Player");
 var FightLayer = require("FightLayer");
 var Constant = require("Constant")
+var Technology = require("Technology")
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -257,6 +258,7 @@ cc.Class({
         //清空战斗层
         this.fightLayer.reStart()
         //清空科技界面
+        this.tech.getComponent(Technology).reStart()
     },
 
     pause () {
