@@ -323,6 +323,20 @@ cc.Class({
         }
         this.fightLayer.setWorldSpeed(this.worldSpeed)    
     },
+    //刷金币
+    updateGoldCoin()
+    {
+
+    },
+    //刷小怪
+    updateMonster()
+    {
+
+    },
+    updateBoss()
+    {
+
+    },
 
     update (dt) {
        if (this.isPause === false){

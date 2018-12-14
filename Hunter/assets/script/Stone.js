@@ -67,7 +67,6 @@ cc.Class({
             if (this.hp <= 0)
             {
                 this.pushScore()
-                //this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y,2)
                 var Custom_Event = new cc.Event.EventCustom("objCreate",true)
                 var data = new Array(2)
                 data[0] = 2

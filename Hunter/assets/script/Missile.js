@@ -60,8 +60,7 @@ cc.Class({
     // onCollisionEnter: function (other, self) {
     //     if (other.node.getComponent("Nature").idx_type != this.idx_type)
     //     {
-    //         this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
-    //         this.destorySelf()
+
     //     }
     // },
 

@@ -6,16 +6,17 @@ var Constant =
         Stone:3,
         Boom:4,
         Missile:5,
+        GoldIcon:6,
     },
 
     //m_type:1.开启科技  2.更改玩家属性  3.特殊判断
     Tech:{
         1:{id:1,name:"机枪激活",icon:"tech_1", x:-195,y:270,  m_type:1,param:[0,1],needId:[0],repel:null,},
-        2:{id:2,name:"散射1",icon:"tech_2",    x:-65, y:270,  m_type:2,param:[0,3],needId:[1],repel:5,},
+        2:{id:2,name:"散射1",icon:"tech_2",    x:-65, y:270,  m_type:2,param:[0,3],needId:[1],repel:null,},
         3:{id:3,name:"散射2",icon:"tech_3",x:65,  y:270,      m_type:2,param:[0,5],needId:[2],repel:null,},
         4:{id:4,name:"散射3",icon:"tech_4", x:195, y:270,     m_type:2,param:[0,7],needId:[3],repel:null,},
 
-        5:{id:5,name:"贯通1",icon:"tech_5", x:-195,  y:140,    m_type:2,param:[0,2],needId:[1],repel:2,},
+        5:{id:5,name:"贯通1",icon:"tech_5", x:-195,  y:140,    m_type:2,param:[0,2],needId:[1],repel:null,},
         6:{id:6,name:"贯通2",icon:"tech_6",x:-65,y:140,        m_type:2,param:[0,4],needId:[5],repel:null,},
         7:{id:7,name:"贯通3",icon:"tech_7",x:65,y:140,       m_type:2,param:[0,6],needId:[6],repel:null,},
         8:{id:8,name:"高能弹药",icon:"tech_8",x:195,y:140,      m_type:1,param:[3],needId:[4,7],repel:null,},

@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
+var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
 
@@ -33,8 +33,12 @@ cc.Class({
         this.isPause = false
     },
 
-    initData (idx){
+    initData (idx,prarm){
         this.idx_type = idx
+        this.rotation = prarm
+        this.node.rotation = this.rotation
+        console.log("@@rotation is",this.rotation);
+        
     },
     setWorldSpeed(sp){
         //this.speed = sp
@@ -42,10 +46,9 @@ cc.Class({
     onCollisionEnter: function (other, self) {
         if (other.node.getComponent("Nature").idx_type != this.idx_type)
         {
-           // this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y)
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)
-            data[0] = 2
+            data[0] = Constant.Objs.Boom
             data[1] = this.node.x
             data[2] = this.node.y
             Custom_Event.setUserData(data)
@@ -59,7 +62,11 @@ cc.Class({
         if (this.isPause === false)
         {
             //this.speed += this.addSpeed
-            this.node.y += this.speed;
+       
+            var x = this.speed*Math.sin(2*Math.PI/360*this.rotation)
+            var y = this.speed*Math.cos(2*Math.PI/360*this.rotation)
+            this.node.y += y;
+            this.node.x += x;
             this.mileage += this.speed
         
             if (this.mileage >= 1350)

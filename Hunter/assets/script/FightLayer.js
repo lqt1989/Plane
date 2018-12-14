@@ -136,7 +136,7 @@ cc.Class({
             obj.parent = this.node; 
             obj.x = x
             obj.y = y
-            obj.getComponent(cfg.script).initData(idx_type)
+            obj.getComponent(cfg.script).initData(idx_type,param)
             obj.getComponent(cfg.script).setWorldSpeed(this.worldSpeed)
             this.objList[idx_type].push(obj)   
         }

@@ -162,10 +162,11 @@ cc.Class({
             var needId = TechData[id].needId
             if (needId[0] === 0 || this.isActiveTech(needId[0])|| this.isActiveTech(needId[1]))
             {
-                if (TechData[id].repel === null ||  !this.isActiveTech(TechData[id].repel))
-                    return 2
-                else 
-                    return 4
+                // if (TechData[id].repel === null ||  !this.isActiveTech(TechData[id].repel))
+                //     return 2
+                // else 
+                //     return 4
+                return 2
             }
             else
             {

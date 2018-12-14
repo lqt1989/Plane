@@ -142,7 +142,7 @@ cc.Class({
             this.wing_2.active = false
             if (this.rotate_1%180 == 0)
             {
-                this.node.parent.getComponent("FightLayer").createObject(1,this.node.x + x1/2,this.node.y +y1)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x1/2,this.node.y +y1)
             }
         }
         else
@@ -150,8 +150,8 @@ cc.Class({
             this.wing_2.active = true
             if (this.rotate_1%180 == 0)
             {
-                this.node.parent.getComponent("FightLayer").createObject(1,this.node.x +x1/2,this.node.y +y1)
-                this.node.parent.getComponent("FightLayer").createObject(1,this.node.x +x2/2,this.node.y +y2)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x1/2,this.node.y +y1)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x2/2,this.node.y +y2)
             }
         }
     },
@@ -246,7 +246,7 @@ cc.Class({
                 if (this.tech[0] !== 0)
                 {
                     if (this.tech[0] === 1)
-                        {this.node.parent.getComponent("FightLayer").createObject(1,this.node.x,this.node.y)}
+                        {this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x,this.node.y)}
                     else{
                         if (this.tech[0]%2 === 0) //贯通
                         {       
@@ -257,16 +257,17 @@ cc.Class({
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
                                 var x = startX + (i-1) * 20
-                                this.node.parent.getComponent("FightLayer").createObject(1,this.node.x + x,this.node.y)
+                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x,this.node.y)
                             }}
                         else                      //散弹
-                        {
-                       
-                            var stratr = 90 - (this.tech[0]-1)*15/2
+                        {                 
+                            var stratr = -(this.tech[0]-1)*15/2
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
                                 var r = stratr + (i-1)*15
-                                this.node.parent.getComponent("FightLayer").createObject(2,this.node.x,this.node.y,1)
+                                console.log("@@@stratr is",stratr);
+                                
+                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_2,this.node.x,this.node.y,r)
                             }}
                         }
                 }
