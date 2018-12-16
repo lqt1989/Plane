@@ -44,7 +44,7 @@ cc.Class({
     },
 
     pause(){
-        log("@@@@@@@@pause!!!!!!")
+        //log("@@@@@@@@pause!!!!!!")
         this.isPause = true
     },
     resume(){

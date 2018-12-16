@@ -38,7 +38,7 @@ cc.Class({
         this.node.getComponent("Nature").idx_type = this.idx_type
         this.rotation = prarm
         this.node.rotation = this.rotation
-        console.log("@@rotation is",this.rotation);
+        //console.log("@@rotation is",this.rotation);
         
     },
     setWorldSpeed(sp){

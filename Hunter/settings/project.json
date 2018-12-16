@@ -49,7 +49,15 @@
   ],
   "design-resolution-height": 960,
   "design-resolution-width": 640,
-  "excluded-modules": [],
+  "excluded-modules": [
+    "EditBox",
+    "VideoPlayer",
+    "Audio",
+    "AudioSource",
+    "Physics",
+    "StudioComponent",
+    "Native NetWork"
+  ],
   "fit-height": false,
   "fit-width": true,
   "group-list": [
