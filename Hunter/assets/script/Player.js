@@ -218,17 +218,22 @@ cc.Class({
         }
     },
 
-    onCollisionEnter: function (other, self) {           
-            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)          
-            if (this.tech[5] > 0)
+    onCollisionEnter: function (other, self) {       
+        //console.log("other.node.getComponent().idx_type is",other.node.getComponent("Nature").idx_type);
+        
+            if (other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)    
             {
-                this.tech[5] -= 1
-                this.node.runAction(cc.sequence(cc.delayTime(10),cc.callFunc(function(){this.tech[5]+=1},this)))
-            }
-            else 
-            {
-                var Custom_Event = new cc.Event.EventCustom("gameover",true)
-                this.node.dispatchEvent(Custom_Event)  
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)          
+                if (this.tech[5] > 0)
+                {
+                    this.tech[5] -= 1
+                    this.node.runAction(cc.sequence(cc.delayTime(10),cc.callFunc(function(){this.tech[5]+=1},this)))
+                }
+                else 
+                {
+                    var Custom_Event = new cc.Event.EventCustom("gameover",true)
+                    this.node.dispatchEvent(Custom_Event)  
+                }
             }
         
     },
@@ -251,13 +256,15 @@ cc.Class({
                         if (this.tech[0]%2 === 0) //贯通
                         {       
                             
-                            var startX = -((this.tech[0] -1) *20/2)   
-                            console.log("startX is",startX);
+                            var startX = -((this.tech[0] -1) *10/2)   
+                            
                             
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
-                                var x = startX + (i-1) * 20
-                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x,this.node.y)
+                                var x = startX + (i-1) * 10
+                                var x = i%2 *20 -10
+                                var y = Math.ceil(i/2) * 5                 
+                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x,this.node.y + y)
                             }}
                         else                      //散弹
                         {                 
@@ -288,7 +295,7 @@ cc.Class({
     onChargeStart(){
         if (this.tech[3] == 0)
         {
-            log("@@先激活大炮！")
+            //log("@@先激活大炮！")
         }
         else{
         if (this.isPause == false){
@@ -300,7 +307,7 @@ cc.Class({
     onChargeEnd(){
         if (this.tech[3] == 0)
         {
-            log("@@先激活大炮！")
+            //log("@@先激活大炮！")
         }
         else{
         if (this.isPause == false){      
@@ -317,7 +324,7 @@ cc.Class({
     onOverLoad(){
         if(this.tech[3] == 0)
         {
-            log("@@先激活大炮！")
+            //log("@@先激活大炮！")
         }
         else{
 

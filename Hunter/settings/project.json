@@ -20,6 +20,8 @@
       false,
       false,
       false,
+      true,
+      null,
       true
     ],
     [
@@ -35,6 +37,14 @@
       false,
       true,
       false
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false
     ]
   ],
   "design-resolution-height": 960,
@@ -47,7 +57,8 @@
     "UILayer",
     "Player",
     "Enemy",
-    "Charge"
+    "Charge",
+    "Gold"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
@@ -55,6 +66,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }

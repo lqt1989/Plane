@@ -11,7 +11,7 @@ require("Bullet_1")
 require("Bullet_2")
 require("Boom")
 require("Stone")
-
+require("Gold")
 
 cc.Class({
     extends: cc.Component,
@@ -50,6 +50,10 @@ cc.Class({
             type:cc.Prefab,
             default:null,
         },
+        gold:{
+            type:cc.Prefab,
+            default:null,
+        }
 
     },
 
@@ -78,6 +82,7 @@ cc.Class({
             3:{prefab:this.stone,script:"Stone",poolIndex:3,poolSize:10},
             4:{prefab:this.boom,script:"Boom",poolIndex:4,poolSize:20},
             5:{prefab:this.missile,script:"Missile",poolIndex:null,poolSize:null},
+            6:{prefab:this.gold,script:"Gold",poolIndex:5,poolSize:10},
         }
 
         var arr = Object.keys(this.Objs);
@@ -166,8 +171,10 @@ cc.Class({
 
     pause(){
         var arr = Object.keys(this.Objs);
-        for (var t = 1;t < arr.length; t++)
+        for (var t = 1;t <= arr.length; t++)
         {
+            console.log("@@@pause t is",t);
+            console.log("@@@t .length  is",this.objList[t].length);
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]
                 obj.getComponent(this.Objs[t].script).pause()
@@ -177,7 +184,7 @@ cc.Class({
 
     resume(){
         var arr = Object.keys(this.Objs);
-        for (var t = 1;t < arr.length; t++)
+        for (var t = 1;t <= arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]
@@ -196,7 +203,7 @@ cc.Class({
         //     obj.getComponent(this.Objs[i].script).setWorldSpeed(sp)
         // }
         var arr = Object.keys(this.Objs);
-        for (var t = 1;t < arr.length; t++)
+        for (var t = 1;t <= arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]              

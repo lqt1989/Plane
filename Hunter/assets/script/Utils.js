@@ -31,24 +31,42 @@ cc.Class({
 
     },
 
+    canSelect(pnode)
+    {
+        cc.loader.loadRes("img_rect1", cc.SpriteFrame, function (err, spriteFrame) {
+            var node = pnode.getChildByName("rect");
+            node.getComponent(cc.Sprite).spriteFrame= spriteFrame
+        })
+
+        cc.loader.loadRes("img_arrow2", cc.SpriteFrame, function (err, spriteFrame) {
+            var node = pnode.getChildByName("line").getChildByName("arrow")
+            node.getComponent(cc.Sprite).spriteFrame= spriteFrame
+        })
+    },
+
+
     addSelect(pnode){
-       cc.loader.loadRes("img_select", cc.SpriteFrame, function (err, spriteFrame) {
-            var node = new cc.Node();
-            node.name = "select"
-            var sprite = node.addComponent(cc.Sprite);
-            sprite.spriteFrame = spriteFrame
-            node.x = 25
-            node.y = 25
-            node.parent = pnode
+       cc.loader.loadRes("img_rect2", cc.SpriteFrame, function (err, spriteFrame) {
+            var node = pnode.getChildByName("rect");
+           node.getComponent(cc.Sprite).spriteFrame= spriteFrame
+        })
+        cc.loader.loadRes("img_arrow2", cc.SpriteFrame, function (err, spriteFrame) {
+            var node = pnode.getChildByName("line").getChildByName("arrow")
+            node.getComponent(cc.Sprite).spriteFrame= spriteFrame
         })
     },
     removeSelect(pnode)
     {
         if (pnode != null)
         {
-            var node = pnode.getChildByName("select")
-            if (node != null)
-            node.destroy()
+            cc.loader.loadRes("img_rect", cc.SpriteFrame, function (err, spriteFrame) {
+                var node = pnode.getChildByName("rect");
+                node.getComponent(cc.Sprite).spriteFrame= spriteFrame
+            })
+            cc.loader.loadRes("img_arrow1", cc.SpriteFrame, function (err, spriteFrame) {
+                var node = pnode.getChildByName("line").getChildByName("arrow")
+                node.getComponent(cc.Sprite).spriteFrame= spriteFrame
+            })
         }
     },
   

@@ -12,10 +12,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        m_select:{
-            type:cc.Node,
-            default:null,
-        },
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -28,7 +25,7 @@ cc.Class({
     },
 
     start () {
-        this.m_select.active = true
+        
     },
 
     sendata(){
@@ -50,17 +47,20 @@ cc.Class({
         else{
             this.node.getChildByName("line").active = true
             if (this.data.id === 5)
-            this.node.getChildByName("line").rotation = 0
+            {this.node.getChildByName("line").height = 100
+            this.node.getChildByName("line").rotation = -60
+            this.node.getChildByName("line").getChildByName("arrow").y = 75
+                }
+            else if(this.data.id === 2)
+            {this.node.getChildByName("line").height = 100
+            this.node.getChildByName("line").rotation = -120
+            this.node.getChildByName("line").getChildByName("arrow").y = 75}
             else
-            this.node.getChildByName("line").rotation = -90
-
-            if(this.data.id === 8)
             {
-                var node =  cc.instantiate(this.node.getChildByName("line"))
-                node.parent = this.node 
-                node.zIndex = -1
-                node.rotation = 0
+            this.node.getChildByName("line").rotation = -90
+            this.node.getChildByName("line").getChildByName("arrow").y = 65
             }
+
         }
 
         var self = this

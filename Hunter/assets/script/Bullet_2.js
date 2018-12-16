@@ -35,6 +35,7 @@ cc.Class({
 
     initData (idx,prarm){
         this.idx_type = idx
+        this.node.getComponent("Nature").idx_type = this.idx_type
         this.rotation = prarm
         this.node.rotation = this.rotation
         console.log("@@rotation is",this.rotation);
@@ -44,7 +45,8 @@ cc.Class({
         //this.speed = sp
     },
     onCollisionEnter: function (other, self) {
-        if (other.node.getComponent("Nature").idx_type != this.idx_type)
+        if (other.node.getComponent("Nature").idx_type != this.idx_type&&
+        other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)
         {
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)

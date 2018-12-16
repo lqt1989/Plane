@@ -49,7 +49,7 @@ cc.Class({
     onLoad () {
         
         this.techItemList = new Array()  
-        for (var i = 1;i <= 16;i++){
+        for (var i = 1;i <= 15;i++){
             var obj = cc.instantiate(this.techItem);
             obj.getComponent("TechItem").setData(TechData[i])
             obj.parent = this.node 
@@ -57,7 +57,7 @@ cc.Class({
         }
 
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
-            log("@@11111")
+        
             this.techDes.active = false
         },this)
         this.node.on("showTech",function(event){
@@ -89,6 +89,7 @@ cc.Class({
         if (this.isActiveTech(id))
         {
             obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
+            
            //obj.getComponent("TechItem").setSelect()
            this.node.getComponent("Utils").addSelect(obj)
         }
@@ -97,15 +98,17 @@ cc.Class({
             this.node.getComponent("Utils").removeSelect(obj)
             //obj.getComponent("TechItem").setSelect()
             if (this.canBeActiveTech(id) === 2)
-            {obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
+            {   this.node.getComponent("Utils").canSelect(obj)
+                obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
             else{
+                this.node.getComponent("Utils").removeSelect(obj)
                 obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.GRAY)
             }
         }
     },
     //刷新科技树
     refreshTech(){
-        for(var i = 1;i <= 16; i ++)
+        for(var i = 1;i <= 15; i ++)
         {
             this.refreshTechItem(i)
         }

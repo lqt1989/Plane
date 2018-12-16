@@ -17,8 +17,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.node.getComponent("Nature").atk = 50
-        this.node.getComponent("Nature").idx_type =  this.idx_type
+
         this.maxHp = 50
         this.score = 3
         
@@ -37,18 +36,14 @@ cc.Class({
         this.isPause = false
         
         var time = this.node.scale * 20
-        // if (this.node.scale > 0.85)
-        //     time = 10
-        // else 
-        //     time = Math.random() * 5 + 5
         var action = cc.repeatForever(cc.rotateBy(time,180))
         this.node.runAction(action)
 
-        //this.node.rotation = Math.random() * 360
     },
 
     initData (idx){
         this.idx_type = idx
+        this.node.getComponent("Nature").idx_type =  this.idx_type
     },
 
     setWorldSpeed(sp){

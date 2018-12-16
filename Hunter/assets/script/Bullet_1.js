@@ -35,12 +35,14 @@ cc.Class({
 
     initData (idx){
         this.idx_type = idx
+        this.node.getComponent("Nature").idx_type = this.idx_type
     },
     setWorldSpeed(sp){
         //this.speed = sp
     },
     onCollisionEnter: function (other, self) {
-        if (other.node.getComponent("Nature").idx_type != this.idx_type)
+        if (other.node.getComponent("Nature").idx_type != this.idx_type &&
+        other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)
         {
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)

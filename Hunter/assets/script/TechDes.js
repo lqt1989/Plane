@@ -33,7 +33,7 @@ cc.Class({
 
     onLoad () {
         this.node.on(cc.Node.EventType.TOUCH_START,function(event){
-            log("@@@@on tech des touch")
+         
             event.stopPropagation();
         },this)
     },

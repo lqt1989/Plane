@@ -203,6 +203,7 @@ cc.Class({
                 his = score
                 cc.sys.localStorage.setItem("history",his)
             }
+            //this.saveScoreToWx(toString(score))
             this.lbl_historyscore.string = "历史最高：" + his
             this.lbl_finalscore.string = "本次得分：" + score
             this.gameover.active = true
@@ -220,6 +221,25 @@ cc.Class({
         this.winWidth = windowSize.width
         this.upNode.y = this.winHeight/2
         this.downNode.y = -this.winHeight/2
+    },
+
+    //存最高分到微信
+    saveScoreToWx(score)
+    {
+        wx.setUserCloudStorage({
+            KVDataList: [{ key: 'score', value: score }],
+            success: res => {
+                console.log("success===",res);
+                // 让子域更新当前用户的最高分，因为主域无法得到getUserCloadStorage;
+                // let openDataContext = wx.getOpenDataContext();
+                // openDataContext.postMessage({
+                //     type: 'updateMaxScore',
+                // });
+            },
+            fail: res => {
+                console.log("fail=====",res);
+            }
+        });
     },
 
     start () {
@@ -242,8 +262,9 @@ cc.Class({
         this.countPerLoop = 6;
         this.batchList = new Array(0,0,0,0,0,0)
         this.mapHeight = 1280
-        //陨石批次
+        //刷怪批次
         this.stoneBatch = 0
+        this.goldBatch = 0
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
@@ -286,19 +307,16 @@ cc.Class({
             this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
         }
     },
-    //更新里程，刷怪，每350整像素检测一次刷怪
-    updateMileage()
+    //更新里程，刷怪，每300整像素检测一次刷怪
+    updateStone()
     {
-        this.mileage += this.worldSpeed
         var batch = Math.floor(this.mileage/300) + 1
         //batch = batch-((this.loopTimes-1) *this.countPerLoop)
         if (this.stoneBatch !== batch)
         {
             this.stoneBatch = batch
-            var count =  Math.floor(Math.random()*4) + 1
-            console.log("@@@count is UUU>>>",count);
-            
-            for(var i = 1;i < count;i++)
+            var count =  Math.floor(Math.random()*3) + 1           
+            for(var i = 0;i < count;i++)
             {
                 var x = Math.floor(Math.random()*440) + 100
                 var y = Math.floor(Math.random()*400) + 50
@@ -308,6 +326,31 @@ cc.Class({
             }
         }
     },
+    //刷金币
+    updateGoldCoin()
+    {
+        var batch = Math.floor(this.mileage/600) + 1
+        if(this.goldBatch !== batch%6)
+        {
+            this.goldBatch = batch%6
+            //this.goldBatch = this.goldBatch>6?1:this.goldBatch
+            var cfg = Constant.Golds[this.goldBatch]
+            for(var i = 1; i< cfg.count; i++)
+            {
+                this.fightLayer.createObject(Constant.Objs.GoldIcon,cfg.startx + i*35,this.winHeight+20);
+            }
+        }
+    },
+    //刷小怪
+    updateMonster()
+    {
+
+    },
+    updateBoss()
+    {
+
+    },
+
     //更新世界速度
     updateWorldSpeed()
     {
@@ -323,27 +366,15 @@ cc.Class({
         }
         this.fightLayer.setWorldSpeed(this.worldSpeed)    
     },
-    //刷金币
-    updateGoldCoin()
-    {
-
-    },
-    //刷小怪
-    updateMonster()
-    {
-
-    },
-    updateBoss()
-    {
-
-    },
 
     update (dt) {
        if (this.isPause === false){
-            this.updateMapLayer()
-            this.updateMileage()
+            this.mileage += this.worldSpeed
             this.updateWorldSpeed()
-
+            this.updateMapLayer()
+            this.updateStone()
+            this.updateGoldCoin()
+            
        }
     },
 });
