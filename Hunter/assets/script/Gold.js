@@ -12,30 +12,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+    },
+    onLoad(){
+        
     },
 
-    initData (idx){
-        this.idx_type = idx
-        this.node.getComponent("Nature").idx_type =  this.idx_type  
-    },
-    setWorldSpeed(sp){
-        this.speed = sp 
-    },
     start () {
         this.init()  
     },
@@ -43,33 +24,24 @@ cc.Class({
         this.init()
     },
 
-    pause(){
-        //log("@@@@@@@@pause!!!!!!")
-        this.isPause = true
-    },
-    resume(){
-        this.isPause = false
-    },
     init(){
-        this.isPause = false
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init();
     },
 
     update (dt) {
-        if (this.isPause === false)
+        if ( this.nature.isPause === false)
         {
-            this.node.y -= this.speed
-            this.mileage += this.speed
-            if (this.mileage >= 1800)
+            this.node.y -= this.nature.speed
+            this.nature.mileage += this.nature.speed
+            if (this.nature.mileage >= 1800)
             {
                 this.destorySelf()
             }
         }
     },
 
-    onCollisionEnter: function (other, self) {  
-        //this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
-        if (other.node.getComponent("Nature").idx_type != Constant.Objs.Bullet_1 &&
-        other.node.getComponent("Nature").idx_type != Constant.Objs.Bullet_2)    
+    onCollisionEnter: function (other, self) {   
         this.destorySelf()   
     },
 
@@ -78,7 +50,7 @@ cc.Class({
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
-        data[1] = this.idx_type
+        data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
     },

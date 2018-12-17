@@ -14,12 +14,8 @@ cc.Class({
     properties: {
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     onLoad () {
-        this.addSpeed = 0.5
-        this.node.getComponent("Nature").atk = 1
-        this.node.getComponent("Nature").idx_type = this.idx_type
+
     },
     start () {
         this.init()
@@ -28,22 +24,17 @@ cc.Class({
         this.init()
     },
     init(){
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init();
+        this.nature.atk = 1
         this.speed = 16
         this.mileage = 0
-        this.isPause = false
     },
 
-    initData (idx){
-        this.idx_type = idx
-        this.node.getComponent("Nature").idx_type = this.idx_type
-    },
-    setWorldSpeed(sp){
-        //this.speed = sp
-    },
     onCollisionEnter: function (other, self) {
-        if (other.node.getComponent("Nature").idx_type != this.idx_type &&
-        other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)
-        {
+        // if (other.node.getComponent("Nature").idx_type != this.idx_type &&
+        // other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)
+        // {
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)
             data[0] = Constant.Objs.Boom
@@ -53,13 +44,12 @@ cc.Class({
             this.node.dispatchEvent(Custom_Event)
 
             this.destorySelf()
-        }
+        //}
     },
 
     update (dt) {
-        if (this.isPause === false)
-        {
-            //this.speed += this.addSpeed
+        if ( this.nature.isPause === false)
+        {           
             this.node.y += this.speed;
             this.mileage += this.speed
         
@@ -69,31 +59,15 @@ cc.Class({
             }
         }
     },
+
     destorySelf(){
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
-        data[1] = this.idx_type
+        data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
     },
-    pause(){
-        this.isPause = true
-    },
-    resume(){
-        this.isPause = false
-    },
 
-    //1:散弹 2.贯通
-    setType(t,index,total){
-        if(t === 1)
-        {
-
-        }
-        else if(t === 2)
-        {
-
-        }
-    },
 });
 
