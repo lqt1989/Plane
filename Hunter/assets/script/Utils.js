@@ -33,7 +33,7 @@ cc.Class({
 
     canSelect(pnode)
     {
-        cc.loader.loadRes("img_rect1", cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes("img_rect", cc.SpriteFrame, function (err, spriteFrame) {
             var node = pnode.getChildByName("rect");
             node.getComponent(cc.Sprite).spriteFrame= spriteFrame
         })
