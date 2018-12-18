@@ -95,9 +95,7 @@ cc.Class({
             var cfg = this.Objs[i]
             var poolInx = cfg.poolIndex
             if ( !this.objPool.hasOwnProperty(poolInx))
-            {
-                console.log("@crea poll idx is",poolInx);
-                
+            {                
                 this.objPool[poolInx] = new cc.NodePool(cfg.script)
                 for (let j = 0; j < cfg.poolSize; ++j)
                 {
@@ -124,6 +122,7 @@ cc.Class({
     createObject(idx_type,x,y,param){   
         var obj = null
         var cfg = this.Objs[idx_type]
+        
         if (cfg.poolIndex === null)
         {
             obj = cc.instantiate(cfg.prefab);
@@ -141,8 +140,7 @@ cc.Class({
             obj.parent = this.node; 
             obj.x = x
             obj.y = y
-            obj.getComponent(cfg.script).initData(idx_type,param)
-            obj.getComponent(cfg.script).setWorldSpeed(this.worldSpeed)
+            obj.getComponent("Nature").initData(idx_type,this.worldSpeed,param)
             this.objList[idx_type].push(obj)   
         }
     },
@@ -150,7 +148,11 @@ cc.Class({
     destroyObject(node,idx_type){
         var cfg = this.Objs[idx_type]
         if (cfg.poolIndex === null)
-        { node.destroy()}
+        {             
+            var index = this.objList[idx_type].indexOf(node)
+            this.objList[idx_type].splice(index,1)
+            node.destroy()
+        }
         else 
         {
             var index = this.objList[idx_type].indexOf(node)
@@ -173,11 +175,9 @@ cc.Class({
         var arr = Object.keys(this.Objs);
         for (var t = 1;t <= arr.length; t++)
         {
-            console.log("@@@pause t is",t);
-            console.log("@@@t .length  is",this.objList[t].length);
             for ( var i = 0; i <this.objList[t].length; i++){
                 var obj = this.objList[t][i]
-                obj.getComponent(this.Objs[t].script).pause()
+                obj.getComponent("Nature").pause()
             }
         }
     },
@@ -187,27 +187,22 @@ cc.Class({
         for (var t = 1;t <= arr.length; t++)
         {
             for ( var i = 0; i <this.objList[t].length; i++){
-                var obj = this.objList[t][i]
-                console.log("i is ",i);
-                console.log("@@script scriptis",this.Objs[t].script);
-                
-                obj.getComponent(this.Objs[t].script).resume()
+                var obj = this.objList[t][i]             
+                obj.getComponent("Nature").resume()
             }
         }
     },
 
     setWorldSpeed(sp){
         this.worldSpeed = sp
-        // for (var i = 0; i < this.objList[1].length;i++){
-        //     var obj = this.objList[1][i]
-        //     obj.getComponent(this.Objs[i].script).setWorldSpeed(sp)
-        // }
         var arr = Object.keys(this.Objs);
         for (var t = 1;t <= arr.length; t++)
         {
-            for ( var i = 0; i <this.objList[t].length; i++){
-                var obj = this.objList[t][i]              
-                obj.getComponent(this.Objs[t].script).setWorldSpeed(sp)
+            if (this.objList.hasOwnProperty(t)) {
+                for ( var i = 0; i <this.objList[t].length; i++){
+                    var obj = this.objList[t][i]   
+                    obj.getComponent("Nature").setWorldSpeed(sp)               
+                }
             }
         }
     },

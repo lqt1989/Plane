@@ -15,47 +15,35 @@ cc.Class({
 
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     onLoad () {
         
-        this.node.zIndex = 11
     },
 
     start () {
-        var anim = this.getComponent(cc.Animation);
-        anim.play('boom_1');
-
-    },
-
-    initData (idx){
-        this.idx_type = idx
+        this.init()
     },
 
     reuse(){
+        this.init()
+    },
+
+    init(){
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init()
         var anim = this.getComponent(cc.Animation);
         anim.play('boom_1');
     },
-    setWorldSpeed(sp){
-        this.speed = sp
-    },
+
     onAniCompleted(string) {
-        //console.log('onAnimCompleted: param1[%s]',string);
         this.destorySelf()
     },
     destorySelf(){
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
-        data[1] = this.idx_type
+        data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
-    },
-    pause(){
-        this.isPause = true
-    },
-    resume(){
-        this.isPause = false
     },
     // update (dt) {},
 });

@@ -17,9 +17,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.addSpeed = 0.3
-        this.node.getComponent("Nature").atk = 3
-        this.node.getComponent("Nature").idx_type = this.idx_type
+
     },
     start () {
         this.init()
@@ -28,16 +26,14 @@ cc.Class({
         this.init()
     },
 
-    initData (idx){
-        this.idx_type = idx
-    },
-
     init(){
+        this.nature = this.node.getComponent("Nature")
+        this.nature.atk = 3
         this.speed = 1
         this.mileage = 0
-        this.isPause = false
         this.node.scale = 1
-
+        this.nature.init()
+        
         var action1 = cc.sequence(cc.moveBy(1,0,150),cc.callFunc(function(){
             var Custom_Event = new cc.Event.EventCustom("objCreate",true)
             var data = new Array(2)
@@ -81,7 +77,7 @@ cc.Class({
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
-        data[1] = this.idx_type
+        data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
     },

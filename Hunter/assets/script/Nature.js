@@ -14,14 +14,37 @@ cc.Class({
     properties: {
         atk:0,
         def:0,
-        idx_type:0,
     },
 
     // onLoad () {},
+    initData(idx_type,worldspeed,param)
+    {
+        this.idx_type = idx_type
+        this.speed = worldspeed
+        this.param = param
+    },
+
+    setWorldSpeed(speed)
+    {
+        this.speed = speed
+    },
+
+    init(){
+        this.isPause = false
+        this.mileage = 0
+    },
 
     start () {
 
     },
+
+    pause(){
+        this.isPause = true
+    },
+    resume(){
+        this.isPause = false
+    },
+    
 
     // update (dt) {},
 });

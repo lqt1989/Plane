@@ -80,7 +80,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 2,
+    "groupIndex": 3,
     "_id": ""
   },
   {
@@ -208,7 +208,6 @@
     "_enabled": true,
     "atk": 0,
     "def": 0,
-    "idx_type": 0,
     "_id": ""
   },
   {

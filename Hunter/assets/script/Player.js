@@ -219,23 +219,20 @@ cc.Class({
     },
 
     onCollisionEnter: function (other, self) {       
-        //console.log("other.node.getComponent().idx_type is",other.node.getComponent("Nature").idx_type);
-        
-            if (other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)    
+        if (other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)    
+        {
+            this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)          
+            if (this.tech[5] > 0)
             {
-                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Boom,this.node.x,this.node.y)          
-                if (this.tech[5] > 0)
-                {
-                    this.tech[5] -= 1
-                    this.node.runAction(cc.sequence(cc.delayTime(10),cc.callFunc(function(){this.tech[5]+=1},this)))
-                }
-                else 
-                {
-                    var Custom_Event = new cc.Event.EventCustom("gameover",true)
-                    this.node.dispatchEvent(Custom_Event)  
-                }
+                this.tech[5] -= 1
+                this.node.runAction(cc.sequence(cc.delayTime(10),cc.callFunc(function(){this.tech[5]+=1},this)))
             }
-        
+            else 
+            {
+                var Custom_Event = new cc.Event.EventCustom("gameover",true)
+                this.node.dispatchEvent(Custom_Event)  
+            }
+        }    
     },
 
     addScore(value){ 
@@ -254,11 +251,8 @@ cc.Class({
                         {this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x,this.node.y)}
                     else{
                         if (this.tech[0]%2 === 0) //贯通
-                        {       
-                            
-                            var startX = -((this.tech[0] -1) *10/2)   
-                            
-                            
+                        {                                  
+                            var startX = -((this.tech[0] -1) *10/2)                                                       
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
                                 var x = startX + (i-1) * 10
@@ -271,9 +265,7 @@ cc.Class({
                             var stratr = -(this.tech[0]-1)*15/2
                             for(var i = 1;i <= this.tech[0]; i++)
                             {
-                                var r = stratr + (i-1)*15
-                                console.log("@@@stratr is",stratr);
-                                
+                                var r = stratr + (i-1)*15                                
                                 this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_2,this.node.x,this.node.y,r)
                             }}
                         }

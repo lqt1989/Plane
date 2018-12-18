@@ -17,10 +17,8 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-
         this.maxHp = 50
-        this.score = 3
-        
+        this.score = 3   
     },
     start () {
         this.init()  
@@ -29,32 +27,21 @@ cc.Class({
         this.init()
     },
     init(){
-        
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init()
+
         this.mileage = 0
         this.hp = 50 * this.node.scale
         this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
-        this.isPause = false
+        this.speed =  this.nature.speed
         
         var time = this.node.scale * 20
         var action = cc.repeatForever(cc.rotateBy(time,180))
         this.node.runAction(action)
-
     },
 
-    initData (idx){
-        this.idx_type = idx
-        this.node.getComponent("Nature").idx_type =  this.idx_type
-    },
-
-    setWorldSpeed(sp){
-        this.speed = sp * (2 - this.node.scale)
-    },
-
-    onCollisionEnter: function (other, self) {
-    
+    onCollisionEnter: function (other, self) {   
         var atk = other.node.getComponent("Nature").atk
-
-        //console.log("collison atk is >>>",atk);
         if (atk)
         {
             this.hp -= atk 
@@ -86,13 +73,13 @@ cc.Class({
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
-        data[1] = this.idx_type
+        data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
     },
 
     update (dt) {
-        if (this.isPause === false)
+        if ( this.nature.isPause === false)
         {
             this.node.y -= this.speed
             this.mileage += this.speed
@@ -101,12 +88,5 @@ cc.Class({
                 this.destorySelf()
             }
         }
-    },
-
-    pause(){
-        this.isPause = true
-    },
-    resume(){
-        this.isPause = false
     },
 });

@@ -330,13 +330,16 @@ cc.Class({
     updateGoldCoin()
     {
         var batch = Math.floor(this.mileage/600) + 1
-        if(this.goldBatch !== batch%6)
+        if(this.goldBatch !== (batch%6) + 1)
         {
-            this.goldBatch = batch%6
+            this.goldBatch = (batch%6) + 1
             //this.goldBatch = this.goldBatch>6?1:this.goldBatch
             var cfg = Constant.Golds[this.goldBatch]
+            console.log("this.goldBatch is",this.goldBatch);
+            
             for(var i = 1; i< cfg.count; i++)
             {
+
                 this.fightLayer.createObject(Constant.Objs.GoldIcon,cfg.startx + i*35,this.winHeight+20);
             }
         }

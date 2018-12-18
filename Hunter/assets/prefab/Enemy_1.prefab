@@ -71,7 +71,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 0,
+    "groupIndex": 4,
     "_id": ""
   },
   {
@@ -118,7 +118,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "fc52a581-74cb-4eda-a62d-776fe7fdd6aa"
     },
     "fileId": "408ViNWR1Kd70I5OQquUdZ",
     "sync": false
