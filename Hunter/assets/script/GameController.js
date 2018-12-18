@@ -12,6 +12,7 @@ var Player = require("Player");
 var FightLayer = require("FightLayer");
 var Constant = require("Constant")
 var Technology = require("Technology")
+require("EnemyCreator")
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -251,6 +252,7 @@ cc.Class({
     },
 
     init () {
+        this.enemyCreator = this.node.getComponent("EnemyCreator")
         //世界速度
         this.worldSpeed = 2;
         this.worldSpeedState = 1;
@@ -315,15 +317,18 @@ cc.Class({
         if (this.stoneBatch !== batch)
         {
             this.stoneBatch = batch
-            var count =  Math.floor(Math.random()*3) + 1           
+            var count =  Math.floor(Math.random()*3)   
+            console.log("@@stone count is ",count);
+                    
             for(var i = 0;i < count;i++)
             {
                 var x = Math.floor(Math.random()*440) + 100
-                var y = Math.floor(Math.random()*400) + 50
+                var y = Math.floor(Math.random()*150) + 50
                 var scale = (10 - Math.floor(Math.random()*7))/10
                 this.fightLayer.createObject(Constant.Objs.Stone,x,this.winHeight+y,scale);
                 this.batchList[batch] = this.loopTimes
             }
+            this.enemyCreator.createEnemySequence(1,count)
         }
     },
     //刷金币

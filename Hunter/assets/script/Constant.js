@@ -7,6 +7,7 @@ var Constant =
         Boom:4,
         Missile:5,
         GoldIcon:6,
+        Enemy_1:7,
     },
 
     //m_type:1.开启科技  2.更改玩家属性  3.特殊判断

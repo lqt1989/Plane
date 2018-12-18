@@ -42,7 +42,7 @@ cc.Class({
             type:cc.Prefab,
             default:null,
         },
-        enemy_1:{
+        enemy1:{
             type:cc.Prefab,
             default:null,
         },
@@ -83,6 +83,7 @@ cc.Class({
             4:{prefab:this.boom,script:"Boom",poolIndex:4,poolSize:20},
             5:{prefab:this.missile,script:"Missile",poolIndex:null,poolSize:null},
             6:{prefab:this.gold,script:"Gold",poolIndex:5,poolSize:10},
+            7:{prefab:this.enemy1,script:"Enemy_1",poolIndex:6,poolSize:15},
         }
 
         var arr = Object.keys(this.Objs);

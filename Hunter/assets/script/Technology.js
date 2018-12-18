@@ -75,7 +75,9 @@ cc.Class({
     start () {
         this.init()
     },
-
+    reStart(){
+        this.start()
+    },
     init(){
         this.techCount = 10   //剩余科技点
         this.techList = new Array()  
@@ -85,24 +87,27 @@ cc.Class({
     },
     //刷新科技
     refreshTechItem(id){
-        var obj = this.techItemList[id]
-        if (this.isActiveTech(id))
+        if (this.techItemList != null)
         {
-            obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
-            
-           //obj.getComponent("TechItem").setSelect()
-           this.node.getComponent("Utils").addSelect(obj)
-        }
-        else
-        {
-            this.node.getComponent("Utils").removeSelect(obj)
+            var obj = this.techItemList[id]           
+            if (this.isActiveTech(id))
+            {
+                obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)
+                
             //obj.getComponent("TechItem").setSelect()
-            if (this.canBeActiveTech(id) === 2)
-            {   this.node.getComponent("Utils").canSelect(obj)
-                obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
-            else{
+            this.node.getComponent("Utils").addSelect(obj)
+            }
+            else
+            {
                 this.node.getComponent("Utils").removeSelect(obj)
-                obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.GRAY)
+                //obj.getComponent("TechItem").setSelect()
+                if (this.canBeActiveTech(id) === 2)
+                {   this.node.getComponent("Utils").canSelect(obj)
+                    obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.NORMAL)}
+                else{
+                    this.node.getComponent("Utils").removeSelect(obj)
+                    obj.getChildByName("icon").getComponent(cc.Sprite).setState(cc.Sprite.State.GRAY)
+                }
             }
         }
     },
@@ -226,8 +231,6 @@ cc.Class({
         this.lbl_des.getComponent(cc.Label).string = data.name
     },
 
-    reStart(){
-        this.start()
-    },
+
     // update (dt) {},
 });
