@@ -35,18 +35,18 @@
     "_prefab": {
       "__id__": 6
     },
-    "_opacity": 214.2,
+    "_opacity": 214,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 46,
-      "b": 79,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
-      "height": 139
+      "width": 158,
+      "height": 145
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -61,8 +61,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": -1,
+      "x": 0.5,
+      "y": -0.5,
       "z": 1
     },
     "_rotationX": 0,
@@ -91,9 +91,9 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "f7a5ad12-033e-4503-b3bf-338e6c006353"
+      "__uuid__": "23c9a150-bab1-4b54-a6b4-87f6ca044b46"
     },
-    "_type": 0,
+    "_type": 2,
     "_sizeMode": 1,
     "_fillType": 0,
     "_fillCenter": {
@@ -103,7 +103,7 @@
     },
     "_fillStart": 0,
     "_fillRange": 0,
-    "_isTrimmedMode": true,
+    "_isTrimmedMode": false,
     "_state": 0,
     "_atlas": null,
     "_id": ""

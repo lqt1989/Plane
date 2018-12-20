@@ -267,6 +267,7 @@ cc.Class({
         //刷怪批次
         this.stoneBatch = 0
         this.goldBatch = 0
+        this.monstarBatch = 0
         //初始化地图位置
         this.map1.y = (this.mapHeight - this.winHeight)/2      
         this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
@@ -327,8 +328,7 @@ cc.Class({
                 var scale = (10 - Math.floor(Math.random()*7))/10
                 this.fightLayer.createObject(Constant.Objs.Stone,x,this.winHeight+y,scale);
                 this.batchList[batch] = this.loopTimes
-            }
-            this.enemyCreator.createEnemySequence(1,count)
+            }          
         }
     },
     //刷金币
@@ -352,7 +352,13 @@ cc.Class({
     //刷小怪
     updateMonster()
     {
+        var batch = Math.floor(this.mileage/1500) + 1
 
+        if (this.monstarBatch !== batch)
+        {
+            this.monstarBatch = batch
+            this.enemyCreator.createEnemySequence(1,5)
+        }
     },
     updateBoss()
     {
@@ -382,7 +388,7 @@ cc.Class({
             this.updateMapLayer()
             this.updateStone()
             this.updateGoldCoin()
-            
+            this.updateMonster()
        }
     },
 });

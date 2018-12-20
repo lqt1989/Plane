@@ -17,6 +17,7 @@ cc.Class({
     onLoad () {
         this.maxHp = 50
         this.score = 3   
+        this.player = cc.find("Canvas/FightLayer/Player");
     },
     start () {
         //this.init()  
@@ -31,8 +32,9 @@ cc.Class({
         this.hp = 15
         this.mileage = 0
         this.speed =  this.nature.speed
-
+        this.node.zIndex= 9
    
+        this.updateState = false
         this.doAction(1)
     },
 
@@ -50,11 +52,31 @@ cc.Class({
                 break;
         }
     },
+
+    moveToPoint(t,x,y)
+    {
+        var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
+        var target_world = this.node.convertToWorldSpaceAR(cc.v2(x,y));
+        var temp_vector = target_world.sub(self_world);
+        var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
+        this.node.rotation -= temp_angleDegrees;
+        
+        this.node.runAction(cc.moveTo(t,x,y))
+        console.log("@@@@player pos is..",this.player.getPosition().x);
+        
+    },
+
     moveToRight()
     {
-       var action = cc.sequence(cc.moveBy(6,cc.v2(600,0)),cc.delayTime(2),cc.callFunc(function(){this.destorySelf},this))
+       var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3,320,500)},this),
+                                cc.delayTime(4),
+                                cc.callFunc(function(){this.moveToPoint(3,600,700)},this),
+                                cc.delayTime(4),
+                                cc.callFunc(function(){this.destorySelf()},this))
        this.node.runAction(action)
     },
+
+
 
 
     onCollisionEnter: function (other, self) {   
@@ -85,16 +107,20 @@ cc.Class({
 
 
     destorySelf(){
-        this.node.stopAllActions()
         var Custom_Event = new cc.Event.EventCustom("objDestory",true)
         var data = new Array(2)
         data[0] = this.node
         data[1] = this.nature.idx_type
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
+        this.node.stopAllActions()
+        log("@@@destory!!!!!!!!!")
     },
 
     update (dt) {
+        if (this.updateState === true)
+        {
 
+        }
     },
 });

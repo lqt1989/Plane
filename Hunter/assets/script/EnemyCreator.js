@@ -62,16 +62,19 @@ cc.Class({
 
     leftToRight(count)
     {
-        var t = new Array();      
-        for(var i = 0; i < count ; i ++)
-        {
-            var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,-10,650,1)},this)
-            t.push(action1)
-            var action2 = cc.delayTime(0.5)
-            t.push(action2)
+        var t = new Array();     
+        if(count >= 1)
+        { 
+            for(var i = 0; i < count ; i ++)
+            {
+                var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,-10,650,1)},this)
+                t.push(action1)
+                var action2 = cc.delayTime(0.5)
+                t.push(action2)
+            }
+            var action = cc.sequence(t)
+            this.node.runAction(action)
         }
-        var action = cc.sequence(t)
-        this.node.runAction(action)
     }
 
 });
