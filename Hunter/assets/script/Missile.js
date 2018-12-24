@@ -50,6 +50,10 @@ cc.Class({
         this.node.runAction(action1)
         this.node.runAction(action2)
     },
+
+    onCreate(){
+
+    },
     setWorldSpeed(sp){
         //this.speed = sp
     },

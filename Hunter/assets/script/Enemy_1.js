@@ -26,32 +26,77 @@ cc.Class({
         this.init()
     },
     init(){
-        this.nature = this.node.getComponent("Nature")
-        this.nature.init()
-
         this.hp = 15
         this.mileage = 0
-        this.speed =  this.nature.speed
         this.node.zIndex= 9
-   
+        
         this.updateState = false
-        this.doAction(1)
     },
 
-    doAction(ai)
+    onCreate(){
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init()
+        this.speed =  this.nature.speed
+        this.actionType =  this.nature.param1      
+        this.direction = this.nature.param2
+        this.hard = this.nature.param3
+
+        this.doAction(this.actionType)
+    },
+
+    doAction(type)
     {
-        switch(ai){
+        switch(type){
             case 1:
-                this.moveToRight()
+                this.straightLine()
                 break;
             case 2:
-
+                this.straightLine()
+                break;
             case 3:
-
+                this.drift()
+                break;
+            case 4:
+                this.fixedPoint()
+                break;
             default:
                 break;
         }
     },
+
+    //折角
+    breakAngle(direction,hard){
+        var x1 = this.nature.param4.x
+        var y1 = this.nature.param4.y
+        var x2 = this.nature.param5.x
+        var y2 = this.nature.param5.y
+              
+        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x1,y1)},this),
+        cc.delayTime(2),
+        cc.callFunc(function(){this.moveToPoint(1.5,x2,y2)},this),
+        cc.delayTime(2),
+        cc.callFunc(function(){this.destorySelf()},this))
+        this.node.runAction(action)
+    },
+    //直线
+    straightLine(direction,hard){
+        var x2 = this.nature.param5.x
+        var y2 = this.nature.param5.y
+        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
+        this.node.runAction(action)
+    },
+    //漂移进场
+    drift(direction,hard){
+        var x2 = this.nature.param5.x
+        var y2 = this.nature.param5.y
+        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
+        this.node.runAction(action)
+    },
+    //定点
+    fixedPoint(direction,hard){
+
+    },
+
 
     moveToPoint(t,x,y)
     {
@@ -67,10 +112,10 @@ cc.Class({
 
     moveToRight()
     {
-       var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3,320,500)},this),
-                                cc.delayTime(4),
-                                cc.callFunc(function(){this.moveToPoint(3,600,700)},this),
-                                cc.delayTime(4),
+       var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,320,500)},this),
+                                cc.delayTime(2),
+                                cc.callFunc(function(){this.moveToPoint(1.5,680,700)},this),
+                                cc.delayTime(2),
                                 cc.callFunc(function(){this.destorySelf()},this))
        this.node.runAction(action)
     },

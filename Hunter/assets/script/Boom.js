@@ -33,7 +33,9 @@ cc.Class({
         var anim = this.getComponent(cc.Animation);
         anim.play('boom_1');
     },
+    onCreate(){
 
+    },
     onAniCompleted(string) {
         this.destorySelf()
     },

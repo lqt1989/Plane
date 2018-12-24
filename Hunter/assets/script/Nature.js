@@ -17,11 +17,15 @@ cc.Class({
     },
 
     // onLoad () {},
-    initData(idx_type,worldspeed,param)
+    initData(idx_type,worldspeed,param1,param2,param3,param4,param5)
     {
         this.idx_type = idx_type
         this.speed = worldspeed
-        this.param = param
+        this.param1 = param1       
+        this.param2 = param2
+        this.param3 = param3
+        this.param4 = param4
+        this.param5 = param5
     },
 
     setWorldSpeed(speed)
@@ -45,6 +49,4 @@ cc.Class({
         this.isPause = false
     },
     
-
-    // update (dt) {},
 });

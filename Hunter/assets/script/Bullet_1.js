@@ -30,7 +30,9 @@ cc.Class({
         this.speed = 16
         this.mileage = 0
     },
-
+    onCreate(){
+ 
+    },
     onCollisionEnter: function (other, self) {
         // if (other.node.getComponent("Nature").idx_type != this.idx_type &&
         // other.node.getComponent("Nature").idx_type != Constant.Objs.GoldIcon)

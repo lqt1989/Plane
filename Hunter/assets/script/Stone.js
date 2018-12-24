@@ -29,15 +29,19 @@ cc.Class({
     init(){
         this.nature = this.node.getComponent("Nature")
         this.nature.init()
+        this.speed =  this.nature.speed
 
         this.mileage = 0
         this.hp = 50 * this.node.scale
         this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
-        this.speed =  this.nature.speed
+        
         
         var time = this.node.scale * 20
         var action = cc.repeatForever(cc.rotateBy(time,180))
         this.node.runAction(action)
+    },
+    onCreate(){
+
     },
 
     onCollisionEnter: function (other, self) {   

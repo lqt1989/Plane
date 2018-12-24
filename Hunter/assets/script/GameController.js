@@ -132,7 +132,7 @@ cc.Class({
 
         this.node.on("objCreate",function(event){
             var data = event.getUserData()
-            this.fightLayer.createObject(data[0],data[1],data[2],data[3])           
+            this.fightLayer.createObject(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7])           
         },this)
 
         this.node.on("objDestory",function(event){
@@ -352,12 +352,12 @@ cc.Class({
     //刷小怪
     updateMonster()
     {
-        var batch = Math.floor(this.mileage/1500) + 1
+        var batch = Math.floor(this.mileage/500) + 1
 
         if (this.monstarBatch !== batch)
         {
             this.monstarBatch = batch
-            this.enemyCreator.createEnemySequence(1,5)
+            this.enemyCreator.createEnemySequence(1,1)
         }
     },
     updateBoss()
@@ -385,7 +385,7 @@ cc.Class({
        if (this.isPause === false){
             this.mileage += this.worldSpeed
             this.updateWorldSpeed()
-            this.updateMapLayer()
+            //this.updateMapLayer()
             this.updateStone()
             this.updateGoldCoin()
             this.updateMonster()

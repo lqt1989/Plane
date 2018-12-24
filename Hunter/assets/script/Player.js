@@ -229,8 +229,8 @@ cc.Class({
             }
             else 
             {
-                var Custom_Event = new cc.Event.EventCustom("gameover",true)
-                this.node.dispatchEvent(Custom_Event)  
+                //var Custom_Event = new cc.Event.EventCustom("gameover",true)
+                //this.node.dispatchEvent(Custom_Event)  
             }
         }    
     },

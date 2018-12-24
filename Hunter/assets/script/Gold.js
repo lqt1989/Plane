@@ -29,6 +29,10 @@ cc.Class({
         this.nature.init();
     },
 
+    onCreate(){
+
+    },
+
     update (dt) {
         if ( this.nature.isPause === false)
         {

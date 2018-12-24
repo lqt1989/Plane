@@ -8,7 +8,7 @@
   "subMetas": {
     "img_enemy1": {
       "ver": "1.0.3",
-      "uuid": "23c9a150-bab1-4b54-a6b4-87f6ca044b46",
+      "uuid": "228f90b4-dd6e-45a2-8263-795afd0fa45f",
       "rawTextureUuid": "1c710a8e-e2b7-4288-8897-03c242a41e7e",
       "trimType": "auto",
       "trimThreshold": 1,
@@ -17,10 +17,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 238,
-      "height": 202,
-      "rawWidth": 238,
-      "rawHeight": 202,
+      "width": 153,
+      "height": 137,
+      "rawWidth": 153,
+      "rawHeight": 137,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

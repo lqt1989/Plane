@@ -28,54 +28,82 @@ cc.Class({
         }
     },
 
-    checkCreateSequeue(){
-        
 
-    },
-
-    //传参：1.类型 2.顺位 3.难度
-    createEnemy(index,x,y,ai){
-        var Custom_Event = new cc.Event.EventCustom("objCreate",true)
-        var data = new Array(3)
-        data[0] = index
-        data[1] = x
-        data[2] = y
-        data[3] = ai
-        Custom_Event.setUserData(data)
-        this.node.dispatchEvent(Custom_Event)
-
-    },
-
-    createEnemySequence(index,num){
-        log("@@@@@==================create star!!!!!")
+    createEnemySequence(index,hard){
+        log("@@@@@@@@@@@@@+================createEnemySequence!!!!========================")
         switch(index){
             case 1:
-                this.leftToRight(num);
+                this.createEnemy1(1,1,hard);
+                break;
             case 2:
-
+                this.createEnemy1(1,2,hard);
+                break;
             case 3:
 
+                break;
             default:
                 break;
         }
 
     },
 
-    leftToRight(count)
+    getRefreshPoint(direction)
     {
-        var t = new Array();     
-        if(count >= 1)
-        { 
-            for(var i = 0; i < count ; i ++)
-            {
-                var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,-10,650,1)},this)
-                t.push(action1)
-                var action2 = cc.delayTime(0.5)
-                t.push(action2)
-            }
-            var action = cc.sequence(t)
-            this.node.runAction(action)
+        var x
+        var y = Math.random()*350 + 350
+        if(direction === 1)
+        {
+            x = -60
         }
-    }
+        else{
+            x = 700
+        }
+        return cc.p(x,y)
+    },
+
+    //direction:1左2右
+    //小型敌人
+    createEnemy1(actionType,direction,hard){
+        var p = this.getRefreshPoint(direction)
+        var count = Math.floor(hard/2) + 4    
+        var t = new Array();
+
+        var x1 = Math.random() * 150 - 75 + 320
+        var y1 = Math.random() * 550 + 250
+        var p1 = cc.p(x1,y1)
+
+        var x2 = 700
+        var y2 = Math.random() * 350 + 350
+        var p2 = cc.p(x2,y2)
+
+        for(var i = 0; i < count ; i ++)
+        {          
+           var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,p.x,p.y,actionType,direction,hard,p1,p2)},this)
+            t.push(action1)
+            var action2 = cc.delayTime(1)
+            t.push(action2)
+        }
+        var action = cc.sequence(t)
+        this.node.runAction(action)
+    },
+
+
+
+     //传参：1.类型 2.顺位 3.难度
+     createEnemy(index,x,y,actionType,direction,hard,p1,p2){
+        var Custom_Event = new cc.Event.EventCustom("objCreate",true)
+        var data = new Array(8)
+        data[0] = index
+        data[1] = x
+        data[2] = y
+        data[3] = actionType
+        data[4] = direction
+        data[5] = hard
+        data[6] = p1
+        data[7] = p2
+        Custom_Event.setUserData(data)
+        this.node.dispatchEvent(Custom_Event)
+    }, 
+
 
 });

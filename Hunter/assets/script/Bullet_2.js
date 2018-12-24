@@ -30,6 +30,9 @@ cc.Class({
         this.mileage = 0
         this.nature.init();
     },
+    onCreate(){
+
+    },
 
     onCollisionEnter: function (other, self) {
         var Custom_Event = new cc.Event.EventCustom("objCreate",true)
