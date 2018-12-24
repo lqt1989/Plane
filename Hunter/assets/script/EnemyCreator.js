@@ -33,6 +33,7 @@ cc.Class({
 
     },
 
+    //传参：1.类型 2.顺位 3.难度
     createEnemy(index,x,y,ai){
         var Custom_Event = new cc.Event.EventCustom("objCreate",true)
         var data = new Array(3)

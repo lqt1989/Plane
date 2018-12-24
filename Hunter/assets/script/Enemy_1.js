@@ -62,8 +62,7 @@ cc.Class({
         this.node.rotation -= temp_angleDegrees;
         
         this.node.runAction(cc.moveTo(t,x,y))
-        console.log("@@@@player pos is..",this.player.getPosition().x);
-        
+        console.log("@@@@player pos is..",this.player.getPosition().x);    
     },
 
     moveToRight()
