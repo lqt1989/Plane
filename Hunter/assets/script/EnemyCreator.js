@@ -92,15 +92,19 @@ cc.Class({
      //传参：1.类型 2.顺位 3.难度
      createEnemy(index,x,y,actionType,direction,hard,p1,p2){
         var Custom_Event = new cc.Event.EventCustom("objCreate",true)
+        var param = new Array(5)
+        param[0] = actionType
+        param[1]= direction
+        param[2]= hard
+        param[3]= p1
+        param[4] = p2
+
         var data = new Array(8)
         data[0] = index
         data[1] = x
         data[2] = y
-        data[3] = actionType
-        data[4] = direction
-        data[5] = hard
-        data[6] = p1
-        data[7] = p2
+        data[3] = param
+
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
     }, 

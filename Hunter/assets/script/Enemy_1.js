@@ -30,28 +30,31 @@ cc.Class({
         this.mileage = 0
         this.node.zIndex= 9
         
-        this.updateState = false
+        //this.updateState = false
     },
 
     onCreate(){
         this.nature = this.node.getComponent("Nature")
         this.nature.init()
         this.speed =  this.nature.speed
-        this.actionType =  this.nature.param1      
-        this.direction = this.nature.param2
-        this.hard = this.nature.param3
-
+        this.actionType =  this.nature.param[0]    
+        this.direction = this.nature.param[1]
+        this.hard = this.nature.param[2]
+        //this.param = this.nature.param
+        console.log("@@@actionType is",this.actionType);
+        
         this.doAction(this.actionType)
+
     },
 
     doAction(type)
     {
         switch(type){
             case 1:
-                this.straightLine()
+                this.drift()
                 break;
             case 2:
-                this.straightLine()
+                this.drift()
                 break;
             case 3:
                 this.drift()
@@ -66,10 +69,10 @@ cc.Class({
 
     //折角
     breakAngle(direction,hard){
-        var x1 = this.nature.param4.x
-        var y1 = this.nature.param4.y
-        var x2 = this.nature.param5.x
-        var y2 = this.nature.param5.y
+        var x1 = this.nature.param[3].x
+        var y1 = this.nature.param[3].y
+        var x2 = this.nature.param[4].x
+        var y2 = this.nature.param[4].y
               
         var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x1,y1)},this),
         cc.delayTime(2),
@@ -80,15 +83,15 @@ cc.Class({
     },
     //直线
     straightLine(direction,hard){
-        var x2 = this.nature.param5.x
-        var y2 = this.nature.param5.y
+        var x2 = this.nature.param[4].x
+        var y2 = this.nature.param[4].y
         var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
         this.node.runAction(action)
     },
     //漂移进场
     drift(direction,hard){
-        var x2 = this.nature.param5.x
-        var y2 = this.nature.param5.y
+        var x2 = 600
+        var y2 = this.nature.param[4].y
         var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
         this.node.runAction(action)
     },
@@ -97,30 +100,23 @@ cc.Class({
 
     },
 
-
     moveToPoint(t,x,y)
     {
         var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
         var target_world = this.node.convertToWorldSpaceAR(cc.v2(x,y));
         var temp_vector = target_world.sub(self_world);
         var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
-        this.node.rotation -= temp_angleDegrees;
-        
-        this.node.runAction(cc.moveTo(t,x,y))
-        console.log("@@@@player pos is..",this.player.getPosition().x);    
+        this.node.rotation -= temp_angleDegrees;       
+        this.node.runAction(cc.moveTo(t,x,y))  
     },
 
-    moveToRight()
+    doShoot()
     {
-       var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,320,500)},this),
-                                cc.delayTime(2),
-                                cc.callFunc(function(){this.moveToPoint(1.5,680,700)},this),
-                                cc.delayTime(2),
-                                cc.callFunc(function(){this.destorySelf()},this))
-       this.node.runAction(action)
+        var action = cc.repeatForever(cc.sequence(cc.delayTime(2),cc.callFunc(function(){
+
+        },this)))
+        this.node.runAction(action)
     },
-
-
 
 
     onCollisionEnter: function (other, self) {   
@@ -162,9 +158,16 @@ cc.Class({
     },
 
     update (dt) {
-        if (this.updateState === true)
-        {
-
-        }
+        // if (this.updateState === true)
+        // {
+            if(this.actionType === 3)
+            {
+                var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
+                var target_world = this.node.convertToWorldSpaceAR(this.player.getPosition())
+                var temp_vector = target_world.sub(self_world);
+                var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
+                this.node.rotation -= temp_angleDegrees; 
+            }
+        //}
     },
 });

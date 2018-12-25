@@ -120,7 +120,7 @@ cc.Class({
         }
     },
 
-    createObject(idx_type,x,y,param1,param2,param3,param4,param5){   
+    createObject(idx_type,x,y,param){   
         var obj = null
         var cfg = this.Objs[idx_type]
         
@@ -142,7 +142,7 @@ cc.Class({
             obj.x = x
             obj.y = y                 
             this.objList[idx_type].push(obj)   
-            obj.getComponent("Nature").initData(idx_type,this.worldSpeed,param1,param2,param3,param4,param5)
+            obj.getComponent("Nature").initData(idx_type,this.worldSpeed,param)
             obj.getComponent(cfg.script).onCreate()
         }
     },
