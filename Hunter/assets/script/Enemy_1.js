@@ -36,11 +36,13 @@ cc.Class({
     onCreate(){
         this.nature = this.node.getComponent("Nature")
         this.nature.init()
-        this.speed =  this.nature.speed
+        this.speed =  300
         this.actionType =  this.nature.param[0]    
         this.direction = this.nature.param[1]
         this.hard = this.nature.param[2]
+        this.index = this.nature.param[3]
         //this.param = this.nature.param
+        this.actionEnd = false
         console.log("@@@actionType is",this.actionType);
         
         this.doAction(this.actionType)
@@ -51,10 +53,10 @@ cc.Class({
     {
         switch(type){
             case 1:
-                this.drift()
+                this.breakAngle()
                 break;
             case 2:
-                this.drift()
+                this.straightLine()
                 break;
             case 3:
                 this.drift()
@@ -69,10 +71,10 @@ cc.Class({
 
     //折角
     breakAngle(direction,hard){
-        var x1 = this.nature.param[3].x
-        var y1 = this.nature.param[3].y
-        var x2 = this.nature.param[4].x
-        var y2 = this.nature.param[4].y
+        var x1 = this.nature.param[4].x
+        var y1 = this.nature.param[4].y
+        var x2 = this.nature.param[5].x
+        var y2 = this.nature.param[5].y
               
         var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x1,y1)},this),
         cc.delayTime(2),
@@ -83,21 +85,27 @@ cc.Class({
     },
     //直线
     straightLine(direction,hard){
-        var x2 = this.nature.param[4].x
-        var y2 = this.nature.param[4].y
+        var x2 = this.nature.param[5].x
+        var y2 = this.nature.param[5].y
         var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
         this.node.runAction(action)
     },
     //漂移进场
     drift(direction,hard){
-        var x2 = 600
-        var y2 = this.nature.param[4].y
-        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),cc.delayTime(4),cc.callFunc(function(){this.destorySelf()},this))
+        var r1 = Math.random()*10
+        var r2 = Math.random()*10
+        var x2 = this.nature.param[5].x - this.index*55 -60 - r1
+        var y2 = this.nature.param[5].y + this.index*55 - r2
+        var action = cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this)
         this.node.runAction(action)
     },
     //定点
     fixedPoint(direction,hard){
-
+        var x = Math.random()*160 + 50
+        var y = Math.random()*400 + 350
+        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x,y)},this),cc.delayTime(1.5),
+        cc.callFunc(function(){this.actionEnd = true},this))
+        this.node.runAction(action)
     },
 
     moveToPoint(t,x,y)
@@ -106,8 +114,23 @@ cc.Class({
         var target_world = this.node.convertToWorldSpaceAR(cc.v2(x,y));
         var temp_vector = target_world.sub(self_world);
         var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
-        this.node.rotation -= temp_angleDegrees;       
-        this.node.runAction(cc.moveTo(t,x,y))  
+        this.node.rotation -= temp_angleDegrees;   
+        if (this.actionType === 4)
+        {
+            this.node.runAction(cc.moveTo(t,x,y))  
+        } 
+        else 
+        {
+            if(this.actionType === 3)
+            {
+                this.speed += 80               
+            }
+            var disX = x - this.node.x
+            var disY = y - this.node.y
+            var dis = Math.sqrt(disX*disX + disY*disY) 
+            var t = dis/this.speed
+            this.node.runAction(cc.moveTo(t,x,y))  
+        }       
     },
 
     doShoot()
@@ -157,17 +180,30 @@ cc.Class({
         log("@@@destory!!!!!!!!!")
     },
 
+    updateRotation()
+    {
+        var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
+        var target_world = this.node.convertToWorldSpaceAR(this.player.getPosition())
+        var temp_vector = target_world.sub(self_world);
+        var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
+        var target = this.node.rotation - temp_angleDegrees;  
+        if (this.node.rotation > target)
+        {this.node.rotation-=2}
+        else if(this.node.rotation < target)
+        {this.node.rotation+=2}
+    },
+
     update (dt) {
-        // if (this.updateState === true)
-        // {
-            if(this.actionType === 3)
+        if(this.actionType === 3)
+        {
+            this.updateRotation()
+        }
+        else if(this.actionType === 4)
+        {
+            if (this.actionEnd === true)
             {
-                var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
-                var target_world = this.node.convertToWorldSpaceAR(this.player.getPosition())
-                var temp_vector = target_world.sub(self_world);
-                var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
-                this.node.rotation -= temp_angleDegrees; 
+                this.updateRotation()
             }
-        //}
+        }
     },
 });

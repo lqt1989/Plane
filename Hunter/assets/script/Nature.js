@@ -28,7 +28,7 @@ cc.Class({
         console.log("@@@param[0] is",this.param[0]);
         console.log("@@@param[1] is",this.param[1]);
         console.log("@@@param[2] is",this.param[2]);
-        console.log("@@@param[3] is",this.param[3].x);
+        console.log("@@@param[3] is",this.param[3]);
         }
               
         // this.param2 = param2

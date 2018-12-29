@@ -258,7 +258,7 @@ cc.Class({
                                 var x = startX + (i-1) * 10
                                 var x = i%2 *20 -10
                                 var y = Math.ceil(i/2) * 5                 
-                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x,this.node.y + y)
+                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_2,this.node.x + x,this.node.y + y,0)
                             }}
                         else                      //散弹
                         {                 

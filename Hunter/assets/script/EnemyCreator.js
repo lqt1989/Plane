@@ -29,18 +29,22 @@ cc.Class({
     },
 
 
-    createEnemySequence(index,hard){
+    createEnemySequence(index,direction,hard){
         log("@@@@@@@@@@@@@+================createEnemySequence!!!!========================")
         switch(index){
             case 1:
-                this.createEnemy1(1,1,hard);
+                this.createEnemy1(1,direction,hard);
                 break;
             case 2:
-                this.createEnemy1(1,2,hard);
+                this.createEnemy1(2,direction,hard);
                 break;
             case 3:
-
+                this.createEnemy1(3,direction,hard);
                 break;
+            case 4:
+                this.createEnemy1(4,direction,hard);
+                break;
+
             default:
                 break;
         }
@@ -76,9 +80,11 @@ cc.Class({
         var y2 = Math.random() * 350 + 350
         var p2 = cc.p(x2,y2)
 
+        this.createIndex = 0
         for(var i = 0; i < count ; i ++)
-        {          
-           var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,p.x,p.y,actionType,direction,hard,p1,p2)},this)
+        {         
+            var index = i 
+           var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,p.x,p.y,actionType,direction,hard,index,p1,p2)},this)
             t.push(action1)
             var action2 = cc.delayTime(1)
             t.push(action2)
@@ -90,17 +96,20 @@ cc.Class({
 
 
      //传参：1.类型 2.顺位 3.难度
-     createEnemy(index,x,y,actionType,direction,hard,p1,p2){
+     createEnemy(type,x,y,actionType,direction,hard,index,p1,p2){
+        this.createIndex += 1
+         
         var Custom_Event = new cc.Event.EventCustom("objCreate",true)
-        var param = new Array(5)
+        var param = new Array(6)
         param[0] = actionType
         param[1]= direction
         param[2]= hard
-        param[3]= p1
-        param[4] = p2
+        param[3]= this.createIndex
+        param[4] = p1
+        param[5] = p2
 
         var data = new Array(8)
-        data[0] = index
+        data[0] = type
         data[1] = x
         data[2] = y
         data[3] = param

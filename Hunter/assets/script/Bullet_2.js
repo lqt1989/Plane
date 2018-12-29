@@ -23,15 +23,14 @@ cc.Class({
         this.init()
     },
     init(){
-        this.nature = this.node.getComponent("Nature")
         this.nature.atk = 1
-        this.rotation = this.nature.param
         this.speed = 16
         this.mileage = 0
         this.nature.init();
     },
     onCreate(){
-
+        this.nature = this.node.getComponent("Nature")
+        this.rotation = this.nature.param
     },
 
     onCollisionEnter: function (other, self) {

@@ -357,7 +357,7 @@ cc.Class({
         if (this.monstarBatch !== batch)
         {
             this.monstarBatch = batch
-            this.enemyCreator.createEnemySequence(1,1)
+            this.enemyCreator.createEnemySequence(3,1,1)
         }
     },
     updateBoss()
