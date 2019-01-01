@@ -28,6 +28,7 @@ cc.Class({
     },
 
     init(){
+        this.node.zIndex= 11
         this.nature = this.node.getComponent("Nature")
         this.nature.init()
         var anim = this.getComponent(cc.Animation);

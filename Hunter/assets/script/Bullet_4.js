@@ -23,7 +23,8 @@ cc.Class({
         this.init()
     },
     init(){
-        this.speed = 10
+        this.nature = this.node.getComponent("Nature")
+        this.speed = 5
         this.mileage = 0
     },
     onCreate(){
@@ -50,8 +51,8 @@ cc.Class({
         {
             var x = this.speed*Math.sin(2*Math.PI/360*this.rotation)
             var y = this.speed*Math.cos(2*Math.PI/360*this.rotation)
-            this.node.y += y;
-            this.node.x += x;
+            this.node.y -= y;
+            this.node.x -= x;
             this.mileage += this.speed      
             if (this.mileage >= 1350)
             {

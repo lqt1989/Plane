@@ -9,6 +9,7 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 require("Bullet_1")
 require("Bullet_2")
+require("Bullet_3")
 require("Boom")
 require("Stone")
 require("Gold")
@@ -27,6 +28,10 @@ cc.Class({
             default:null,
         },
         bullet2:{
+            type:cc.Prefab,
+            default:null,
+        },
+        bullet3:{
             type:cc.Prefab,
             default:null,
         },
@@ -53,7 +58,16 @@ cc.Class({
         gold:{
             type:cc.Prefab,
             default:null,
-        }
+        },
+        bullet4:{
+            type:cc.Prefab,
+            default:null,
+        },
+        enemy2:
+        {
+            type:cc.Prefab,
+            default:null,
+        },
 
     },
 
@@ -79,15 +93,17 @@ cc.Class({
         this.Objs = {
             1:{prefab:this.bullet1,script:"Bullet_1",poolIndex:1,poolSize:30},
             2:{prefab:this.bullet2,script:"Bullet_2",poolIndex:2,poolSize:30},
-            3:{prefab:this.stone,script:"Stone",poolIndex:3,poolSize:10},
-            4:{prefab:this.boom,script:"Boom",poolIndex:4,poolSize:20},
-            5:{prefab:this.missile,script:"Missile",poolIndex:null,poolSize:null},
-            6:{prefab:this.gold,script:"Gold",poolIndex:5,poolSize:10},
-            7:{prefab:this.enemy1,script:"Enemy_1",poolIndex:6,poolSize:15},
+            3:{prefab:this.bullet3,script:"Bullet_3",poolIndex:3,poolSize:30},
+            4:{prefab:this.stone,script:"Stone",poolIndex:4,poolSize:10},
+            5:{prefab:this.boom,script:"Boom",poolIndex:5,poolSize:20},
+            6:{prefab:this.missile,script:"Missile",poolIndex:null,poolSize:null},
+            7:{prefab:this.gold,script:"Gold",poolIndex:6,poolSize:10},
+            8:{prefab:this.enemy1,script:"Enemy_1",poolIndex:7,poolSize:15},
+            9:{prefab:this.bullet4,script:"Bullet_4",poolIndex:8,poolSize:30},
+            10:{prefab:this.enemy2,script:"Enemy_2",poolIndex:9,poolSize:10},
         }
 
         var arr = Object.keys(this.Objs);
-        console.log(arr.length)
         this.objPool = new Array();
         this.objList = new Array();
         for(var i = 1; i <= arr.length; i++)

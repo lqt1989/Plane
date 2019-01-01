@@ -310,16 +310,16 @@ cc.Class({
             this.map2.y = this.winHeight/2+this.mapHeight/2+(this.mapHeight - this.winHeight)
         }
     },
-    //更新里程，刷怪，每300整像素检测一次刷怪
+    //刷石头
     updateStone()
     {
-        var batch = Math.floor(this.mileage/300) + 1
+        var batch = Math.floor(this.mileage/600) + 1
         //batch = batch-((this.loopTimes-1) *this.countPerLoop)
         if (this.stoneBatch !== batch)
         {
             this.stoneBatch = batch
-            var count =  Math.floor(Math.random()*3)   
-            console.log("@@stone count is ",count);
+            var count =  Math.floor(Math.random()*2)   
+
                     
             for(var i = 0;i < count;i++)
             {
@@ -340,7 +340,6 @@ cc.Class({
             this.goldBatch = (batch%6) + 1
             //this.goldBatch = this.goldBatch>6?1:this.goldBatch
             var cfg = Constant.Golds[this.goldBatch]
-            console.log("this.goldBatch is",this.goldBatch);
             
             for(var i = 1; i< cfg.count; i++)
             {
@@ -353,11 +352,27 @@ cc.Class({
     updateMonster()
     {
         var batch = Math.floor(this.mileage/500) + 1
-
         if (this.monstarBatch !== batch)
         {
             this.monstarBatch = batch
-            this.enemyCreator.createEnemySequence(3,1,1)
+            var type = Math.ceil(Math.random()*100)
+            var dir = Math.ceil(Math.random()*2) 
+            //type:1.直线小 2.折角小 3.漂移小 4.驻点中
+            if(type < 20)
+            {
+                this.enemyCreator.createEnemySequence(4,dir,1)
+            }else if(type < 40)
+            {
+                this.enemyCreator.createEnemySequence(3,dir,1)
+            }else if(type < 60)
+            {
+                this.enemyCreator.createEnemySequence(2,dir,1)
+            }else if(type <= 100)
+            {
+                this.enemyCreator.createEnemySequence(1,dir,1)
+            }
+          
+            
         }
     },
     updateBoss()

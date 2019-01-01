@@ -3,11 +3,14 @@ var Constant =
     Objs:{
         Bullet_1:1,
         Bullet_2:2,
-        Stone:3,
-        Boom:4,
-        Missile:5,
-        GoldIcon:6,
-        Enemy_1:7,
+        Bullet_3:3,
+        Stone:4,
+        Boom:5,
+        Missile:6,
+        GoldIcon:7,
+        Enemy_1:8,
+        Bullet_4:9,
+        Enemy_2:10,
     },
 
     //m_type:1.开启科技  2.更改玩家属性  3.特殊判断

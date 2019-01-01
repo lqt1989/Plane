@@ -116,17 +116,17 @@ cc.Class({
     {
         
         
-        this.rotate_1 += 5
-        this.rotate_2 -= 5
+        this.rotate_1 += 2
+        this.rotate_2 -= 2
 
         this.rotate_1 = this.rotate_1 > 360 ? 0 : this.rotate_1
         this.rotate_2 = this.rotate_2 < -180 ? 180 : this.rotate_2
 
-        var y1 = Math.sin(2*Math.PI/360*this.rotate_1) * 180
-        var x1 = Math.cos(2*Math.PI/360*this.rotate_1) * 180
+        var y1 = Math.sin(2*Math.PI/360*this.rotate_1) * 120
+        var x1 = Math.cos(2*Math.PI/360*this.rotate_1) * 120
         
-        var y2 = Math.sin(2*Math.PI/360*this.rotate_2) * 180
-        var x2 = Math.cos(2*Math.PI/360*this.rotate_2) * 180
+        var y2 = Math.sin(2*Math.PI/360*this.rotate_2) * 120
+        var x2 = Math.cos(2*Math.PI/360*this.rotate_2) * 120
         
         this.wing_1.x = x1 
         this.wing_1.y = y1 
@@ -142,7 +142,7 @@ cc.Class({
             this.wing_2.active = false
             if (this.rotate_1%180 == 0)
             {
-                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x1/2,this.node.y +y1)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x + x1,this.node.y +y1)
             }
         }
         else
@@ -150,8 +150,8 @@ cc.Class({
             this.wing_2.active = true
             if (this.rotate_1%180 == 0)
             {
-                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x1/2,this.node.y +y1)
-                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x2/2,this.node.y +y2)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x1,this.node.y +y1)
+                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_1,this.node.x +x2,this.node.y +y2)
             }
         }
     },
@@ -258,7 +258,7 @@ cc.Class({
                                 var x = startX + (i-1) * 10
                                 var x = i%2 *20 -10
                                 var y = Math.ceil(i/2) * 5                 
-                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_2,this.node.x + x,this.node.y + y,0)
+                                this.node.parent.getComponent("FightLayer").createObject(Constant.Objs.Bullet_3,this.node.x + x,this.node.y + y)
                             }}
                         else                      //散弹
                         {                 

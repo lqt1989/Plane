@@ -30,7 +30,6 @@ cc.Class({
 
 
     createEnemySequence(index,direction,hard){
-        log("@@@@@@@@@@@@@+================createEnemySequence!!!!========================")
         switch(index){
             case 1:
                 this.createEnemy1(1,direction,hard);
@@ -42,7 +41,7 @@ cc.Class({
                 this.createEnemy1(3,direction,hard);
                 break;
             case 4:
-                this.createEnemy1(4,direction,hard);
+                this.createEnemy2(1,direction,hard);
                 break;
 
             default:
@@ -85,6 +84,33 @@ cc.Class({
         {         
             var index = i 
            var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_1,p.x,p.y,actionType,direction,hard,index,p1,p2)},this)
+            t.push(action1)
+            var action2 = cc.delayTime(1)
+            t.push(action2)
+        }
+        var action = cc.sequence(t)
+        this.node.runAction(action)
+    },
+
+    //中型敌人
+    createEnemy2(actionType,direction,hard){
+        var p = this.getRefreshPoint(direction)
+        var count = Math.floor(hard/2) + 4    
+        var t = new Array();
+
+        var x1 = Math.random() * 150 - 75 + 320
+        var y1 = Math.random() * 550 + 250
+        var p1 = cc.p(x1,y1)
+
+        var x2 = 700
+        var y2 = Math.random() * 350 + 350
+        var p2 = cc.p(x2,y2)
+
+        this.createIndex = 0
+        for(var i = 0; i < count ; i ++)
+        {         
+            var index = i 
+           var action1 = cc.callFunc(function(){this.createEnemy(Constant.Objs.Enemy_2,p.x,p.y,actionType,direction,hard,index,p1,p2)},this)
             t.push(action1)
             var action2 = cc.delayTime(1)
             t.push(action2)

@@ -27,13 +27,11 @@ cc.Class({
         this.init()
     },
     init(){
-        this.nature = this.node.getComponent("Nature")
-        this.nature.init()
-        this.speed =  this.nature.speed
+        this.speed =  1
 
         this.mileage = 0
         this.hp = 50 * this.node.scale
-        this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
+        //this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
         
         
         var time = this.node.scale * 20
@@ -41,7 +39,10 @@ cc.Class({
         this.node.runAction(action)
     },
     onCreate(){
-
+        this.nature = this.node.getComponent("Nature")
+        this.nature.init()
+        this.node.scale = this.nature.param
+        
     },
 
     onCollisionEnter: function (other, self) {   
@@ -49,7 +50,7 @@ cc.Class({
         if (atk)
         {
             this.hp -= atk 
-            this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
+           // this.node.getComponent(cc.ProgressBar).progress = this.hp/this.maxHp
             if (this.hp <= 0)
             {
                 this.pushScore()

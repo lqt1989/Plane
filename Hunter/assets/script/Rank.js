@@ -16,7 +16,7 @@ cc.Class({
     start () {
         // this.subContextView = this.node.getComponent(cc.WXSubContextView)
         // subContextView.enabled = false
-        console.log("@@@@rank start============!!!!!!!!!!!!!!!!");
+
         
     },
 

@@ -1,12 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var Constant = require("Constant")
 cc.Class({
     extends: cc.Component,
@@ -15,7 +6,7 @@ cc.Class({
     },
 
     onLoad () {
-        this.maxHp = 3
+        this.maxHp = 6
         this.score = 3   
         this.player = cc.find("Canvas/FightLayer/Player");
     },
@@ -26,7 +17,7 @@ cc.Class({
         this.init()
     },
     init(){
-        this.hp = 3
+        this.hp = 6
         this.mileage = 0
         this.node.zIndex= 9
         
@@ -45,96 +36,31 @@ cc.Class({
         this.actionEnd = false
 
         
-        this.doAction(this.actionType)
+        //this.doAction(this.actionType)
+        this.fixedPoint()
     },
 
-    doAction(type)
-    {
-        switch(type){
-            case 1:
-                this.breakAngle()
-                break;
-            case 2:
-                this.straightLine()
-                break;
-            case 3:
-                this.drift()
-                break;
-            case 4:
-                this.fixedPoint()
-                break;
-            default:
-                break;
-        }
-    },
+    // doAction(type)
+    // {
+    //     switch(type){
+    //         case 1:
+    //             this.breakAngle()
+    //             break;
+    //         case 2:
+    //             this.straightLine()
+    //             break;
+    //         case 3:
+    //             this.drift()
+    //             break;
+    //         case 4:
+    //             this.fixedPoint()
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // },
 
-    //折角
-    breakAngle(){
-        var x1 = this.nature.param[4].x
-        var y1 = this.nature.param[4].y
-        var x2 = this.nature.param[5].x
-        var y2 = this.nature.param[5].y
 
-        if (this.direction === 1)
-        {
-            x2 = 700
-        }
-        else if(this.direction === 2)
-        {
-            x2 = -60
-        }
-              
-        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x1,y1)},this),
-        cc.callFunc(function(){this.doShoot()},this),
-        cc.delayTime(2),
-        cc.callFunc(function(){this.doShoot()},this),
-        cc.callFunc(function(){this.moveToPoint(1.5,x2,y2)},this),
-        cc.delayTime(2),
-        cc.callFunc(function(){this.destorySelf()},this))
-        this.node.runAction(action)
-    },
-    //直线
-    straightLine(){
-        var x2 = this.nature.param[5].x
-        var y2 = this.nature.param[5].y
-        if (this.direction === 1)
-        {
-            x2 = 700
-        }
-        else if(this.direction === 2)
-        {
-            x2 = -60
-        }
-
-        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this),
-                                cc.delayTime(1),
-                                cc.callFunc(function(){this.doShoot()},this),
-                                cc.delayTime(3),
-                                cc.callFunc(function(){this.destorySelf()},this))
-        this.node.runAction(action)
-    },
-    //漂移进场
-    drift(){
-        var r1 = Math.random()*10
-        var r2 = Math.random()*10
-        var x2 = this.nature.param[5].x - this.index*55 -60 - r1
-        var y2 = this.nature.param[5].y + this.index*55 - r2
-        if (this.direction === 1)
-        {
-            x2 = this.nature.param[5].x - this.index*55 -60 - r1
-        }
-        else if(this.direction === 2)
-        {
-            x2 = Math.random() * 50 + 80
-        }
-
-        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(3.5,x2,y2)},this), 
-        cc.delayTime(2),
-        cc.callFunc(function(){this.runShoot()},this),
-        cc.delayTime(2),
-        cc.callFunc(function(){this.actionEnd = true},this))
-        this.node.runAction(action)
-    },
     //定点
     fixedPoint(){
         var y = Math.random()*400 + 350
@@ -147,8 +73,9 @@ cc.Class({
         {
             x = Math.random()*160 + 400
         }
-        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x,y)},this),cc.delayTime(1.5),
-        cc.callFunc(function(){this.actionEnd = true},this))
+        var action = cc.sequence(cc.callFunc(function(){this.moveToPoint(1.5,x,y)},this),cc.delayTime(0.5),
+        cc.callFunc(function(){this.actionEnd = true},this),cc.delayTime(1),
+        cc.callFunc(function(){this.runShoot()},this))
         this.node.runAction(action)
     },
 
@@ -176,6 +103,7 @@ cc.Class({
             this.node.runAction(cc.moveTo(t,x,y))  
         }       
     },
+
     runShoot()
     {
         var action = cc.repeatForever(cc.sequence(cc.callFunc(function(){
@@ -184,23 +112,32 @@ cc.Class({
         this.node.runAction(action)
     },
 
+
     doShoot()
     {   
-        var Custom_Event = new cc.Event.EventCustom("objCreate",true)
-        var data = new Array(4)
-        data[0] = Constant.Objs.Bullet_4
-        data[1] = this.node.x
-        data[2] = this.node.y
-
         var self_world = this.node.convertToWorldSpaceAR(this.node.getPosition());
         var target_world = this.node.convertToWorldSpaceAR(this.player.getPosition())
         var temp_vector = target_world.sub(self_world);
         var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;
         var target = this.node.rotation - temp_angleDegrees;  
 
+        var Custom_Event = new cc.Event.EventCustom("objCreate",true)
+        var data = new Array(4)
+        data[0] = Constant.Objs.Bullet_4
+        data[1] = this.node.x-(10*Math.sin(2*Math.PI/360*(target-90)))       
+        data[2] = this.node.y-(10*Math.cos(2*Math.PI/360*(target-90)))
         data[3] = target
         Custom_Event.setUserData(data)
         this.node.dispatchEvent(Custom_Event)
+
+        var Custom_Event2 = new cc.Event.EventCustom("objCreate",true)
+        var data2 = new Array(4)
+        data2[0] = Constant.Objs.Bullet_4
+        data2[1] = this.node.x+(10*Math.sin(2*Math.PI/360*(target-90)))
+        data2[2] = this.node.y+(10*Math.cos(2*Math.PI/360*(target-90)))
+        data2[3] = target
+        Custom_Event2.setUserData(data2)
+        this.node.dispatchEvent(Custom_Event2)
     },
 
 
@@ -272,18 +209,9 @@ cc.Class({
     },
 
     update (dt) {
-        if(this.actionType === 3)
+        if (this.actionEnd === true)
         {
-            this.updateRotation()
-            this.updatePos()
-        }
-        else if(this.actionType === 4)
-        {
-            if (this.actionEnd === true)
-            {
-                this.updateRotation()
-                
-            }
+            this.updateRotation()         
         }
     },
 });

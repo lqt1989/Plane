@@ -37,13 +37,10 @@
       },
       {
         "__id__": 11
-      },
-      {
-        "__id__": 12
       }
     ],
     "_prefab": {
-      "__id__": 13
+      "__id__": 12
     },
     "_opacity": 255,
     "_color": {
@@ -323,6 +320,28 @@
     "_id": ""
   },
   {
+    "__type__": "08dfaCRzjRD9ZpNRLhUpcnb",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "atk": 0,
+    "def": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "5b2b2MZwtNN5KB3zrlMPBoY",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_id": ""
+  },
+  {
     "__type__": "cc.PolygonCollider",
     "_name": "",
     "_objFlags": 0,
@@ -339,89 +358,35 @@
     "points": [
       {
         "__type__": "cc.Vec2",
-        "x": -92,
-        "y": 53
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": -107,
-        "y": -4
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": -77,
-        "y": -58
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": -7,
-        "y": -107
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": 58,
-        "y": -79
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": 108,
+        "x": -105,
         "y": -3
       },
       {
         "__type__": "cc.Vec2",
-        "x": 67,
-        "y": 72
+        "x": -12,
+        "y": -108
       },
       {
         "__type__": "cc.Vec2",
-        "x": 23,
-        "y": 106
+        "x": 109,
+        "y": -6
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": 25,
+        "y": 108
       },
       {
         "__type__": "cc.Vec2",
         "x": -41,
-        "y": 103
+        "y": 102
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -94,
+        "y": 54
       }
     ],
-    "_id": ""
-  },
-  {
-    "__type__": "08dfaCRzjRD9ZpNRLhUpcnb",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "atk": 0,
-    "def": 0,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.ProgressBar",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_N$totalLength": 1,
-    "_N$barSprite": {
-      "__id__": 6
-    },
-    "_N$mode": 2,
-    "_N$progress": 0.8,
-    "_N$reverse": false,
-    "_id": ""
-  },
-  {
-    "__type__": "5b2b2MZwtNN5KB3zrlMPBoY",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
     "_id": ""
   },
   {
