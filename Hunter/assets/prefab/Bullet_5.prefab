@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Bullet_4",
+    "_name": "Bullet_5",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -45,8 +45,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 58,
-      "height": 58
+      "width": 31,
+      "height": 92
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -61,8 +61,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.7,
+      "y": 0.9,
       "z": 1
     },
     "_rotationX": 0,
@@ -91,7 +91,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "931c8e4c-f360-4a83-a128-c165213ec8f4"
+      "__uuid__": "4117b1c7-d283-4bc1-929b-4a567443bda9"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -137,23 +137,23 @@
     "points": [
       {
         "__type__": "cc.Vec2",
-        "x": -5.1,
-        "y": 0.1
+        "x": -2.5,
+        "y": 15
       },
       {
         "__type__": "cc.Vec2",
-        "x": -0.2,
-        "y": -7.9
+        "x": -2.5,
+        "y": -15
       },
       {
         "__type__": "cc.Vec2",
-        "x": 5.1,
-        "y": -0.1
+        "x": 2.5,
+        "y": -15
       },
       {
         "__type__": "cc.Vec2",
-        "x": 0,
-        "y": 8.17
+        "x": 2.5,
+        "y": 15
       }
     ],
     "_id": ""
@@ -174,9 +174,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "209de514-6f36-480b-9d68-9952cf651cc2"
+      "__uuid__": "2123d929-eabd-4cec-8ef8-f4ad395f7457"
     },
-    "fileId": "02Sc0tE5VNNKlS8rrRiYKA",
+    "fileId": "36TwMfJjlB5paUiXtTB+6+",
     "sync": false
   }
 ]

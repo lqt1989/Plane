@@ -83,18 +83,20 @@ cc.Class({
 
         this.node.on("touchStart",function(event){
             var data = event.getUserData()   
-            if (data.y < 100)
-            {        
-                this.reocker.x = data.x-320
-                this.reocker.y = data.y
-            }
+            // if (data.y < 100)
+            // {        
+                // this.reocker.x = data.x-320
+                // this.reocker.y = data.y
+
+                this.reockerMoveTo(data.x-320,data.y)
+            //}
 
         },this)
 
         this.node.on("touchMove",function(event){
             var data = event.getUserData()    
-            if (data.y < 180)
-            {
+            // if (data.y < 180)
+            // {
                 var location = this.reocker.convertToNodeSpaceAR(data)
                 var x = location.x
                 var y = location.y
@@ -107,12 +109,14 @@ cc.Class({
 
                 this.pp.setPosition(x,y)    
                 this.player.getComponent(Player).setSpeed(x/15,y/15)
-            }
+            //}
         },this)
 
         this.node.on("touchEnd",function(event){
             this.pp.setPosition(0,0)    
             this.player.getComponent(Player).setSpeed(0,0)
+
+            this.resetRocker()
         },this)
 
         this.node.on("createMissile",function(event){
@@ -274,6 +278,7 @@ cc.Class({
 
         this.isPause = false
         this.tech.active =  false
+
     },
 
     clear(){
@@ -295,6 +300,20 @@ cc.Class({
         this.fightLayer.resume()
         this.player.getComponent(Player).resume()
     },
+
+    reockerMoveTo(x,y){
+        this.reocker.stopAllActions()
+        this.reocker.runAction(cc.sequence(cc.moveTo(0.1,cc.v2(x,y)),cc.scaleTo(0.1,2)))
+        this.reocker.runAction(cc.rotateTo(0.1,0))      
+    },
+    resetRocker()
+    {
+        this.reocker.stopAllActions()
+        this.reocker.runAction(cc.moveTo(0.1,cc.v2(0,110)))
+        this.reocker.runAction(cc.scaleTo(0.1,0.3))
+        this.reocker.runAction(cc.repeatForever(cc.rotateBy(1,180)))
+    },
+
 
     //更新背景
     updateMapLayer()

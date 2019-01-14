@@ -68,6 +68,11 @@ cc.Class({
             type:cc.Prefab,
             default:null,
         },
+        bullet5:{
+            type:cc.Prefab,
+            default:null,
+        },
+
 
     },
 
@@ -101,6 +106,7 @@ cc.Class({
             8:{prefab:this.enemy1,script:"Enemy_1",poolIndex:7,poolSize:15},
             9:{prefab:this.bullet4,script:"Bullet_4",poolIndex:8,poolSize:30},
             10:{prefab:this.enemy2,script:"Enemy_2",poolIndex:9,poolSize:10},
+            11:{prefab:this.bullet5,script:"Bullet_4",poolIndex:10,poolSize:30},
         }
 
         var arr = Object.keys(this.Objs);
@@ -121,6 +127,21 @@ cc.Class({
                 }
             }
         }
+
+        var graphics=this.getComponent(cc.Graphics);
+
+        let color = cc.Color.BLUE;//声明一个颜色变量
+        color.a=100;//添加透明度
+        graphics.fillColor=color;//填充
+        graphics.strokeColor = color;
+        graphics.lineWidth = 2;
+        graphics.moveTo(200, 0);
+        graphics.lineTo(200, 960);
+        graphics.stroke(); 
+        graphics.moveTo(200, 400);
+        graphics.lineTo(640, 400);
+        graphics.stroke();          
+
     },
 
     clear(){

@@ -37,50 +37,55 @@ cc.Class({
             Custom_Event.setUserData(location)
             this.node.dispatchEvent(Custom_Event)
 
-            var y = event.getLocationY() 
-            var p = this.eventList[event.getID()]
-            if (this.direction === 0)
-            {
-                if (y - p.y > 0)
-                {
-                    this.direction = 1
-                }
-                else if(y - p.y < 0)
-                {
-                    this.direction = 2
-                    var Custom_Event = new cc.Event.EventCustom("chargestart",true)
-                    this.node.dispatchEvent(Custom_Event)
-                }
-            }
+            // var y = event.getLocationY() 
+            // var p = this.eventList[event.getID()]
+            // if (this.direction === 0)
+            // {
+            //     if (y - p.y > 0)
+            //     {
+            //         this.direction = 1
+            //     }
+            //     else if(y - p.y < 0)
+            //     {
+            //         this.direction = 2
+            //         var Custom_Event = new cc.Event.EventCustom("chargestart",true)
+            //         this.node.dispatchEvent(Custom_Event)
+            //     }
+            // }
         },this)
 
         this.node.on(cc.Node.EventType.TOUCH_END,function(event){
-            var y = event.getLocationY() 
-            var p = this.eventList[event.getID()]
+            // var y = event.getLocationY() 
+            // var p = this.eventList[event.getID()]
 
-            if (this.direction === 1)
-            {
-                if (y - p.y > 50) {
-                    var Custom_Event = new cc.Event.EventCustom("createMissile",true)
-                    var data = new Array(3)
-                    data[0] = event.getID()
-                    data[1] = p.x
-                    data[2] = p.y           
-                    Custom_Event.setUserData(data)
-                    this.node.dispatchEvent(Custom_Event)
-                }
-            }
-            else if(this.direction === 2)
-            {
-                var Custom_Event = new cc.Event.EventCustom("chargeend",true)
-                this.node.dispatchEvent(Custom_Event)
-            }
+            // if (this.direction === 1)
+            // {
+            //     if (y - p.y > 50) {
+            //         var Custom_Event = new cc.Event.EventCustom("createMissile",true)
+            //         var data = new Array(3)
+            //         data[0] = event.getID()
+            //         data[1] = p.x
+            //         data[2] = p.y           
+            //         Custom_Event.setUserData(data)
+            //         this.node.dispatchEvent(Custom_Event)
+            //     }
+            // }
+            // else if(this.direction === 2)
+            // {
+            //     var Custom_Event = new cc.Event.EventCustom("chargeend",true)
+            //     this.node.dispatchEvent(Custom_Event)
+            // }
 
             var Custom_Event2 = new cc.Event.EventCustom("touchEnd",true)
             this.node.dispatchEvent(Custom_Event2)
             this.direction = 0
         },this)
 
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL,function(event){
+            var Custom_Event2 = new cc.Event.EventCustom("touchEnd",true)
+            this.node.dispatchEvent(Custom_Event2)
+            this.direction = 0
+        },this)
     },
 
     onDeviceMotionEvent (event) {

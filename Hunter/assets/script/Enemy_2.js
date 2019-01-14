@@ -123,7 +123,7 @@ cc.Class({
 
         var Custom_Event = new cc.Event.EventCustom("objCreate",true)
         var data = new Array(4)
-        data[0] = Constant.Objs.Bullet_4
+        data[0] = Constant.Objs.Bullet_5
         data[1] = this.node.x-(10*Math.sin(2*Math.PI/360*(target-90)))       
         data[2] = this.node.y-(10*Math.cos(2*Math.PI/360*(target-90)))
         data[3] = target
@@ -132,7 +132,7 @@ cc.Class({
 
         var Custom_Event2 = new cc.Event.EventCustom("objCreate",true)
         var data2 = new Array(4)
-        data2[0] = Constant.Objs.Bullet_4
+        data2[0] = Constant.Objs.Bullet_5
         data2[1] = this.node.x+(10*Math.sin(2*Math.PI/360*(target-90)))
         data2[2] = this.node.y+(10*Math.cos(2*Math.PI/360*(target-90)))
         data2[3] = target

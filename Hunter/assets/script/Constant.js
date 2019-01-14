@@ -11,6 +11,7 @@ var Constant =
         Enemy_1:8,
         Bullet_4:9,
         Enemy_2:10,
+        Bullet_5:11,
     },
 
     //m_type:1.开启科技  2.更改玩家属性  3.特殊判断
