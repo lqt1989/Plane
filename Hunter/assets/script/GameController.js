@@ -61,6 +61,10 @@ cc.Class({
            default:null,
            type:cc.Node, 
         },
+        arrow:{
+            default:null,
+            type:cc.Node,
+        },
 
         lbl_finalscore:{
             default:null,
@@ -101,14 +105,29 @@ cc.Class({
                 var x = location.x
                 var y = location.y
                 var r = Math.sqrt(x*x + y*y)
-                if (r >= 80)
+                if (r >= 160)
                 {
-                    x = x*80/r
-                    y = y*80/r
+                    x = x*160/r
+                    y = y*160/r
                 }
 
-                this.pp.setPosition(x,y)    
-                this.player.getComponent(Player).setSpeed(x/15,y/15)
+                this.pp.setPosition(x,y)   
+                var xsp =  x/15
+                var ysp = y/15
+                xsp = xsp>6?6:xsp
+                xsp = xsp<-6?-6:xsp
+                ysp = ysp>6?6:ysp
+                ysp = ysp<-6?-6:ysp
+                this.player.getComponent(Player).setSpeed(xsp,ysp)
+
+
+                var self_world = this.reocker.convertToWorldSpaceAR(this.arrow.getPosition());
+                var target_world = this.reocker.convertToWorldSpaceAR(location)
+                var temp_vector = target_world.sub(self_world);
+                var temp_angleDegrees = temp_vector.signAngle(cc.v2(0,1)) / Math.PI * 180;             
+                this.arrow.rotation = temp_angleDegrees;  
+
+
             //}
         },this)
 
@@ -303,7 +322,7 @@ cc.Class({
 
     reockerMoveTo(x,y){
         this.reocker.stopAllActions()
-        this.reocker.runAction(cc.sequence(cc.moveTo(0.1,cc.v2(x,y)),cc.scaleTo(0.1,2)))
+        this.reocker.runAction(cc.sequence(cc.moveTo(0.1,cc.v2(x,y)),cc.scaleTo(0.1,1)))
         this.reocker.runAction(cc.rotateTo(0.1,0))      
     },
     resetRocker()

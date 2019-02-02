@@ -128,19 +128,19 @@ cc.Class({
             }
         }
 
-        var graphics=this.getComponent(cc.Graphics);
+        // var graphics=this.getComponent(cc.Graphics);
 
-        let color = cc.Color.BLUE;//声明一个颜色变量
-        color.a=100;//添加透明度
-        graphics.fillColor=color;//填充
-        graphics.strokeColor = color;
-        graphics.lineWidth = 2;
-        graphics.moveTo(200, 0);
-        graphics.lineTo(200, 960);
-        graphics.stroke(); 
-        graphics.moveTo(200, 400);
-        graphics.lineTo(640, 400);
-        graphics.stroke();          
+        // let color = cc.Color.BLUE;//声明一个颜色变量
+        // color.a=100;//添加透明度
+        // graphics.fillColor=color;//填充
+        // graphics.strokeColor = color;
+        // graphics.lineWidth = 2;
+        // graphics.moveTo(200, 0);
+        // graphics.lineTo(200, 960);
+        // graphics.stroke(); 
+        // graphics.moveTo(200, 400);
+        // graphics.lineTo(640, 400);
+        // graphics.stroke();          
 
     },
 
