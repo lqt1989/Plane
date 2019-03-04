@@ -74,6 +74,12 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
+
+        des:
+        {
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -333,6 +339,30 @@ cc.Class({
         this.reocker.runAction(cc.repeatForever(cc.rotateBy(1,180)))
     },
 
+    showTips(str)
+    {
+        console.log("@@showtips!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        this.des.str = str
+        this.des.active = true
+        this.des.runAction(
+            cc.sequence(
+                cc.callFunc(function(){
+                    console.debug("@@@strat runaction")
+                    this.des.y = 550 
+                    this.des.active = true
+                },this),
+                cc.moveBy(1,cc.v2(0,300)),
+                cc.callFunc(function(){
+                    this.des.active = false
+                    this.des.y = 550
+                    console.debug("@@@strat end!!")
+                },this)
+            )
+        )
+        //this.des.runAction(cc.moveBy(1,cc.v2(0,300)),)
+    },
+
 
     //更新背景
     updateMapLayer()
@@ -392,9 +422,12 @@ cc.Class({
         var batch = Math.floor(this.mileage/500) + 1
         if (this.monstarBatch !== batch)
         {
+            
             this.monstarBatch = batch
             var type = Math.ceil(Math.random()*100)
             var dir = Math.ceil(Math.random()*2) 
+
+            this.showTips("刷小怪"+type)
             //type:1.直线小 2.折角小 3.漂移小 4.驻点中
             if(type < 20)
             {
